@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.MenuMapper">
+
+
+    <!--查询用户菜单权限-->
+    <select id="selectMenu" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SM.*,SMP.SM_NAME AS SM_PARENT_NAME,SC.SC_NAME,SPD.SPD_NAME
+        FROM(
+            SELECT SM.*
+            FROM SYS_MENU SM
+            <where>
+                <if test="SM_PARENTID != null and SM_PARENTID != '' ">
+                    AND SM.SM_PARENTID = #{SM_PARENTID}
+                </if>
+                <if test="ID != null and ID != '' ">
+                    AND SM.ID = #{ID}
+                </if>
+                <if test="SM_TYPE != null and SM_TYPE != '' ">
+                    AND SM.SM_TYPE = #{SM_TYPE}
+                </if>
+                <if test="SM_CODE != null and SM_CODE != '' ">
+                    AND SM.SM_CODE = #{SM_CODE}
+                </if>
+                <if test="SM_URL != null and SM_URL != '' ">
+                    AND SM.SM_URL = #{SM_URL}
+                </if>
+                <if test="SC_ID != null and SC_ID != '' ">
+                    AND SM.SC_ID = #{SC_ID}
+                </if>
+                <if test="NOT_ID != null and NOT_ID != '' ">
+                    AND SM.ID != #{NOT_ID}
+                </if>
+            </where>
+        )SM
+        LEFT JOIN SYS_MENU SMP ON SMP.ID = SM.SM_PARENTID
+        LEFT JOIN SYS_CONFIGURE SC ON SC.ID = SM.SC_ID
+        LEFT JOIN SYS_PROCESS_DEFINITION SPD ON SPD.ID = SM.SPD_ID
+        ORDER BY SM.SM_ORDER ASC
+    </select>
+
+    <!--查询用户菜单权限数量-->
+    <select id="selectMenuCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM SYS_MENU
+        <where>
+            <if test="SM_PARENTID != null and SM_PARENTID != '' ">
+                AND SM_PARENTID = #{SM_PARENTID}
+            </if>
+            <if test="ID != null and ID != '' ">
+                AND ID = #{ID}
+            </if>
+            <if test="SM_TYPE != null and SM_TYPE != '' ">
+                AND SM_TYPE = #{SM_TYPE}
+            </if>
+            <if test="SM_CODE != null and SM_CODE != '' ">
+                AND SM_CODE = #{SM_CODE}
+            </if>
+            <if test="SM_URL != null and SM_URL != '' ">
+                AND SM_URL = #{SM_URL}
+            </if>
+            <if test="NOT_ID != null and NOT_ID != '' ">
+                AND ID != #{NOT_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入菜单-->
+    <insert id="insertMenu" parameterType="java.util.Map">
+        INSERT INTO SYS_MENU
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SPD_ID != null">SPD_ID,</if>
+            <if test="SM_NAME != null">SM_NAME,</if>
+            <if test="SM_PARENTID != null">SM_PARENTID,</if>
+            <if test="SM_CODE != null">SM_CODE,</if>
+            <if test="SM_URL != null">SM_URL,</if>
+            <if test="SM_CLASSICON != null">SM_CLASSICON,</if>
+            <if test="SM_TYPE != null">SM_TYPE,</if>
+            <if test="SM_ORDER != null">SM_ORDER,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+            <if test="SC_ID != null">SC_ID,</if>
+            <if test="SM_IS_LEAF != null">SM_IS_LEAF,</if>
+            <if test="SM_IS_EXPAND != null">SM_IS_EXPAND,</if>
+            <if test="SM_URL_PARAMS != null">SM_URL_PARAMS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SPD_ID != null">#{SPD_ID},</if>
+            <if test="SM_NAME != null">#{SM_NAME},</if>
+            <if test="SM_PARENTID != null">#{SM_PARENTID},</if>
+            <if test="SM_CODE != null">#{SM_CODE},</if>
+            <if test="SM_URL != null">#{SM_URL},</if>
+            <if test="SM_CLASSICON != null">#{SM_CLASSICON},</if>
+            <if test="SM_TYPE != null">#{SM_TYPE},</if>
+            <if test="SM_ORDER != null">#{SM_ORDER},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+            <if test="SC_ID != null">#{SC_ID},</if>
+            <if test="SM_IS_LEAF != null">#{SM_IS_LEAF},</if>
+            <if test="SM_IS_EXPAND != null">#{SM_IS_EXPAND},</if>
+            <if test="SM_URL_PARAMS != null">#{SM_URL_PARAMS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑菜单-->
+    <update id="updateMenu" parameterType="java.util.Map">
+        UPDATE SYS_MENU
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SPD_ID != null">SPD_ID=#{SPD_ID},</if>
+            <if test="SM_NAME != null">SM_NAME=#{SM_NAME},</if>
+            <if test="SM_PARENTID != null">SM_PARENTID=#{SM_PARENTID},</if>
+            <if test="SM_CODE != null">SM_CODE=#{SM_CODE},</if>
+            <if test="SM_URL != null">SM_URL=#{SM_URL},</if>
+            <if test="SM_CLASSICON != null">SM_CLASSICON=#{SM_CLASSICON},</if>
+            <if test="SM_TYPE != null">SM_TYPE=#{SM_TYPE},</if>
+            <if test="SM_ORDER != null">SM_ORDER=#{SM_ORDER},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+            <if test="SC_ID != null">SC_ID=#{SC_ID},</if>
+            <if test="SM_IS_LEAF != null">SM_IS_LEAF=#{SM_IS_LEAF},</if>
+            <if test="SM_IS_EXPAND != null">SM_IS_EXPAND=#{SM_IS_EXPAND},</if>
+            <if test="SM_URL_PARAMS != null">SM_URL_PARAMS=#{SM_URL_PARAMS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除-->
+    <delete id="deleteMenu" parameterType="java.util.Map">
+        DELETE FROM SYS_MENU WHERE ID = #{ID}
+    </delete>
+
+    <!--查询当前菜单用户拥有的按钮和返回按钮-->
+    <select id="selectOperatorNowMenu" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT *
+        FROM (
+            SELECT SB.*
+            FROM SYS_OPERATOR_ROLE SOR
+            INNER JOIN SYS_ROLE_MENU SRM ON SRM.SR_ID = SOR.SR_ID
+            INNER JOIN SYS_ROLE_BUTTON SRB ON SRB.SRM_ID = SRM.ID
+            INNER JOIN SYS_MENU SM ON SM.ID = SRM.SM_ID AND SM.IS_STATUS = 1
+            INNER JOIN SYS_MENU_BUTTON SMB ON SMB.SM_ID = SM.ID AND SMB.SB_ID = SRB.SB_ID
+            INNER JOIN SYS_BUTTON SB ON SB.ID = SMB.SB_ID AND SM.IS_STATUS = 1
+            WHERE SOR.SO_ID = #{SO_ID} AND SM.ID = #{SM_ID}
+            UNION ALL
+            SELECT SB.*
+            FROM SYS_MENU SM
+            INNER JOIN SYS_MENU_BUTTON SMB ON SMB.SM_ID = SM.ID
+            INNER JOIN SYS_BUTTON SB ON SB.ID = SMB.SB_ID AND SM.IS_STATUS = 1
+            WHERE SM.ID = #{SM_ID} AND SB.SB_CODE = 'RETURN'
+        )TEMP
+        <where>
+            <if test="SB_TYPE != null and SB_TYPE != '' ">
+                AND SB_TYPE = #{SB_TYPE}
+            </if>
+        </where>
+        GROUP BY ID
+        ORDER BY SB_TYPE ASC,SB_ORDER ASC
+    </select>
+
+    <!--查询菜单菜单按钮关联表-->
+    <select id="selectMenuButton" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SMB.*,SB.SB_NAME,SB.SB_CODE
+        FROM(
+            SELECT SMB.*
+            FROM SYS_MENU_BUTTON SMB
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND SMB.ID = #{ID}
+                </if>
+                <if test="SM_ID != NULL and SM_ID != ''">
+                    AND SMB.SM_ID = #{SM_ID}
+                </if>
+            </where>
+        )SMB
+        INNER JOIN SYS_BUTTON SB ON SB.ID = SMB.SB_ID
+        ORDER BY SB.SB_TYPE ASC,SB.SB_ORDER ASC
+    </select>
+
+    <!--插入菜单菜单按钮关联表-->
+    <insert id="insertMenuButton" parameterType="java.util.Map">
+        INSERT INTO SYS_MENU_BUTTON
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SM_ID != null">SM_ID,</if>
+            <if test="SB_ID != null">SB_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SM_ID != null">#{SM_ID},</if>
+            <if test="SB_ID != null">#{SB_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑菜单菜单按钮关联表-->
+    <update id="updateMenuButton" parameterType="java.util.Map">
+        UPDATE SYS_MENU_BUTTON
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SM_ID != null">SM_ID=#{SM_ID},</if>
+            <if test="SB_ID != null">SB_ID=#{SB_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除菜单菜单按钮关联表-->
+    <delete id="deleteMenuButton" parameterType="java.util.Map">
+        DELETE FROM SYS_MENU_BUTTON
+        <where>
+            <if test="ID !=null and ID != ''">
+                AND ID=#{ID}
+            </if>
+            <if test="SB_ID !=null and SB_ID != ''">
+                AND SB_ID=#{SB_ID}
+            </if>
+            <if test="SM_ID !=null and SM_ID != ''">
+                AND SM_ID=#{SM_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

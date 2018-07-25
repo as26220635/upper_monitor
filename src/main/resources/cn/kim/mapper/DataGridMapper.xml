@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.DataGridMapper">
+    <!--查询列表-->
+    <select id="selectByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT DG.*
+        ${processSelect}
+        <if test="processDefinitionId != null and processDefinitionId != ''">
+            ,'${processDefinitionId}' AS SPD_ID,SPS.SPS_AUDIT_STATUS,
+            (
+            CASE
+            WHEN SPS.SPS_AUDIT_STATUS = -1 AND SPS_BACK_STATUS = 1
+            THEN '审核退回'
+            WHEN SPS.SPS_AUDIT_STATUS = -1 AND SPS_BACK_STATUS = 2
+            THEN '撤回审核'
+            WHEN BPS.SDI_NAME IS NOT NULL
+            THEN BPS.SDI_NAME ELSE '未启动'
+            END
+            ) AS PROCESS_STATUS_NAME
+        </if>
+        FROM(
+            SELECT *
+            FROM ${view}
+            <where>
+                <if test="whereClause != null and whereClause != ''">
+                    ${whereClause}
+                </if>
+            </where>
+            <if test="orderByClause != null and orderByClause != ''">
+                order by ${orderByClause}
+            </if>
+            <if test="limit != null">
+                <if test="offset != null">
+                    limit ${offset}, ${limit}
+                </if>
+                <if test="offset == null">
+                    limit ${limit}
+                </if>
+            </if>
+        )DG
+        <if test="processDefinitionId != null and processDefinitionId != ''">
+        LEFT JOIN SYS_PROCESS_SCHEDULE SPS ON SPS.SPS_TABLE_ID = DG.ID AND SPS.SPS_IS_CANCEL = 0
+        LEFT JOIN SYS_DICT_INFO BPS ON BPS.SDT_CODE = 'SYS_PROCESS_STATUS' AND BPS.SDI_CODE = SPS.SPS_AUDIT_STATUS
+        </if>
+        ${processJoin}
+        <where>
+            ${processWhere}
+        </where>
+    </select>
+    <!--查询列表数量-->
+    <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM ${view}
+        <where>
+            <if test="whereClause != null and whereClause != ''">
+                ${whereClause}
+            </if>
+        </where>
+    </select>
+</mapper>

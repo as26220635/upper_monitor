@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>JSTL 1.1 functions library</description>
+    <display-name>JSTL functions sys</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>fns</short-name>
+    <uri>http://java.sun.com/jsp/jstl/functionss</uri>
+
+    <!-- 格式化时间 -->
+    <function>
+        <description>格式化时间</description>
+        <name>showTime</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String showTime(java.util.Date, java.lang.String)</function-signature>
+        <example>${fns:showTime(ctime,format)}</example>
+    </function>
+    <!--字符串转为数字-->
+    <function>
+        <description>字符串转为数字</description>
+        <name>toInt</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.Integer toInt(java.lang.String)</function-signature>
+        <example>${fns:toInt(str)}</example>
+    </function>
+    <!--拿到拼音首字母转为小写-->
+    <function>
+        <description>拿到拼音首字母转为小写</description>
+        <name>getPinYinHeadCharLowCase</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String getPinYinHeadCharLowCase(java.lang.String)</function-signature>
+        <example>${fns:getPinYinHeadCharLowCase(str)}</example>
+    </function>
+    <!--根据文件后缀变换图标-->
+    <function>
+        <description>根据文件后缀变换图标</description>
+        <name>getFileIcon</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String getFileIcon(java.lang.String)</function-signature>
+        <example>${fns:getFileIcon(str)}</example>
+    </function>
+    <!--是否参数为1，就是真-->
+    <function>
+        <description>是否参数为1，就是真</description>
+        <name>isYes</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>boolean isYes(java.lang.Object)</function-signature>
+        <example>${fns:isYes(obj)}</example>
+    </function>
+    <!--是否参数为1(真),返回参数1，0(假)返回参数2-->
+    <function>
+        <description>是否参数为1(真),返回参数1，0(假)返回参数2</description>
+        <name>trueOrFalse</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.Object trueOrFalse(java.lang.Object,java.lang.Object,java.lang.Object)
+        </function-signature>
+        <example>${fns:trueOrFalse(status,val1,val2)}</example>
+    </function>
+    <!--格式化函数-->
+    <function>
+        <description>格式化函数</description>
+        <name>formatFunc</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String formatFunc(java.lang.String,int,java.lang.String)</function-signature>
+        <example>${fns:formatFunc(func,index,field)}</example>
+    </function>
+    <!--是否是空-->
+    <function>
+        <description>是否是空</description>
+        <name>isEmpty</name>
+        <function-class>cn.kim.util.ValidateUtil</function-class>
+        <function-signature>boolean isEmpty(java.lang.Object)</function-signature>
+        <example>${fns:isEmpty(obj)}</example>
+    </function>
+    <!--根据按钮权限ID获取按钮地址-->
+    <function>
+        <description>根据按钮权限ID获取按钮地址</description>
+        <name>getUrlByMenuCode</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String getUrlByMenuCode(java.lang.String)</function-signature>
+        <example>${fns:getUrlByMenuCode(SM_CODE)}</example>
+    </function>
+    <!--根据表名和字段获取验证-->
+    <function>
+        <description>根据表名和字段获取验证</description>
+        <name>validField</name>
+        <function-class>cn.kim.util.ValidateUtil</function-class>
+        <function-signature>java.lang.String validField(java.lang.String,java.lang.String)</function-signature>
+        <example>${fns:validField(SV_TABLE,SVF_FIELD)}</example>
+    </function>
+    <!--toString-->
+    <function>
+        <description>toString</description>
+        <name>toString</name>
+        <function-class>cn.kim.util.TextUtil</function-class>
+        <function-signature>java.lang.String toString(java.lang.Object)</function-signature>
+        <example>${fns:toString(obj)}</example>
+    </function>
+    <!--javaScriptStringEnc-->
+    <function>
+        <description>防止js过长</description>
+        <name>javaScriptStringEnc</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.String javaScriptStringEnc(java.lang.String)</function-signature>
+        <example>${fns:javaScriptStringEnc(str)}</example>
+    </function>
+    <!--AES加密-->
+    <function>
+        <description>AES加密</description>
+        <name>AESEncode</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.Object idEncrypt(java.lang.Object)</function-signature>
+        <example>${fns:AESEncode(obj)}</example>
+    </function>
+    <!--AES解密-->
+    <function>
+        <description>AES解密</description>
+        <name>AESDncode</name>
+        <function-class>cn.kim.util.CommonUtil</function-class>
+        <function-signature>java.lang.Object idDecrypt(java.lang.Object)</function-signature>
+        <example>${fns:AESDncode(obj)}</example>
+    </function>
+
+</taglib>

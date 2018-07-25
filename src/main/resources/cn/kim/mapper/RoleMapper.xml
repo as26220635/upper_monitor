@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.RoleMapper">
+
+    <!--查询角色-->
+    <select id="selectRole" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_ROLE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                AND IS_STATUS = #{IS_STATUS}
+            </if>
+        </where>
+    </select>
+
+    <!--查询角色数量-->
+    <select id="selectRoleCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM SYS_ROLE
+        <where>
+            <if test="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test="SR_CODE != NULL and SR_CODE != ''">
+                AND SR_CODE = #{SR_CODE}
+            </if>
+        </where>
+    </select>
+
+    <!--插入角色-->
+    <insert id="insertRole" parameterType="java.util.Map">
+        INSERT INTO SYS_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SR_NAME != null">SR_NAME,</if>
+            <if test="SR_CODE != null">SR_CODE,</if>
+            <if test="SR_EXPLAIN != null">SR_EXPLAIN,</if>
+            <if test="SR_REMARK != null">SR_REMARK,</if>
+            <if test="SR_TYPE != null">SR_TYPE,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SR_NAME != null">#{SR_NAME},</if>
+            <if test="SR_CODE != null">#{SR_CODE},</if>
+            <if test="SR_EXPLAIN != null">#{SR_EXPLAIN},</if>
+            <if test="SR_REMARK != null">#{SR_REMARK},</if>
+            <if test="SR_TYPE != null">#{SR_TYPE},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑角色-->
+    <update id="updateRole" parameterType="java.util.Map">
+        UPDATE SYS_ROLE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SR_NAME != null">SR_NAME=#{SR_NAME},</if>
+            <if test="SR_CODE != null">SR_CODE=#{SR_CODE},</if>
+            <if test="SR_EXPLAIN != null">SR_EXPLAIN=#{SR_EXPLAIN},</if>
+            <if test="SR_REMARK != null">SR_REMARK=#{SR_REMARK},</if>
+            <if test="SR_TYPE != null">SR_TYPE=#{SR_TYPE},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除角色-->
+    <delete id="deleteRole" parameterType="java.util.Map">
+        DELETE FROM SYS_ROLE WHERE ID = #{ID}
+    </delete>
+
+    <!--查询角色关联菜单-->
+    <select id="selectRoleMenu" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SRM.*,SM.SM_NAME
+        FROM SYS_ROLE_MENU SRM
+        LEFT JOIN SYS_MENU SM ON SM.ID = SRM.SM_ID
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND SRM.ID = #{ID}
+            </if>
+            <if test="SR_ID != NULL and SR_ID != ''">
+                AND SRM.SR_ID = #{SR_ID}
+            </if>
+            <if test="SM_ID != NULL and SM_ID != ''">
+                AND SRM.SM_ID = #{SM_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入角色关联菜单-->
+    <insert id="insertRoleMenu" parameterType="java.util.Map">
+        INSERT INTO SYS_ROLE_MENU
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SR_ID != null">SR_ID,</if>
+            <if test="SM_ID != null">SM_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SR_ID != null">#{SR_ID},</if>
+            <if test="SM_ID != null">#{SM_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑角色关联菜单-->
+    <update id="updateRoleMenu" parameterType="java.util.Map">
+        UPDATE SYS_ROLE_MENU
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SR_ID != null">SR_ID=#{SR_ID},</if>
+            <if test="SM_ID != null">SM_ID=#{SM_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除角色关联菜单-->
+    <delete id="deleteRoleMenu" parameterType="java.util.Map">
+        DELETE FROM SYS_ROLE_MENU
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SR_ID != NULL and SR_ID != ''">
+                AND SR_ID = #{SR_ID}
+            </if>
+            <if test="SM_ID != NULL and SM_ID != ''">
+                AND SM_ID = #{SM_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询角色关联按钮-->
+    <select id="selectRoleButton" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_ROLE_BUTTON
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SRM_ID != NULL and SRM_ID != ''">
+                AND SRM_ID = #{SRM_ID}
+            </if>
+            <if test="SB_ID != NULL and SB_ID != ''">
+                AND SB_ID = #{SB_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入角色关联按钮-->
+    <insert id="insertRoleButton" parameterType="java.util.Map">
+        INSERT INTO SYS_ROLE_BUTTON
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SRM_ID != null">SRM_ID,</if>
+            <if test="SB_ID != null">SB_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SRM_ID != null">#{SRM_ID},</if>
+            <if test="SB_ID != null">#{SB_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑角色关联按钮-->
+    <update id="updateRoleButton" parameterType="java.util.Map">
+        UPDATE SYS_ROLE_BUTTON
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SRM_ID != null">SRM_ID=#{SRM_ID},</if>
+            <if test="SB_ID != null">SB_ID=#{SB_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除角色关联按钮-->
+    <delete id="deleteRoleButton" parameterType="java.util.Map">
+        DELETE FROM SYS_ROLE_BUTTON
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SRM_ID != NULL and SRM_ID != ''">
+                AND SRM_ID = #{SRM_ID}
+            </if>
+            <if test="SB_ID != NULL and SB_ID != ''">
+                AND SB_ID = #{SB_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ConfigureMapper">
+
+
+    <!--查询配置列表-->
+    <select id="selectConfigure" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_CONFIGURE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SC_ID != NULL and SC_ID != ''">
+                AND SC_ID = #{SC_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入配置列表-->
+    <insert id="insertConfigure" parameterType="java.util.Map">
+        INSERT INTO SYS_CONFIGURE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SC_NAME != null">SC_NAME,</if>
+            <if test="SC_VIEW != null">SC_VIEW,</if>
+            <if test="SC_ORDER_BY != null">SC_ORDER_BY,</if>
+            <if test="SC_JSP != null">SC_JSP,</if>
+            <if test="SC_IS_SINGLE != null">SC_IS_SINGLE,</if>
+            <if test="SC_IS_SELECT != null">SC_IS_SELECT,</if>
+            <if test="SC_IS_PAGING != null">SC_IS_PAGING,</if>
+            <if test="SC_IS_SEARCH != null">SC_IS_SEARCH,</if>
+            <if test="SC_IS_FILTER != null">SC_IS_FILTER,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SC_NAME != null">#{SC_NAME},</if>
+            <if test="SC_VIEW != null">#{SC_VIEW},</if>
+            <if test="SC_ORDER_BY != null">#{SC_ORDER_BY},</if>
+            <if test="SC_JSP != null">#{SC_JSP},</if>
+            <if test="SC_IS_SINGLE != null">#{SC_IS_SINGLE},</if>
+            <if test="SC_IS_SELECT != null">#{SC_IS_SELECT},</if>
+            <if test="SC_IS_PAGING != null">#{SC_IS_PAGING},</if>
+            <if test="SC_IS_SEARCH != null">#{SC_IS_SEARCH},</if>
+            <if test="SC_IS_FILTER != null">#{SC_IS_FILTER},</if>
+        </trim>
+    </insert>
+
+    <!--编辑配置列表-->
+    <update id="updateConfigure" parameterType="java.util.Map">
+        UPDATE SYS_CONFIGURE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SC_NAME != null">SC_NAME=#{SC_NAME},</if>
+            <if test="SC_VIEW != null">SC_VIEW=#{SC_VIEW},</if>
+            <if test="SC_ORDER_BY != null">SC_ORDER_BY=#{SC_ORDER_BY},</if>
+            <if test="SC_JSP != null">SC_JSP=#{SC_JSP},</if>
+            <if test="SC_IS_SINGLE != null">SC_IS_SINGLE=#{SC_IS_SINGLE},</if>
+            <if test="SC_IS_SELECT != null">SC_IS_SELECT=#{SC_IS_SELECT},</if>
+            <if test="SC_IS_PAGING != null">SC_IS_PAGING=#{SC_IS_PAGING},</if>
+            <if test="SC_IS_SEARCH != null">SC_IS_SEARCH=#{SC_IS_SEARCH},</if>
+            <if test="SC_IS_FILTER != null">SC_IS_FILTER=#{SC_IS_FILTER},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除配置列表-->
+    <delete id="deleteConfigure" parameterType="java.util.Map">
+        DELETE FROM SYS_CONFIGURE WHERE ID = #{ID}
+    </delete>
+
+    <!--查询配置列表字段-->
+    <select id="selectConfigureColumn" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_CONFIGURE_COLUMN
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SC_ID != NULL and SC_ID != ''">
+                AND SC_ID = #{SC_ID}
+            </if>
+        </where>
+        ORDER BY SCC_ORDER ASC
+    </select>
+
+    <!--插入配置列表字段-->
+    <insert id="insertConfigureColumn" parameterType="java.util.Map">
+        INSERT INTO SYS_CONFIGURE_COLUMN
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SC_ID != null">SC_ID,</if>
+            <if test="SCC_NAME != null">SCC_NAME,</if>
+            <if test="SCC_FIELD != null">SCC_FIELD,</if>
+            <if test="SCC_ALIGN != null">SCC_ALIGN,</if>
+            <if test="SCC_WIDTH != null">SCC_WIDTH,</if>
+            <if test="SCC_CLASS != null">SCC_CLASS,</if>
+            <if test="SCC_FUNC != null">SCC_FUNC,</if>
+            <if test="SCC_SDT_CODE != null">SCC_SDT_CODE,</if>
+            <if test="SCC_IS_OPERATION != null">SCC_IS_OPERATION,</if>
+            <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE,</if>
+            <if test="SCC_IS_STATUS != null">SCC_IS_STATUS,</if>
+            <if test="SCC_ORDER != null">SCC_ORDER,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SC_ID != null">#{SC_ID},</if>
+            <if test="SCC_NAME != null">#{SCC_NAME},</if>
+            <if test="SCC_FIELD != null">#{SCC_FIELD},</if>
+            <if test="SCC_ALIGN != null">#{SCC_ALIGN},</if>
+            <if test="SCC_WIDTH != null">#{SCC_WIDTH},</if>
+            <if test="SCC_CLASS != null">#{SCC_CLASS},</if>
+            <if test="SCC_FUNC != null">#{SCC_FUNC},</if>
+            <if test="SCC_SDT_CODE != null">#{SCC_SDT_CODE},</if>
+            <if test="SCC_IS_OPERATION != null">#{SCC_IS_OPERATION},</if>
+            <if test="SCC_IS_VISIBLE != null">#{SCC_IS_VISIBLE},</if>
+            <if test="SCC_IS_STATUS != null">#{SCC_IS_STATUS},</if>
+            <if test="SCC_ORDER != null">#{SCC_ORDER},</if>
+        </trim>
+    </insert>
+
+    <!--编辑配置列表字段-->
+    <update id="updateConfigureColumn" parameterType="java.util.Map">
+        UPDATE SYS_CONFIGURE_COLUMN
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SC_ID != null">SC_ID=#{SC_ID},</if>
+            <if test="SCC_NAME != null">SCC_NAME=#{SCC_NAME},</if>
+            <if test="SCC_FIELD != null">SCC_FIELD=#{SCC_FIELD},</if>
+            <if test="SCC_ALIGN != null">SCC_ALIGN=#{SCC_ALIGN},</if>
+            <if test="SCC_WIDTH != null">SCC_WIDTH=#{SCC_WIDTH},</if>
+            <if test="SCC_CLASS != null">SCC_CLASS=#{SCC_CLASS},</if>
+            <if test="SCC_FUNC != null">SCC_FUNC=#{SCC_FUNC},</if>
+            <if test="SCC_SDT_CODE != null">SCC_SDT_CODE=#{SCC_SDT_CODE},</if>
+            <if test="SCC_IS_OPERATION != null">SCC_IS_OPERATION=#{SCC_IS_OPERATION},</if>
+            <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE=#{SCC_IS_VISIBLE},</if>
+            <if test="SCC_IS_STATUS != null">SCC_IS_STATUS=#{SCC_IS_STATUS},</if>
+            <if test="SCC_ORDER != null">SCC_ORDER=#{SCC_ORDER},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除配置列表字段-->
+    <delete id="deleteConfigureColumn" parameterType="java.util.Map">
+        DELETE FROM SYS_CONFIGURE_COLUMN
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SC_ID != NULL and SC_ID != ''">
+                AND SC_ID = #{SC_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询配置列表搜索-->
+    <select id="selectConfigureSearch" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_CONFIGURE_SEARCH
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SC_ID != NULL and SC_ID != ''">
+                AND SC_ID = #{SC_ID}
+            </if>
+        </where>
+        ORDER BY SCS_ORDER ASC
+    </select>
+
+    <!--插入配置列表搜索-->
+    <insert id="insertConfigureSearch" parameterType="java.util.Map">
+        INSERT INTO SYS_CONFIGURE_SEARCH
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SC_ID != null">SC_ID,</if>
+            <if test="SCS_NAME != null">SCS_NAME,</if>
+            <if test="SCS_FIELD != null">SCS_FIELD,</if>
+            <if test="SCS_SDT_CODE != null">SCS_SDT_CODE,</if>
+            <if test="SCS_METHOD_TYPE != null">SCS_METHOD_TYPE,</if>
+            <if test="SCS_TYPE != null">SCS_TYPE,</if>
+            <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE,</if>
+            <if test="SCS_ORDER != null">SCS_ORDER,</if>
+            <if test="SCS_REMARK != null">SCS_REMARK,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SC_ID != null">#{SC_ID},</if>
+            <if test="SCS_NAME != null">#{SCS_NAME},</if>
+            <if test="SCS_FIELD != null">#{SCS_FIELD},</if>
+            <if test="SCS_SDT_CODE != null">#{SCS_SDT_CODE},</if>
+            <if test="SCS_METHOD_TYPE != null">#{SCS_METHOD_TYPE},</if>
+            <if test="SCS_TYPE != null">#{SCS_TYPE},</if>
+            <if test="SCC_IS_VISIBLE != null">#{SCC_IS_VISIBLE},</if>
+            <if test="SCS_ORDER != null">#{SCS_ORDER},</if>
+            <if test="SCS_REMARK != null">#{SCS_REMARK},</if>
+        </trim>
+    </insert>
+
+    <!--编辑配置列表搜索-->
+    <update id="updateConfigureSearch" parameterType="java.util.Map">
+        UPDATE SYS_CONFIGURE_SEARCH
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SC_ID != null">SC_ID=#{SC_ID},</if>
+            <if test="SCS_NAME != null">SCS_NAME=#{SCS_NAME},</if>
+            <if test="SCS_FIELD != null">SCS_FIELD=#{SCS_FIELD},</if>
+            <if test="SCS_SDT_CODE != null">SCS_SDT_CODE=#{SCS_SDT_CODE},</if>
+            <if test="SCS_METHOD_TYPE != null">SCS_METHOD_TYPE=#{SCS_METHOD_TYPE},</if>
+            <if test="SCS_TYPE != null">SCS_TYPE=#{SCS_TYPE},</if>
+            <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE=#{SCC_IS_VISIBLE},</if>
+            <if test="SCS_ORDER != null">SCS_ORDER=#{SCS_ORDER},</if>
+            <if test="SCS_REMARK != null">SCS_REMARK=#{SCS_REMARK},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除配置列表搜索-->
+    <delete id="deleteConfigureSearch" parameterType="java.util.Map">
+        DELETE FROM SYS_CONFIGURE_SEARCH
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SC_ID != NULL and SC_ID != ''">
+                AND SC_ID = #{SC_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

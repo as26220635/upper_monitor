@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ValidateMapper">
+
+
+    <!--查询验证-->
+    <select id="selectValidate" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_VALIDATE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+        </where>
+    </select>
+
+    <!--查询验证-->
+    <select id="selectValidateCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM SYS_VALIDATE
+        <where>
+            <if test="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test="SV_TABLE != NULL and SV_TABLE != ''">
+                AND SV_TABLE = #{SV_TABLE}
+            </if>
+        </where>
+    </select>
+
+    <!--插入验证-->
+    <insert id="insertValidate" parameterType="java.util.Map">
+        INSERT INTO SYS_VALIDATE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SV_TABLE != null">SV_TABLE,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SV_TABLE != null">#{SV_TABLE},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑验证-->
+    <update id="updateValidate" parameterType="java.util.Map">
+        UPDATE SYS_VALIDATE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SV_TABLE != null">SV_TABLE=#{SV_TABLE},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除验证-->
+    <delete id="deleteValidate" parameterType="java.util.Map">
+		DELETE FROM SYS_VALIDATE WHERE ID = #{ID}
+	</delete>
+
+    <!--查询验证字段-->
+    <select id="selectValidateField" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SVF.*,SVR.SVR_REGEX,SVR.SVR_NAME,SVR.SVR_REGEX_MESSAGE
+        FROM(
+        SELECT SVF.*
+        FROM SYS_VALIDATE_FIELD SVF
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND SVF.ID = #{ID}
+            </if>
+            <if test="SV_ID != NULL and SV_ID != ''">
+                AND SVF.SV_ID = #{SV_ID}
+            </if>
+            <if test="SVF_FIELD != NULL and SVF_FIELD != ''">
+                AND SVF.SVF_FIELD = #{SVF_FIELD}
+            </if>
+            <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                AND SVF.IS_STATUS = #{IS_STATUS}
+            </if>
+            <if test="SVG_GROUPS != NULL and SVG_GROUPS.size > 0">
+                AND SVF.ID IN (SELECT SVGF.SVF_ID FROM SYS_VALIDATE_GROUP SVG INNER JOIN SYS_VALIDATE_GROUP_FIELD SVGF
+                ON SVGF.SVG_ID = SVG.ID WHERE SVG.SVG_GROUP IN
+                <foreach item="SVG_GROUP" index="index" collection="SVG_GROUPS" open="("
+                         separator="," close=")">
+                    #{SVG_GROUP}
+                </foreach>
+                )
+            </if>
+        </where>
+        )SVF
+        INNER JOIN SYS_VALIDATE SV ON SV.ID = SVF.SV_ID
+        LEFT JOIN SYS_VALIDATE_REGEX SVR ON SVR.ID = SVF.SVR_ID
+        <if test="SVR_IS_STATUS != NULL and SVR_IS_STATUS != ''">AND SVR.IS_STATUS = #{SVR_IS_STATUS}</if>
+        <where>
+            <if test="SV_TABLE != NULL and SV_TABLE != ''">
+                AND SV.SV_TABLE = #{SV_TABLE}
+            </if>
+            <if test="SV_IS_STATUS != NULL and SV_IS_STATUS != ''">
+                AND SV.IS_STATUS = #{SV_IS_STATUS}
+            </if>
+        </where>
+    </select>
+
+    <!--查询验证字段数量-->
+    <select id="selectValidateFieldCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM SYS_VALIDATE_FIELD SVF
+        <where>
+            <if test="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test="SV_ID != NULL and SV_ID != ''">
+                AND SV_ID = #{SV_ID}
+            </if>
+            <if test="SVF_FIELD != NULL and SVF_FIELD != ''">
+                AND SVF_FIELD = #{SVF_FIELD}
+            </if>
+            <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                AND IS_STATUS = #{IS_STATUS}
+            </if>
+        </where>
+    </select>
+
+    <!--插入验证字段-->
+    <insert id="insertValidateField" parameterType="java.util.Map">
+        INSERT INTO SYS_VALIDATE_FIELD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SV_ID != null">SV_ID,</if>
+            <if test="SVF_NAME != null">SVF_NAME,</if>
+            <if test="SVF_FIELD != null">SVF_FIELD,</if>
+            <if test="SVF_IS_REQUIRED != null">SVF_IS_REQUIRED,</if>
+            <if test="SVF_MAX_LENGTH != null">SVF_MAX_LENGTH,</if>
+            <if test="SVF_MIN_LENGTH != null">SVF_MIN_LENGTH,</if>
+            <if test="SVR_ID != null">SVR_ID,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SV_ID != null">#{SV_ID},</if>
+            <if test="SVF_NAME != null">#{SVF_NAME},</if>
+            <if test="SVF_FIELD != null">#{SVF_FIELD},</if>
+            <if test="SVF_IS_REQUIRED != null">#{SVF_IS_REQUIRED},</if>
+            <if test="SVF_MAX_LENGTH != null">#{SVF_MAX_LENGTH},</if>
+            <if test="SVF_MIN_LENGTH != null">#{SVF_MIN_LENGTH},</if>
+            <if test="SVR_ID != null">#{SVR_ID},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑验证字段-->
+    <update id="updateValidateField" parameterType="java.util.Map">
+        UPDATE SYS_VALIDATE_FIELD
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SV_ID != null">SV_ID=#{SV_ID},</if>
+            <if test="SVF_NAME != null">SVF_NAME=#{SVF_NAME},</if>
+            <if test="SVF_FIELD != null">SVF_FIELD=#{SVF_FIELD},</if>
+            <if test="SVF_IS_REQUIRED != null">SVF_IS_REQUIRED=#{SVF_IS_REQUIRED},</if>
+            <if test="SVF_MAX_LENGTH != null">SVF_MAX_LENGTH=#{SVF_MAX_LENGTH},</if>
+            <if test="SVF_MIN_LENGTH != null">SVF_MIN_LENGTH=#{SVF_MIN_LENGTH},</if>
+            <if test="SVR_ID != null">SVR_ID=#{SVR_ID},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除验证字段-->
+    <delete id="deleteValidateField" parameterType="java.util.Map">
+        DELETE FROM SYS_VALIDATE_FIELD
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SV_ID != NULL and SV_ID != ''">
+                AND SV_ID = #{SV_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询验证正则-->
+    <select id="selectValidateRegex" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_VALIDATE_REGEX
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入验证正则-->
+    <insert id="insertValidateRegex" parameterType="java.util.Map">
+        INSERT INTO SYS_VALIDATE_REGEX
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SVR_NAME != null">SVR_NAME,</if>
+            <if test="SVR_REGEX != null">SVR_REGEX,</if>
+            <if test="SVR_REGEX_MESSAGE != null">SVR_REGEX_MESSAGE,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SVR_NAME != null">#{SVR_NAME},</if>
+            <if test="SVR_REGEX != null">#{SVR_REGEX},</if>
+            <if test="SVR_REGEX_MESSAGE != null">#{SVR_REGEX_MESSAGE},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑验证正则-->
+    <update id="updateValidateRegex" parameterType="java.util.Map">
+        UPDATE SYS_VALIDATE_REGEX
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SVR_NAME != null">SVR_NAME=#{SVR_NAME},</if>
+            <if test="SVR_REGEX != null">SVR_REGEX=#{SVR_REGEX},</if>
+            <if test="SVR_REGEX_MESSAGE != null">SVR_REGEX_MESSAGE=#{SVR_REGEX_MESSAGE},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除验证正则-->
+    <delete id="deleteValidateRegex" parameterType="java.util.Map">
+		DELETE FROM SYS_VALIDATE_REGEX WHERE ID = #{ID}
+	</delete>
+
+    <!--查询验证组-->
+    <select id="selectValidateGroup" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_VALIDATE_GROUP
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SV_ID != NULL and SV_ID != ''">
+                AND SV_ID = #{SV_ID}
+            </if>
+            <if test="SVG_GROUPS != NULL and SVG_GROUPS.size > 0">
+                AND SVG_GROUP IN
+                <foreach item="SVG_GROUP" index="index" collection="SVG_GROUPS" open="("
+                         separator="," close=")">
+                    #{SVG_GROUP}
+                </foreach>
+            </if>
+            <if test="SV_TABLE != NULL and SV_TABLE != ''">
+                AND SV_ID = (SELECT ID FROM SYS_VALIDATE WHERE SV_TABLE = #{SV_TABLE})
+            </if>
+        </where>
+    </select>
+
+    <!--插入验证组-->
+    <insert id="insertValidateGroup" parameterType="java.util.Map">
+        INSERT INTO SYS_VALIDATE_GROUP
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SV_ID != null">SV_ID,</if>
+            <if test="SVG_GROUP != null">SVG_GROUP,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SV_ID != null">#{SV_ID},</if>
+            <if test="SVG_GROUP != null">#{SVG_GROUP},</if>
+        </trim>
+    </insert>
+
+    <!--编辑验证组-->
+    <update id="updateValidateGroup" parameterType="java.util.Map">
+        UPDATE SYS_VALIDATE_GROUP
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SV_ID != null">SV_ID=#{SV_ID},</if>
+            <if test="SVG_GROUP != null">SVG_GROUP=#{SVG_GROUP},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除验证组-->
+    <delete id="deleteValidateGroup" parameterType="java.util.Map">
+        DELETE FROM SYS_VALIDATE_GROUP
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SV_ID != NULL and SV_ID != ''">
+                AND SV_ID = #{SV_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询验证组字段-->
+    <select id="selectValidateGroupField" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_VALIDATE_GROUP_FIELD
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SVG_ID != NULL and SVG_ID != ''">
+                AND SVG_ID = #{SVG_ID}
+            </if>
+            <if test="SVF_ID != NULL and SVF_ID != ''">
+                AND SVF_ID = #{SVF_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入验证组字段-->
+    <insert id="insertValidateGroupField" parameterType="java.util.Map">
+        INSERT INTO SYS_VALIDATE_GROUP_FIELD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SVG_ID != null">SVG_ID,</if>
+            <if test="SVF_ID != null">SVF_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SVG_ID != null">#{SVG_ID},</if>
+            <if test="SVF_ID != null">#{SVF_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑验证组字段-->
+    <update id="updateValidateGroupField" parameterType="java.util.Map">
+        UPDATE SYS_VALIDATE_GROUP_FIELD
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SVG_ID != null">SVG_ID=#{SVG_ID},</if>
+            <if test="SVF_ID != null">SVF_ID=#{SVF_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除验证组字段-->
+    <delete id="deleteValidateGroupField" parameterType="java.util.Map">
+        DELETE FROM SYS_VALIDATE_GROUP_FIELD
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SVG_ID != NULL and SVG_ID != ''">
+                AND SVG_ID = #{SVG_ID}
+            </if>
+            <if test="SVF_ID != NULL and SVF_ID != ''">
+                AND SVF_ID = #{SVF_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

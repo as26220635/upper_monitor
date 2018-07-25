@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.FormatMapper">
+
+
+    <!--查询格式-->
+    <select id="selectFormat" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_FORMAT
+        <where>
+            <if test ="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test ="NOT_ID != NULL and NOT_ID != ''">
+                AND NOT_ID != #{NOT_ID}
+            </if>
+            <if test ="SF_CODE != NULL and SF_CODE != ''">
+                AND SF_CODE = #{SF_CODE}
+            </if>
+        </where>
+    </select>
+
+    <!--查询格式-->
+    <select id="selectFormatCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM SYS_FORMAT
+        <where>
+            <if test ="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test ="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test ="SF_CODE != NULL and SF_CODE != ''">
+                AND SF_CODE = #{SF_CODE}
+            </if>
+        </where>
+    </select>
+
+    <!--插入格式-->
+    <insert id="insertFormat" parameterType="java.util.Map">
+        INSERT INTO SYS_FORMAT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SF_NAME != null">SF_NAME,</if>
+            <if test="SF_CODE != null">SF_CODE,</if>
+            <if test="SF_YEAR != null">SF_YEAR,</if>
+            <if test="SF_ENTRY_TIME != null">SF_ENTRY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SF_NAME != null">#{SF_NAME},</if>
+            <if test="SF_CODE != null">#{SF_CODE},</if>
+            <if test="SF_YEAR != null">#{SF_YEAR},</if>
+            <if test="SF_ENTRY_TIME != null">#{SF_ENTRY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑格式-->
+    <update id="updateFormat" parameterType="java.util.Map">
+        UPDATE SYS_FORMAT
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SF_NAME != null">SF_NAME=#{SF_NAME},</if>
+            <if test="SF_CODE != null">SF_CODE=#{SF_CODE},</if>
+            <if test="SF_YEAR != null">SF_YEAR=#{SF_YEAR},</if>
+            <if test="SF_ENTRY_TIME != null">SF_ENTRY_TIME=#{SF_ENTRY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除格式-->
+    <delete id="deleteFormat" parameterType="java.util.Map">
+		DELETE FROM SYS_FORMAT WHERE ID = #{ID}
+	</delete>
+
+    <!--查询格式详细-->
+    <select id="selectFormatDetail" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SFD.*,SM.SM_NAME,SM.SM_URL,SM.SM_URL_PARAMS,SM.SM_CODE,SF_P.SF_NAME AS SFD_PARENT_NAME
+        FROM(
+            SELECT * FROM SYS_FORMAT_DETAIL
+            <where>
+                <if test ="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+                <if test ="NOT_ID != NULL and NOT_ID != ''">
+                    AND ID != #{NOT_ID}
+                </if>
+                <if test ="SF_ID != NULL and SF_ID != ''">
+                    AND SF_ID = #{SF_ID}
+                </if>
+                <if test ="SFD_PARENT_ID != NULL and SFD_PARENT_ID != ''">
+                    AND SFD_PARENT_ID = #{SFD_PARENT_ID}
+                </if>
+            </where>
+        )SFD
+        LEFT JOIN SYS_FORMAT SF_P ON SF_P.ID = SFD.SFD_PARENT_ID
+        LEFT JOIN SYS_MENU SM ON SM.ID = SFD.SM_ID
+        ORDER BY SFD.SFD_ORDER ASC
+    </select>
+
+    <!--插入格式详细-->
+    <insert id="insertFormatDetail" parameterType="java.util.Map">
+        INSERT INTO SYS_FORMAT_DETAIL
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SF_ID != null">SF_ID,</if>
+            <if test="SM_ID != null">SM_ID,</if>
+            <if test="SFD_NAME != null">SFD_NAME,</if>
+            <if test="SFD_ORDER != null">SFD_ORDER,</if>
+            <if test="SFD_PARENT_ID != null">SFD_PARENT_ID,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SF_ID != null">#{SF_ID},</if>
+            <if test="SM_ID != null">#{SM_ID},</if>
+            <if test="SFD_NAME != null">#{SFD_NAME},</if>
+            <if test="SFD_ORDER != null">#{SFD_ORDER},</if>
+            <if test="SFD_PARENT_ID != null">#{SFD_PARENT_ID},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑格式详细-->
+    <update id="updateFormatDetail" parameterType="java.util.Map">
+        UPDATE SYS_FORMAT_DETAIL
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SF_ID != null">SF_ID=#{SF_ID},</if>
+            <if test="SM_ID != null">SM_ID=#{SM_ID},</if>
+            <if test="SFD_NAME != null">SFD_NAME=#{SFD_NAME},</if>
+            <if test="SFD_ORDER != null">SFD_ORDER=#{SFD_ORDER},</if>
+            <if test="SFD_PARENT_ID != null">SFD_PARENT_ID=#{SFD_PARENT_ID},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除格式详细-->
+    <delete id="deleteFormatDetail" parameterType="java.util.Map">
+		DELETE FROM SYS_FORMAT_DETAIL WHERE
+        <if test="ID != NULL and ID != ''">
+            ID = #{ID}
+        </if>
+        <if test="SF_ID != NULL and SF_ID != ''">
+            SF_ID = #{SF_ID}
+        </if>
+	</delete>
+</mapper>

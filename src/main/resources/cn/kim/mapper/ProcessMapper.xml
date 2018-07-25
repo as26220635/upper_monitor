@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ProcessMapper">
+
+    <!--查询流程更新表名称+-->
+    <select id="selectProcessTableName" parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT ${SPD_UPDATE_NAME} FROM ${SPD_UPDATE_TABLE} WHERE ID = #{SPD_TABLE_ID}
+    </select>
+
+    <!--查询流程进度-->
+    <select id="selectProcessSchedule" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_PROCESS_SCHEDULE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SPS_TABLE_ID != NULL and SPS_TABLE_ID != ''">
+                AND SPS_TABLE_ID = #{SPS_TABLE_ID}
+            </if>
+            <if test="SPD_ID != NULL and SPD_ID != ''">
+                AND SPD_ID = #{SPD_ID}
+            </if>
+            <if test="SPS_IS_CANCEL != NULL and SPS_IS_CANCEL != ''">
+                AND SPS_IS_CANCEL = #{SPS_IS_CANCEL}
+            </if>
+        </where>
+    </select>
+
+    <!--插入流程进度-->
+    <insert id="insertProcessSchedule" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_SCHEDULE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SPD_ID != null">SPD_ID,</if>
+            <if test="SPS_TABLE_ID != null">SPS_TABLE_ID,</if>
+            <if test="SPS_AUDIT_STATUS != null">SPS_AUDIT_STATUS,</if>
+            <if test="SPS_BACK_STATUS != null">SPS_BACK_STATUS,</if>
+            <if test="SPS_STEP_TYPE != null">SPS_STEP_TYPE,</if>
+            <if test="SPS_STEP_TRANSACTOR != null">SPS_STEP_TRANSACTOR,</if>
+            <if test="SPS_PREV_AUDIT_STATUS != null">SPS_PREV_AUDIT_STATUS,</if>
+            <if test="SPS_PREV_STEP_TYPE != null">SPS_PREV_STEP_TYPE,</if>
+            <if test="SPS_PREV_STEP_TRANSACTOR != null">SPS_PREV_STEP_TRANSACTOR,</if>
+            <if test="SPS_BACK_STATUS_TRANSACTOR != null">SPS_BACK_STATUS_TRANSACTOR,</if>
+            <if test="SPS_TABLE_NAME != null">SPS_TABLE_NAME,</if>
+            <if test="SPS_IS_CANCEL != null">SPS_IS_CANCEL,</if>
+            <if test="SPS_PREV_STEP_ID != null">SPS_PREV_STEP_ID,</if>
+            <if test="SPS_ID != null">SPS_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SPD_ID != null">#{SPD_ID},</if>
+            <if test="SPS_TABLE_ID != null">#{SPS_TABLE_ID},</if>
+            <if test="SPS_AUDIT_STATUS != null">#{SPS_AUDIT_STATUS},</if>
+            <if test="SPS_BACK_STATUS != null">#{SPS_BACK_STATUS},</if>
+            <if test="SPS_STEP_TYPE != null">#{SPS_STEP_TYPE},</if>
+            <if test="SPS_STEP_TRANSACTOR != null">#{SPS_STEP_TRANSACTOR},</if>
+            <if test="SPS_PREV_AUDIT_STATUS != null">#{SPS_PREV_AUDIT_STATUS},</if>
+            <if test="SPS_PREV_STEP_TYPE != null">#{SPS_PREV_STEP_TYPE},</if>
+            <if test="SPS_PREV_STEP_TRANSACTOR != null">#{SPS_PREV_STEP_TRANSACTOR},</if>
+            <if test="SPS_BACK_STATUS_TRANSACTOR != null">#{SPS_BACK_STATUS_TRANSACTOR},</if>
+            <if test="SPS_TABLE_NAME != null">#{SPS_TABLE_NAME},</if>
+            <if test="SPS_IS_CANCEL != null">#{SPS_IS_CANCEL},</if>
+            <if test="SPS_PREV_STEP_ID != null">#{SPS_PREV_STEP_ID},</if>
+            <if test="SPS_ID != null">#{SPS_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑流程进度-->
+    <update id="updateProcessSchedule" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_SCHEDULE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SPD_ID != null">SPD_ID=#{SPD_ID},</if>
+            <if test="SPS_TABLE_ID != null">SPS_TABLE_ID=#{SPS_TABLE_ID},</if>
+            <if test="SPS_AUDIT_STATUS != null">SPS_AUDIT_STATUS=#{SPS_AUDIT_STATUS},</if>
+            <if test="SPS_BACK_STATUS != null">SPS_BACK_STATUS=#{SPS_BACK_STATUS},</if>
+            <if test="SPS_STEP_TYPE != null">SPS_STEP_TYPE=#{SPS_STEP_TYPE},</if>
+            <if test="SPS_STEP_TRANSACTOR != null">SPS_STEP_TRANSACTOR=#{SPS_STEP_TRANSACTOR},</if>
+            <if test="SPS_PREV_AUDIT_STATUS != null">SPS_PREV_AUDIT_STATUS=#{SPS_PREV_AUDIT_STATUS},</if>
+            <if test="SPS_PREV_STEP_TYPE != null">SPS_PREV_STEP_TYPE=#{SPS_PREV_STEP_TYPE},</if>
+            <if test="SPS_PREV_STEP_TRANSACTOR != null">SPS_PREV_STEP_TRANSACTOR=#{SPS_PREV_STEP_TRANSACTOR},</if>
+            <if test="SPS_BACK_STATUS_TRANSACTOR != null">SPS_BACK_STATUS_TRANSACTOR=#{SPS_BACK_STATUS_TRANSACTOR},</if>
+            <if test="SPS_TABLE_NAME != null">SPS_TABLE_NAME=#{SPS_TABLE_NAME},</if>
+            <if test="SPS_IS_CANCEL != null">SPS_IS_CANCEL=#{SPS_IS_CANCEL},</if>
+            <if test="SPS_PREV_STEP_ID != null">SPS_PREV_STEP_ID=#{SPS_PREV_STEP_ID},</if>
+            <if test="SPS_ID != null">SPS_ID=#{SPS_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除流程进度-->
+    <delete id="deleteProcessSchedule" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_SCHEDULE WHERE ID = #{ID}
+    </delete>
+
+    <!--查询流程日志-->
+    <select id="selectProcessLog" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPL.*,SDI.SDI_NAME AS SPL_PROCESS_STATUS_NAME
+        FROM(
+        SELECT * FROM SYS_PROCESS_LOG
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SPS_ID != NULL and SPS_ID != ''">
+                AND SPS_ID = #{SPS_ID}
+            </if>
+            <if test="SPL_TABLE_ID != NULL and SPL_TABLE_ID != ''">
+                AND SPL_TABLE_ID = #{SPL_TABLE_ID}
+            </if>
+            <if test="SPL_TYPE != NULL and SPL_TYPE != ''">
+                AND SPL_TYPE = #{SPL_TYPE}
+            </if>
+        </where>
+        )SPL
+        LEFT JOIN SYS_DICT_INFO SDI ON SDI.SDT_CODE = 'SYS_PROCESS_STATUS' AND SDI.SDI_CODE = SPL.SPL_PROCESS_STATUS
+        <where>
+            <if test="SPL_PROCESS_STATUS != NULL and SPL_PROCESS_STATUS != ''">
+                AND SPS.SPL_PROCESS_STATUS = #{SPL_PROCESS_STATUS}
+            </if>
+            <if test="SPL_PROCESS_STATUS_ARRAY != NULL and SPL_PROCESS_STATUS_ARRAY != ''">
+                AND SPS.SPL_PROCESS_STATUS IN( ${SPL_PROCESS_STATUS_ARRAY} )
+            </if>
+        </where>
+        <if test="IS_GROUP != NULL and IS_GROUP != ''">
+            GROUP BY SPL_SO_ID,SPL_PROCESS_STATUS
+        </if>
+    </select>
+
+    <!--插入流程日志-->
+    <insert id="insertProcessLog" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SPS_ID != null">SPS_ID,</if>
+            <if test="SPL_TABLE_ID != null">SPL_TABLE_ID,</if>
+            <if test="SPL_SO_ID != null">SPL_SO_ID,</if>
+            <if test="SPL_TRANSACTOR != null">SPL_TRANSACTOR,</if>
+            <if test="SPL_OPINION != null">SPL_OPINION,</if>
+            <if test="SPL_ENTRY_TIME != null">SPL_ENTRY_TIME,</if>
+            <if test="SPL_TYPE != null">SPL_TYPE,</if>
+            <if test="SPL_PROCESS_STATUS != null">SPL_PROCESS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SPS_ID != null">#{SPS_ID},</if>
+            <if test="SPL_TABLE_ID != null">#{SPL_TABLE_ID},</if>
+            <if test="SPL_SO_ID != null">#{SPL_SO_ID},</if>
+            <if test="SPL_TRANSACTOR != null">#{SPL_TRANSACTOR},</if>
+            <if test="SPL_OPINION != null">#{SPL_OPINION},</if>
+            <if test="SPL_ENTRY_TIME != null">#{SPL_ENTRY_TIME},</if>
+            <if test="SPL_TYPE != null">#{SPL_TYPE},</if>
+            <if test="SPL_PROCESS_STATUS != null">#{SPL_PROCESS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑流程日志-->
+    <update id="updateProcessLog" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_LOG
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SPS_ID != null">SPS_ID=#{SPS_ID},</if>
+            <if test="SPL_TABLE_ID != null">SPL_TABLE_ID=#{SPL_TABLE_ID},</if>
+            <if test="SPL_SO_ID != null">SPL_SO_ID=#{SPL_SO_ID},</if>
+            <if test="SPL_TRANSACTOR != null">SPL_TRANSACTOR=#{SPL_TRANSACTOR},</if>
+            <if test="SPL_OPINION != null">SPL_OPINION=#{SPL_OPINION},</if>
+            <if test="SPL_ENTRY_TIME != null">SPL_ENTRY_TIME=#{SPL_ENTRY_TIME},</if>
+            <if test="SPL_TYPE != null">SPL_TYPE=#{SPL_TYPE},</if>
+            <if test="SPL_PROCESS_STATUS != null">SPL_PROCESS_STATUS=#{SPL_PROCESS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除流程日志-->
+    <delete id="deleteProcessLog" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_LOG WHERE ID = #{ID}
+    </delete>
+
+    <!--查询作废记录-->
+    <select id="selectProcessScheduleCancel" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPSC.*,SPS.SPS_TABLE_NAME,SAI.SAI_NAME AS CANCEL_NAME
+        FROM(
+            SELECT * FROM SYS_PROCESS_SCHEDULE_CANCEL
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+            </where>
+        )SPSC
+        INNER JOIN SYS_PROCESS_SCHEDULE SPS ON SPS.ID = SPSC.SPS_ID
+        LEFT JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SPSC.SO_ID
+    </select>
+
+    <!--插入作废记录-->
+    <insert id="insertProcessScheduleCancel" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_SCHEDULE_CANCEL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SPS_ID != null">SPS_ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SPSC_REASON != null">SPSC_REASON,</if>
+            <if test="SPSC_ENTRY_TIME != null">SPSC_ENTRY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SPS_ID != null">#{SPS_ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SPSC_REASON != null">#{SPSC_REASON},</if>
+            <if test="SPSC_ENTRY_TIME != null">#{SPSC_ENTRY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑作废记录-->
+    <update id="updateProcessScheduleCancel" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_SCHEDULE_CANCEL
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SPS_ID != null">SPS_ID=#{SPS_ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SPSC_REASON != null">SPSC_REASON=#{SPSC_REASON},</if>
+            <if test="SPSC_ENTRY_TIME != null">SPSC_ENTRY_TIME=#{SPSC_ENTRY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除作废记录-->
+    <delete id="deleteProcessScheduleCancel" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_SCHEDULE_CANCEL WHERE ID = #{ID}
+    </delete>
+</mapper>

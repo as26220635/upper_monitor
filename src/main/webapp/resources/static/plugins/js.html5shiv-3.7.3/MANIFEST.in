@@ -1,0 +1,3 @@
+recursive-include js/html5shiv/resources *.*
+recursive-include js/html5shiv *.txt
+include *.txt

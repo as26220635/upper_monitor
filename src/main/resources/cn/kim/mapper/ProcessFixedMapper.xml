@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ProcessFixedMapper">
+
+
+    <!--查询流程下一步骤-->
+    <select id="selectProcessNextStep" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_PROCESS_STEP WHERE SPS_ORDER > (SELECT SPS_ORDER FROM SYS_PROCESS_STEP WHERE SPD_ID = #{SPD_ID} AND SPS_PROCESS_STATUS = #{SPS_PROCESS_STATUS} ) ORDER BY SPS_ORDER ASC  LIMIT 0 ,1
+    </select>
+
+    <!--查询流程上一步骤-->
+    <select id="selectProcessPrevStep" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT *
+        FROM SYS_PROCESS_STEP
+        WHERE SPS_ORDER &lt;
+        (
+            SELECT SPS_ORDER
+            FROM SYS_PROCESS_STEP
+            WHERE SPD_ID = #{SPD_ID}
+            <if test="SPS_PROCESS_STATUS != null and SPS_PROCESS_STATUS != ''">
+                AND SPS_PROCESS_STATUS = #{SPS_PROCESS_STATUS}
+            </if>
+        )
+        <if test="SR_ID != null and SR_ID != ''">
+            AND SR_ID = #{SR_ID}
+        </if>
+        ORDER BY SPS_ORDER DESC
+        <if test="ALL == null">
+            LIMIT 0 ,1
+        </if>
+    </select>
+
+    <!--根据角色id查询最高拥有的启动角色-->
+    <select id="selectProcessStepStartRoleTop" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPST.* FROM SYS_PROCESS_START SPS
+        INNER JOIN SYS_PROCESS_STEP SPST ON SPST.SR_ID = SPS.SR_ID
+        WHERE SPS.SPD_ID = #{SPD_ID}
+        AND SPS.SR_ID IN(${SR_IDS})
+        ORDER BY SPST.SPS_ORDER DESC
+        LIMIT 0,1
+    </select>
+    <!--查询流程定义-->
+    <select id="selectProcessDefinition" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPD.*,SR.SR_NAME,SAI.SAI_NAME
+        FROM(
+            SELECT * FROM SYS_PROCESS_DEFINITION
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+                <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                    AND IS_STATUS = #{IS_STATUS}
+                </if>
+            </where>
+        )SPD
+        LEFT JOIN SYS_ROLE SR ON SR.ID = SPD.SR_ID
+        LEFT JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SPD.SO_ID
+    </select>
+
+    <!--插入流程定义-->
+    <insert id="insertProcessDefinition" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_DEFINITION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SR_ID != null">SR_ID,</if>
+            <if test="SPD_NAME != null">SPD_NAME,</if>
+            <if test="SPD_VERSION != null">SPD_VERSION,</if>
+            <if test="SPD_UPDATE_TABLE != null">SPD_UPDATE_TABLE,</if>
+            <if test="SPD_UPDATE_NAME != null">SPD_UPDATE_NAME,</if>
+            <if test="SPD_DESCRIBE != null">SPD_DESCRIBE,</if>
+            <if test="SDP_ENTRY_TIME != null">SDP_ENTRY_TIME,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+            <if test="IS_MULTISTAGE_BACK != null">IS_MULTISTAGE_BACK,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SR_ID != null">#{SR_ID},</if>
+            <if test="SPD_NAME != null">#{SPD_NAME},</if>
+            <if test="SPD_VERSION != null">#{SPD_VERSION},</if>
+            <if test="SPD_UPDATE_TABLE != null">#{SPD_UPDATE_TABLE},</if>
+            <if test="SPD_UPDATE_NAME != null">#{SPD_UPDATE_NAME},</if>
+            <if test="SPD_DESCRIBE != null">#{SPD_DESCRIBE},</if>
+            <if test="SDP_ENTRY_TIME != null">#{SDP_ENTRY_TIME},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+            <if test="IS_MULTISTAGE_BACK != null">#{IS_MULTISTAGE_BACK},</if>
+        </trim>
+    </insert>
+
+    <!--编辑流程定义-->
+    <update id="updateProcessDefinition" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_DEFINITION
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SR_ID != null">SR_ID=#{SR_ID},</if>
+            <if test="SPD_NAME != null">SPD_NAME=#{SPD_NAME},</if>
+            <if test="SPD_VERSION != null">SPD_VERSION=#{SPD_VERSION},</if>
+            <if test="SPD_UPDATE_TABLE != null">SPD_UPDATE_TABLE=#{SPD_UPDATE_TABLE},</if>
+            <if test="SPD_UPDATE_NAME != null">SPD_UPDATE_NAME=#{SPD_UPDATE_NAME},</if>
+            <if test="SPD_DESCRIBE != null">SPD_DESCRIBE=#{SPD_DESCRIBE},</if>
+            <if test="SDP_ENTRY_TIME != null">SDP_ENTRY_TIME=#{SDP_ENTRY_TIME},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+            <if test="IS_MULTISTAGE_BACK != null">IS_MULTISTAGE_BACK=#{IS_MULTISTAGE_BACK},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除流程定义-->
+    <delete id="deleteProcessDefinition" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_DEFINITION WHERE ID = #{ID}
+    </delete>
+
+    <!--查询流程步骤-->
+    <select id="selectProcessStep" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPS.*,SR.SR_NAME
+        FROM(
+            SELECT * FROM SYS_PROCESS_STEP
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+                <if test="SPD_ID != NULL and SPD_ID != ''">
+                    AND SPD_ID = #{SPD_ID}
+                </if>
+                <if test="SR_ID != NULL and SR_ID != ''">
+                    AND SR_ID = #{SR_ID}
+                </if>
+                <if test="SPS_PROCESS_STATUS != NULL and SPS_PROCESS_STATUS != ''">
+                    AND SPS_PROCESS_STATUS = #{SPS_PROCESS_STATUS}
+                </if>
+            </where>
+        )SPS
+        LEFT JOIN SYS_ROLE SR ON SR.ID = SPS.SR_ID
+    </select>
+
+    <!--查询流程步骤数量-->
+    <select id="selectProcessStepCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM SYS_PROCESS_STEP
+        <where>
+            <if test="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test="SPS_PROCESS_STATUS != NULL and SPS_PROCESS_STATUS != ''">
+                AND SPS_PROCESS_STATUS = #{SPS_PROCESS_STATUS}
+            </if>
+            <if test="SPS_ORDER != NULL and SPS_ORDER != ''">
+                AND SPS_ORDER = #{SPS_ORDER}
+            </if>
+        </where>
+    </select>
+
+    <!--插入流程步骤-->
+    <insert id="insertProcessStep" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_STEP
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SPD_ID != null">SPD_ID,</if>
+            <if test="SR_ID != null">SR_ID,</if>
+            <if test="SPS_NAME != null">SPS_NAME,</if>
+            <if test="SPS_ORDER != null">SPS_ORDER,</if>
+            <if test="SPS_PROCESS_STATUS != null">SPS_PROCESS_STATUS,</if>
+            <if test="SPS_IS_OVER_TIME != null">SPS_IS_OVER_TIME,</if>
+            <if test="SPS_OVER_TIME != null">SPS_OVER_TIME,</if>
+            <if test="SPS_STEP_TYPE != null">SPS_STEP_TYPE,</if>
+            <if test="SPS_TAB != null">SPS_TAB,</if>
+            <if test="SPS_IS_ADVANCE_CHECK != null">SPS_IS_ADVANCE_CHECK,</if>
+            <if test="SPS_IS_RETREAT_CHECK != null">SPS_IS_RETREAT_CHECK,</if>
+            <if test="SPS_IS_ADVANCE_EXECUTE != null">SPS_IS_ADVANCE_EXECUTE,</if>
+            <if test="SPS_IS_RETREAT_EXECUTE != null">SPS_IS_RETREAT_EXECUTE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SPD_ID != null">#{SPD_ID},</if>
+            <if test="SR_ID != null">#{SR_ID},</if>
+            <if test="SPS_NAME != null">#{SPS_NAME},</if>
+            <if test="SPS_ORDER != null">#{SPS_ORDER},</if>
+            <if test="SPS_PROCESS_STATUS != null">#{SPS_PROCESS_STATUS},</if>
+            <if test="SPS_IS_OVER_TIME != null">#{SPS_IS_OVER_TIME},</if>
+            <if test="SPS_OVER_TIME != null">#{SPS_OVER_TIME},</if>
+            <if test="SPS_STEP_TYPE != null">#{SPS_STEP_TYPE},</if>
+            <if test="SPS_TAB != null">#{SPS_TAB},</if>
+            <if test="SPS_IS_ADVANCE_CHECK != null">#{SPS_IS_ADVANCE_CHECK},</if>
+            <if test="SPS_IS_RETREAT_CHECK != null">#{SPS_IS_RETREAT_CHECK},</if>
+            <if test="SPS_IS_ADVANCE_EXECUTE != null">#{SPS_IS_ADVANCE_EXECUTE},</if>
+            <if test="SPS_IS_RETREAT_EXECUTE != null">#{SPS_IS_RETREAT_EXECUTE},</if>
+        </trim>
+    </insert>
+
+    <!--编辑流程步骤-->
+    <update id="updateProcessStep" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_STEP
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SPD_ID != null">SPD_ID=#{SPD_ID},</if>
+            <if test="SR_ID != null">SR_ID=#{SR_ID},</if>
+            <if test="SPS_NAME != null">SPS_NAME=#{SPS_NAME},</if>
+            <if test="SPS_ORDER != null">SPS_ORDER=#{SPS_ORDER},</if>
+            <if test="SPS_PROCESS_STATUS != null">SPS_PROCESS_STATUS=#{SPS_PROCESS_STATUS},</if>
+            <if test="SPS_IS_OVER_TIME != null">SPS_IS_OVER_TIME=#{SPS_IS_OVER_TIME},</if>
+            <if test="SPS_OVER_TIME != null">SPS_OVER_TIME=#{SPS_OVER_TIME},</if>
+            <if test="SPS_STEP_TYPE != null">SPS_STEP_TYPE=#{SPS_STEP_TYPE},</if>
+            <if test="SPS_TAB != null">SPS_TAB=#{SPS_TAB},</if>
+            <if test="SPS_IS_ADVANCE_CHECK != null">SPS_IS_ADVANCE_CHECK=#{SPS_IS_ADVANCE_CHECK},</if>
+            <if test="SPS_IS_RETREAT_CHECK != null">SPS_IS_RETREAT_CHECK=#{SPS_IS_RETREAT_CHECK},</if>
+            <if test="SPS_IS_ADVANCE_EXECUTE != null">SPS_IS_ADVANCE_EXECUTE=#{SPS_IS_ADVANCE_EXECUTE},</if>
+            <if test="SPS_IS_RETREAT_EXECUTE != null">SPS_IS_RETREAT_EXECUTE=#{SPS_IS_RETREAT_EXECUTE},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除流程步骤-->
+    <delete id="deleteProcessStep" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_STEP WHERE ID = #{ID}
+    </delete>
+
+    <!--查询流程开始角色-->
+    <select id="selectProcessStart" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SPS.*,SR.SR_NAME
+        FROM(
+            SELECT * FROM SYS_PROCESS_START
+            <where>
+                <if test ="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+            </where>
+        )SPS
+        LEFT JOIN SYS_ROLE SR ON SR.ID = SPS.SR_ID
+    </select>
+
+    <!--插入流程开始角色-->
+    <insert id="insertProcessStart" parameterType="java.util.Map">
+        INSERT INTO SYS_PROCESS_START
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SPD_ID != null">SPD_ID,</if>
+            <if test="SR_ID != null">SR_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SPD_ID != null">#{SPD_ID},</if>
+            <if test="SR_ID != null">#{SR_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑流程开始角色-->
+    <update id="updateProcessStart" parameterType="java.util.Map">
+        UPDATE SYS_PROCESS_START
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SPD_ID != null">SPD_ID=#{SPD_ID},</if>
+            <if test="SR_ID != null">SR_ID=#{SR_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除流程开始角色-->
+    <delete id="deleteProcessStart" parameterType="java.util.Map">
+        DELETE FROM SYS_PROCESS_START WHERE ID = #{ID}
+    </delete>
+
+</mapper>

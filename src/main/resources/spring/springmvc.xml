@@ -1,0 +1,168 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
+
+    <description>Spring配置</description>
+
+    <!-- 加载配置文件 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:db.properties</value>
+                <value>classpath:config.properties</value>
+                <value>classpath:mybatis-refresh.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 使用spring组件扫描 -->
+    <context:component-scan base-package="cn.kim"/>
+    <!-- 静态资源解析
+	包括 ：js、css、img、.. restful
+	 -->
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
+
+    <!-- 开启aop，对类代理 -->
+    <aop:config proxy-target-class="true"/>
+    <!--开启注解aop-->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 开启shiro注解支持 -->
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!-- 支持Shiro对Controller的方法级AOP安全控制-->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+    <!-- 通过annotation-driven可以替代下边的处理器映射器和适配器 -->
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <ref bean="stringHttpMessageConverter"/>
+            <ref bean="byteArrayHttpMessageConverter"/>
+            <ref bean="customFastJsonConverter"/>
+            <!--<ref bean="mappingJacksonHttpMessageConverter"/>-->
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="stringHttpMessageConverter"
+          class="org.springframework.http.converter.StringHttpMessageConverter">
+        <constructor-arg value="UTF-8" index="0"></constructor-arg>
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--防止xssJson-->
+    <bean id="customFastJsonConverter" class="cn.kim.controller.converter.CustomFastJsonConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <!-- 这里顺序不能反，一定先写text/html,不然ie下出现下载提示 -->
+                <value>text/html;charset=UTF-8</value>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+
+    <!-- 配置视图解析器 要求将jstl的包加到classpath -->
+    <!-- ViewResolver -->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="cn.kim.common.springmvc.ui.EncryptView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver"
+          class="cn.kim.common.springmvc.commons.DecryptMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为100MB -->
+        <property name="maxUploadSize">
+            <value>104857600</value>
+        </property>
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+    </bean>
+
+    <!-- 处理shiro 404 session丢失的问题 -->
+    <bean id="defaultController" class="cn.kim.controller.manager.DefaultController"/>
+
+    <bean id="defaulturlmapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order" value="2147483647"/><!-- 此处的order很重要，要低于 mvc:resources的默认值2147483646-->
+        <property name="mappings">
+            <props>
+                <prop key="/*/**">defaultController</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 定义统一异常处理器 -->
+    <bean class="cn.kim.exception.CustomExceptionResolver"></bean>
+
+    <!-- csrf CookieCsrfTokenRepository -->
+    <bean class="cn.kim.common.csrf.CookieCsrfTokenRepository"/>
+
+    <mvc:interceptors>
+        <!-- 多个拦截器，顺序执行 -->
+        <!-- 配置Token拦截器，防止用户重复提交数据 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="cn.kim.interceptor.TokenInterceptor"/>
+        </mvc:interceptor>
+        <!-- Spring csrf 拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/login"/>
+            <mvc:mapping path="/admin/login"/>
+            <bean class="cn.kim.common.csrf.CsrfInterceptor"/>
+        </mvc:interceptor>
+        <!--SESSION失效拦截AJAX退出-->
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/my_home/**"/>
+            <bean class="cn.kim.interceptor.SessionExpireInterceptor"></bean>
+        </mvc:interceptor>
+        <!--pjax拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--不拦截的地址-->
+            <mvc:exclude-mapping path="/druid/**"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/check"/>
+            <mvc:exclude-mapping path="/resources/**"/>
+            <mvc:exclude-mapping path="/pic/**"/>
+            <mvc:exclude-mapping path="/file/**"/>
+            <mvc:exclude-mapping path="/perview/**"/>
+            <bean class="cn.kim.interceptor.PjaxInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

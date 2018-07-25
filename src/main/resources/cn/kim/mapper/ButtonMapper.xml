@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ButtonMapper">
+
+
+    <!--查询按钮-->
+    <select id="selectButton" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SB.*,SDI.SDI_NAME AS SB_TYPE_NAME
+        FROM(
+            SELECT SB.*
+            FROM SYS_BUTTON SB
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND SB.ID = #{ID}
+                </if>
+            </where>
+        )SB
+        LEFT JOIN SYS_DICT_INFO SDI ON SDI.SDT_CODE = 'SYS_BUTTON_TYPE' AND SDI.SDI_CODE = SB.SB_TYPE
+        ORDER BY SB.SB_TYPE ASC,SB.SB_ORDER ASC
+    </select>
+
+    <!--插入按钮-->
+    <insert id="insertButton" parameterType="java.util.Map">
+        INSERT INTO SYS_BUTTON
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SB_NAME != null">SB_NAME,</if>
+            <if test="SB_BUTTONID != null">SB_BUTTONID,</if>
+            <if test="SB_FUNC != null">SB_FUNC,</if>
+            <if test="SB_CLASS != null">SB_CLASS,</if>
+            <if test="SB_ICON != null">SB_ICON,</if>
+            <if test="SB_CODE != null">SB_CODE,</if>
+            <if test="SB_ORDER != null">SB_ORDER,</if>
+            <if test="SB_TYPE != null">SB_TYPE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SB_NAME != null">#{SB_NAME},</if>
+            <if test="SB_BUTTONID != null">#{SB_BUTTONID},</if>
+            <if test="SB_FUNC != null">#{SB_FUNC},</if>
+            <if test="SB_CLASS != null">#{SB_CLASS},</if>
+            <if test="SB_ICON != null">#{SB_ICON},</if>
+            <if test="SB_CODE != null">#{SB_CODE},</if>
+            <if test="SB_ORDER != null">#{SB_ORDER},</if>
+            <if test="SB_TYPE != null">#{SB_TYPE},</if>
+        </trim>
+    </insert>
+
+    <!--编辑按钮-->
+    <update id="updateButton" parameterType="java.util.Map">
+        UPDATE SYS_BUTTON
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SB_NAME != null">SB_NAME=#{SB_NAME},</if>
+            <if test="SB_BUTTONID != null">SB_BUTTONID=#{SB_BUTTONID},</if>
+            <if test="SB_FUNC != null">SB_FUNC=#{SB_FUNC},</if>
+            <if test="SB_CLASS != null">SB_CLASS=#{SB_CLASS},</if>
+            <if test="SB_ICON != null">SB_ICON=#{SB_ICON},</if>
+            <if test="SB_CODE != null">SB_CODE=#{SB_CODE},</if>
+            <if test="SB_ORDER != null">SB_ORDER=#{SB_ORDER},</if>
+            <if test="SB_TYPE != null">SB_TYPE=#{SB_TYPE},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除按钮-->
+    <delete id="deleteButton" parameterType="java.util.Map">
+        DELETE FROM SYS_BUTTON WHERE ID = #{ID}
+    </delete>
+</mapper>

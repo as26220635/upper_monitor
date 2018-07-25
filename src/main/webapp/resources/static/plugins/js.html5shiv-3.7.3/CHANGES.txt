@@ -1,0 +1,31 @@
+CHANGES
+*******
+
+3.7.3 (2015-10-06)
+==================
+
+- Update to 3.7.3.
+
+
+3.6.2-1 (2013-05-04)
+====================
+
+- Minor packaging fixes.
+  [davidjb]
+
+
+3.6.2 (2013-05-04)
+==================
+
+- Include minified (dist) versions of libraries.
+  [davidjb]
+- Update to html5shiv version 3.6.2.
+  [davidjb]
+- Update package buildout to use ``zc.recipe.egg`` for tests.
+  [davidjb]
+
+
+3.5 (2012-07-04)
+================
+
+- Initial release.

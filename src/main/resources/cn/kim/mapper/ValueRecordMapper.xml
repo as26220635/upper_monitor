@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ValueRecordMapper">
+
+    <!--查询旧值记录-->
+    <select id="selectValue" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM ${SVR_TABLE_NAME} WHERE ID = #{ID}
+    </select>
+
+    <!--查询参数记录-->
+    <select id="selectValueRecord" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_VALUE_RECORD
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SVR_TABLE_NAME != NULL and SVR_TABLE_NAME != ''">
+                AND SVR_TABLE_NAME = #{SVR_TABLE_NAME}
+            </if>
+            <if test="SVR_TABLE_ID != NULL and SVR_TABLE_ID != ''">
+                AND SVR_TABLE_ID = #{SVR_TABLE_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入参数记录-->
+    <insert id="insertValueRecord" parameterType="java.util.Map">
+        INSERT INTO SYS_VALUE_RECORD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SVR_TABLE_NAME != null">SVR_TABLE_NAME,</if>
+            <if test="SVR_TABLE_ID != null">SVR_TABLE_ID,</if>
+            <if test="SVR_OLD_VALUE != null">SVR_OLD_VALUE,</if>
+            <if test="SVR_NEW_VALUE != null">SVR_NEW_VALUE,</if>
+            <if test="SVR_ENTRY_TIME != null">SVR_ENTRY_TIME,</if>
+            <if test="SVR_TYPE != null">SVR_TYPE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SVR_TABLE_NAME != null">#{SVR_TABLE_NAME},</if>
+            <if test="SVR_TABLE_ID != null">#{SVR_TABLE_ID},</if>
+            <if test="SVR_OLD_VALUE != null">#{SVR_OLD_VALUE},</if>
+            <if test="SVR_NEW_VALUE != null">#{SVR_NEW_VALUE},</if>
+            <if test="SVR_ENTRY_TIME != null">#{SVR_ENTRY_TIME},</if>
+            <if test="SVR_TYPE != null">#{SVR_TYPE},</if>
+        </trim>
+    </insert>
+
+    <!--编辑参数记录-->
+    <update id="updateValueRecord" parameterType="java.util.Map">
+        UPDATE SYS_VALUE_RECORD
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SVR_TABLE_NAME != null">SVR_TABLE_NAME=#{SVR_TABLE_NAME},</if>
+            <if test="SVR_TABLE_ID != null">SVR_TABLE_ID=#{SVR_TABLE_ID},</if>
+            <if test="SVR_OLD_VALUE != null">SVR_OLD_VALUE=#{SVR_OLD_VALUE},</if>
+            <if test="SVR_NEW_VALUE != null">SVR_NEW_VALUE=#{SVR_NEW_VALUE},</if>
+            <if test="SVR_ENTRY_TIME != null">SVR_ENTRY_TIME=#{SVR_ENTRY_TIME},</if>
+            <if test="SVR_TYPE != null">SVR_TYPE=#{SVR_TYPE},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除参数记录-->
+    <delete id="deleteValueRecord" parameterType="java.util.Map">
+		DELETE FROM SYS_VALUE_RECORD WHERE ID = #{ID}
+	</delete>
+</mapper>

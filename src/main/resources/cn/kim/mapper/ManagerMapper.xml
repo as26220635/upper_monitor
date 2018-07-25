@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.ManagerMapper">
+
+    <!--获取数据库日期-->
+    <select id="selectNowDate" resultType="java.lang.String">
+        SELECT NOW()
+    </select>
+
+    <!--验证登录账号是否存在-->
+    <select id="checkLoginUsername" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM SYS_OPERATOR_SUB
+        WHERE SOS_USERNAME = #{SOS_USERNAME}
+    </select>
+
+    <!--查询登录账号-->
+    <select id="queryLoginUsername" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT SO.ID,SOS.SOS_USERNAME,SOS.SOS_USERTYPE,SOS.IS_STATUS,SO.SO_PASSWORD,SO_SALT,SAI.SAI_NAME,SOR.SR_NAME,SOR.SR_ID,SO.IS_STATUS AS SO_IS_STATUS
+      FROM(
+          SELECT SOS.*
+          FROM SYS_OPERATOR_SUB SOS
+          WHERE SOS.SOS_USERNAME = #{SOS_USERNAME}
+      )SOS
+      INNER JOIN SYS_OPERATOR SO ON SO.ID = SOS.SO_ID
+      LEFT JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SO.ID
+      LEFT JOIN(SELECT SO_ID,GROUP_CONCAT(SR.SR_NAME) AS SR_NAME,GROUP_CONCAT(SR.ID) AS SR_ID FROM SYS_OPERATOR_ROLE SOR INNER JOIN SYS_ROLE SR ON SR.ID = SOR.SR_ID GROUP BY SOR.SO_ID)SOR ON SOR.SO_ID = SO.ID
+    </select>
+
+    <!--查询用户角色-->
+    <select id="queryOperatorRole" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SR.*
+        FROM(
+        SELECT SOR.*
+        FROM SYS_OPERATOR_ROLE SOR
+        WHERE SOR.SO_ID = #{SO_ID}
+        )SOR
+        INNER JOIN SYS_ROLE SR ON SR.ID = SOR.SR_ID
+        <where>
+            <if test="IS_STATUS != null and IS_STATUS != '' ">
+                AND SR.IS_STATUS = #{IS_STATUS}
+            </if>
+        </where>
+    </select>
+
+    <!--查询用户账号信息-->
+    <select id="queryAccountInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT *
+        FROM SYS_ACCOUNT_INFO
+        WHERE SO_ID = #{SO_ID}
+    </select>
+
+    <!--查询用户菜单权限-->
+    <select id="queryOperatorMenu" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SM.*,SMP.SM_NAME AS SM_PARENT_NAME,SC.SC_NAME
+        FROM SYS_MENU SM
+        LEFT JOIN SYS_MENU SMP ON SMP.ID = SM.SM_PARENTID
+        LEFT JOIN SYS_CONFIGURE SC ON SC.ID = SM.SC_ID
+        WHERE SM.ID IN(
+        SELECT SM_ID
+        FROM SYS_ROLE_MENU
+        WHERE SR_ID IN(
+        SELECT SR_ID
+        FROM SYS_OPERATOR_ROLE
+        WHERE SO_ID =#{SO_ID}
+        )
+        )
+        AND SM.IS_STATUS = 1
+        <if test="SM_PARENTID != null and SM_PARENTID != '' ">
+            AND SM.SM_PARENTID = #{SM_PARENTID}
+        </if>
+        <if test="ID != null and ID != '' ">
+            AND SM.ID = #{ID}
+        </if>
+        <if test="SM_TYPE != null and SM_TYPE != '' ">
+            AND SM.SM_TYPE = #{SM_TYPE}
+        </if>
+        ORDER BY SM.SM_ORDER ASC
+    </select>
+
+    <!--查询用户按钮菜单权限-->
+    <select id="queryOperatorMenuButtonPrecode" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT PRECODE
+        FROM (
+            SELECT CONCAT(SM.SM_CODE,'_',SB.SB_CODE) AS PRECODE
+            FROM SYS_OPERATOR_ROLE SOR
+            INNER JOIN  SYS_ROLE_MENU SRM ON SRM.SR_ID = SOR.SR_ID
+            INNER JOIN SYS_ROLE_BUTTON SRB ON SRB.SRM_ID = SRM.ID
+            INNER JOIN SYS_MENU SM ON SM.ID = SRM.SM_ID AND SM.IS_STATUS = 1
+            INNER JOIN SYS_BUTTON SB ON SB.ID = SRB.SB_ID AND SM.IS_STATUS = 1
+            WHERE SOR.SO_ID = #{SO_ID}
+        )TEMP
+        GROUP  BY PRECODE
+    </select>
+
+</mapper>

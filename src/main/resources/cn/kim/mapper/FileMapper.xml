@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.FileMapper">
+
+
+    <!--查询文件-->
+    <select id="selectFile" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SF.*,SDT.SDT_ROLE_DOWN,SDT.SDT_ROLE_DEL
+        FROM (
+            SELECT * FROM SYS_FILE
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+                <if test="SF_TABLE_ID != NULL and SF_TABLE_ID != ''">
+                    AND SF_TABLE_ID = #{SF_TABLE_ID}
+                </if>
+                <if test="SF_TABLE_NAME != NULL and SF_TABLE_NAME != ''">
+                    AND SF_TABLE_NAME = #{SF_TABLE_NAME}
+                </if>
+                <if test="SF_SDT_CODE != NULL and SF_SDT_CODE != ''">
+                    AND SF_SDT_CODE = #{SF_SDT_CODE}
+                </if>
+                <if test="SF_SDI_CODE != NULL and SF_SDI_CODE != ''">
+                    AND SF_SDI_CODE = #{SF_SDI_CODE}
+                </if>
+            </where>
+        )SF
+        LEFT JOIN SYS_DICT_TYPE SDT ON SDT.SDT_CODE = SF.SF_SDT_CODE
+    </select>
+
+    <!--插入文件-->
+    <insert id="insertFile" parameterType="java.util.Map">
+        INSERT INTO SYS_FILE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SF_TABLE_ID != null">SF_TABLE_ID,</if>
+            <if test="SF_TABLE_NAME != null">SF_TABLE_NAME,</if>
+            <if test="SF_SDT_CODE != null">SF_SDT_CODE,</if>
+            <if test="SF_SDI_CODE != null">SF_SDI_CODE,</if>
+            <if test="SF_ORIGINAL_NAME != null">SF_ORIGINAL_NAME,</if>
+            <if test="SF_NAME != null">SF_NAME,</if>
+            <if test="SF_PATH != null">SF_PATH,</if>
+            <if test="SF_SUFFIX != null">SF_SUFFIX,</if>
+            <if test="SF_SIZE != null">SF_SIZE,</if>
+            <if test="SF_SEE_TYPE != null">SF_SEE_TYPE,</if>
+            <if test="SF_ENTRY_TIME != null">SF_ENTRY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SF_TABLE_ID != null">#{SF_TABLE_ID},</if>
+            <if test="SF_TABLE_NAME != null">#{SF_TABLE_NAME},</if>
+            <if test="SF_SDT_CODE != null">#{SF_SDT_CODE},</if>
+            <if test="SF_SDI_CODE != null">#{SF_SDI_CODE},</if>
+            <if test="SF_ORIGINAL_NAME != null">#{SF_ORIGINAL_NAME},</if>
+            <if test="SF_NAME != null">#{SF_NAME},</if>
+            <if test="SF_PATH != null">#{SF_PATH},</if>
+            <if test="SF_SUFFIX != null">#{SF_SUFFIX},</if>
+            <if test="SF_SIZE != null">#{SF_SIZE},</if>
+            <if test="SF_SEE_TYPE != null">#{SF_SEE_TYPE},</if>
+            <if test="SF_ENTRY_TIME != null">#{SF_ENTRY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑文件-->
+    <update id="updateFile" parameterType="java.util.Map">
+        UPDATE SYS_FILE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SF_TABLE_ID != null">SF_TABLE_ID=#{SF_TABLE_ID},</if>
+            <if test="SF_TABLE_NAME != null">SF_TABLE_NAME=#{SF_TABLE_NAME},</if>
+            <if test="SF_SDT_CODE != null">SF_SDT_CODE=#{SF_SDT_CODE},</if>
+            <if test="SF_SDI_CODE != null">SF_SDI_CODE=#{SF_SDI_CODE},</if>
+            <if test="SF_ORIGINAL_NAME != null">SF_ORIGINAL_NAME=#{SF_ORIGINAL_NAME},</if>
+            <if test="SF_NAME != null">SF_NAME=#{SF_NAME},</if>
+            <if test="SF_PATH != null">SF_PATH=#{SF_PATH},</if>
+            <if test="SF_SUFFIX != null">SF_SUFFIX=#{SF_SUFFIX},</if>
+            <if test="SF_SIZE != null">SF_SIZE=#{SF_SIZE},</if>
+            <if test="SF_SEE_TYPE != null">SF_SEE_TYPE=#{SF_SEE_TYPE},</if>
+            <if test="SF_ENTRY_TIME != null">SF_ENTRY_TIME=#{SF_ENTRY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除文件-->
+    <delete id="deleteFile" parameterType="java.util.Map">
+		DELETE FROM SYS_FILE WHERE ID = #{ID}
+	</delete>
+</mapper>

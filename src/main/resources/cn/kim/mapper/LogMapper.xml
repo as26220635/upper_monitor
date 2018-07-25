@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.LogMapper">
+
+    <!--查询列表-->
+    <select id="selectByMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SL.*,SLT.SLT_CONTENT
+        FROM SYS_LOG SL
+        LEFT JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SL.SO_ID
+        LEFT JOIN SYS_LOG_TEXT SLT ON SLT.SL_ID = SL.ID
+        <where>
+            <if test="whereClause != null and whereClause != ''">
+                ${whereClause}
+            </if>
+        </where>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+    <!--查询列表数量-->
+    <select id="countByMap" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM SYS_LOG SL
+        LEFT JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SL.SO_ID
+        LEFT JOIN SYS_LOG_TEXT SLT ON SLT.SL_ID = SL.ID
+        <where>
+            <if test="whereClause != null and whereClause != ''">
+                ${whereClause}
+            </if>
+        </where>
+    </select>
+
+    <!--插入日志-->
+    <insert id="insertLog" parameterType="java.util.Map">
+        INSERT INTO SYS_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SL_NAME != null">SL_NAME,</if>
+            <if test="SL_EVENT != null">SL_EVENT,</if>
+            <if test="SL_IP != null">SL_IP,</if>
+            <if test="SL_RESULT != null">SL_RESULT,</if>
+            <if test="SL_ENTERTIME != null">SL_ENTERTIME,</if>
+            <if test="SL_TYPE != null">SL_TYPE,</if>
+            <if test="SL_USETYPE != null">SL_USETYPE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SL_NAME != null">#{SL_NAME},</if>
+            <if test="SL_EVENT != null">#{SL_EVENT},</if>
+            <if test="SL_IP != null">#{SL_IP},</if>
+            <if test="SL_RESULT != null">#{SL_RESULT},</if>
+            <if test="SL_ENTERTIME != null">#{SL_ENTERTIME},</if>
+            <if test="SL_TYPE != null">#{SL_TYPE},</if>
+            <if test="SL_USETYPE != null">#{SL_USETYPE},</if>
+        </trim>
+    </insert>
+
+    <!--插入日志文本-->
+    <insert id="insertLogText" parameterType="java.util.Map">
+        INSERT INTO SYS_LOG_TEXT
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="SL_ID != null">SL_ID,</if>
+            <if test="SLT_CONTENT != null">SLT_CONTENT,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="SL_ID != null">#{SL_ID},</if>
+            <if test="SLT_CONTENT != null">#{SLT_CONTENT},</if>
+        </trim>
+    </insert>
+</mapper>

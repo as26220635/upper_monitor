@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.AllocationMapper">
+
+
+    <!--查询系统配置-->
+    <select id="selectAllocation" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_ALLOCATION
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SA_KEY != NULL and SA_KEY != ''">
+                AND SA_KEY = #{SA_KEY}
+            </if>
+        </where>
+    </select>
+
+    <!--插入系统配置-->
+    <insert id="insertAllocation" parameterType="java.util.Map">
+        INSERT INTO SYS_ALLOCATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SA_KEY != null">SA_KEY,</if>
+            <if test="SA_VALUE != null">SA_VALUE,</if>
+            <if test="SA_MODIFY_TIME != null">SA_MODIFY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SA_KEY != null">#{SA_KEY},</if>
+            <if test="SA_VALUE != null">#{SA_VALUE},</if>
+            <if test="SA_MODIFY_TIME != null">#{SA_MODIFY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑系统配置-->
+    <update id="updateAllocation" parameterType="java.util.Map">
+        UPDATE SYS_ALLOCATION
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SA_KEY != null">SA_KEY=#{SA_KEY},</if>
+            <if test="SA_VALUE != null">SA_VALUE=#{SA_VALUE},</if>
+            <if test="SA_MODIFY_TIME != null">SA_MODIFY_TIME=#{SA_MODIFY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除系统配置-->
+    <delete id="deleteAllocation" parameterType="java.util.Map">
+        DELETE FROM SYS_ALLOCATION WHERE
+        <if test="ID != NULL and ID != ''">
+            ID = #{ID}
+        </if>
+        <if test="SA_KEY != NULL and SA_KEY != ''">
+            SA_KEY = #{SA_KEY}
+        </if>
+    </delete>
+</mapper>

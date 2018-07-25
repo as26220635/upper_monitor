@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.DictMapper">
+
+
+    <!--查询字典类型-->
+    <select id="selectDictType" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_DICT_TYPE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                AND IS_STATUS = #{IS_STATUS}
+            </if>
+        </where>
+    </select>
+
+    <!--插入字典类型-->
+    <insert id="insertDictType" parameterType="java.util.Map">
+        INSERT INTO SYS_DICT_TYPE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SDT_NAME != null">SDT_NAME,</if>
+            <if test="SDT_CODE != null">SDT_CODE,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+            <if test="IS_HIDDEN != null">IS_HIDDEN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SDT_NAME != null">#{SDT_NAME},</if>
+            <if test="SDT_CODE != null">#{SDT_CODE},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+            <if test="IS_HIDDEN != null">#{IS_HIDDEN},</if>
+        </trim>
+    </insert>
+
+    <!--编辑字典类型-->
+    <update id="updateDictType" parameterType="java.util.Map">
+        UPDATE SYS_DICT_TYPE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SDT_NAME != null">SDT_NAME=#{SDT_NAME},</if>
+            <if test="SDT_CODE != null">SDT_CODE=#{SDT_CODE},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+            <if test="IS_HIDDEN != null">IS_HIDDEN=#{IS_HIDDEN},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除字典类型-->
+    <delete id="deleteDictType" parameterType="java.util.Map">
+        DELETE FROM SYS_DICT_TYPE WHERE ID = #{ID}
+    </delete>
+
+    <!--查询字典信息-->
+    <select id="selectDictInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SDI.*,SDT.SDT_NAME
+        FROM(
+            SELECT SDI.*
+            FROM SYS_DICT_INFO SDI
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND SDI.ID = #{ID}
+                </if>
+                <if test="NOT_ID != NULL and NOT_ID != ''">
+                    AND SDI.ID != #{NOT_ID}
+                </if>
+                <if test="SDT_ID != NULL and SDT_ID != ''">
+                    AND SDI.SDT_ID = #{SDT_ID}
+                </if>
+                <if test="SDT_CODE != NULL and SDT_CODE != ''">
+                    AND SDI.SDT_CODE = #{SDT_CODE}
+                </if>
+                <if test="SDI_CODE != NULL and SDI_CODE != ''">
+                    AND SDI.SDI_CODE = #{SDI_CODE}
+                </if>
+                <if test="SDI_PARENTID != NULL and SDI_PARENTID != ''">
+                    AND SDI.SDI_PARENTID = #{SDI_PARENTID}
+                </if>
+                <if test="IS_STATUS != NULL and IS_STATUS != ''">
+                    AND SDI.IS_STATUS = #{IS_STATUS}
+                </if>
+            </where>
+        )SDI
+        INNER JOIN SYS_DICT_TYPE SDT ON SDT.ID = SDI.SDT_ID
+        ORDER BY SDI.SDI_ORDER ASC
+    </select>
+
+    <!--插入字典信息-->
+    <insert id="insertDictInfo" parameterType="java.util.Map">
+        INSERT INTO SYS_DICT_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SDT_ID != null">SDT_ID,</if>
+            <if test="SDT_CODE != null">SDT_CODE,</if>
+            <if test="SDI_NAME != null">SDI_NAME,</if>
+            <if test="SDI_CODE != null">SDI_CODE,</if>
+            <if test="SDI_INNERCODE != null">SDI_INNERCODE,</if>
+            <if test="SDI_ORDER != null">SDI_ORDER,</if>
+            <if test="SDI_PARENTID != null">SDI_PARENTID,</if>
+            <if test="SDI_REMARK != null">SDI_REMARK,</if>
+            <if test="SDI_REQUIRED != null">SDI_REQUIRED,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SDT_ID != null">#{SDT_ID},</if>
+            <if test="SDT_CODE != null">#{SDT_CODE},</if>
+            <if test="SDI_NAME != null">#{SDI_NAME},</if>
+            <if test="SDI_CODE != null">#{SDI_CODE},</if>
+            <if test="SDI_INNERCODE != null">#{SDI_INNERCODE},</if>
+            <if test="SDI_ORDER != null">#{SDI_ORDER},</if>
+            <if test="SDI_PARENTID != null">#{SDI_PARENTID},</if>
+            <if test="SDI_REMARK != null">#{SDI_REMARK},</if>
+            <if test="SDI_REQUIRED != null">#{SDI_REQUIRED},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑字典信息-->
+    <update id="updateDictInfo" parameterType="java.util.Map">
+        UPDATE SYS_DICT_INFO
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SDT_ID != null">SDT_ID=#{SDT_ID},</if>
+            <if test="SDT_CODE != null">SDT_CODE=#{SDT_CODE},</if>
+            <if test="SDI_NAME != null">SDI_NAME=#{SDI_NAME},</if>
+            <if test="SDI_CODE != null">SDI_CODE=#{SDI_CODE},</if>
+            <if test="SDI_INNERCODE != null">SDI_INNERCODE=#{SDI_INNERCODE},</if>
+            <if test="SDI_ORDER != null">SDI_ORDER=#{SDI_ORDER},</if>
+            <if test="SDI_PARENTID != null">SDI_PARENTID=#{SDI_PARENTID},</if>
+            <if test="SDI_REMARK != null">SDI_REMARK=#{SDI_REMARK},</if>
+            <if test="SDI_REQUIRED != null">SDI_REQUIRED=#{SDI_REQUIRED},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除字典信息-->
+    <delete id="deleteDictInfo" parameterType="java.util.Map">
+        DELETE FROM SYS_DICT_INFO
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SDT_ID != NULL and SDT_ID != ''">
+                AND SDT_ID = #{SDT_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

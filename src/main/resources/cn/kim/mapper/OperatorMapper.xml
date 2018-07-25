@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.OperatorMapper">
+
+    <!--查询账号-->
+    <select id="selectOperator" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SO.*,SAI.SAI_NAME,SAI.SAI_PHONE,SAI.SAI_EMAIL
+        FROM(
+            SELECT SO.*
+            FROM SYS_OPERATOR SO
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND SO.ID = #{ID}
+                </if>
+            </where>
+        )SO
+        INNER JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SO.ID
+    </select>
+
+    <!--查询角色关联账号-->
+    <select id="selectOperatorByRoleId" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SO.ID,SAI.SAI_NAME
+        FROM(
+            SELECT SO.ID FROM SYS_OPERATOR SO
+            INNER JOIN SYS_OPERATOR_ROLE SOR ON SOR.SO_ID = SO.ID
+            INNER JOIN SYS_ROLE SR ON SOR.SR_ID = SOR.SR_ID AND SR.ID = #{SR_ID}
+        )SO
+        INNER JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SO.ID
+    </select>
+
+    <!--插入账号-->
+    <insert id="insertOperator" parameterType="java.util.Map">
+        INSERT INTO SYS_OPERATOR
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_PASSWORD != null">SO_PASSWORD,</if>
+            <if test="SO_SALT != null">SO_SALT,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_PASSWORD != null">#{SO_PASSWORD},</if>
+            <if test="SO_SALT != null">#{SO_SALT},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑账号-->
+    <update id="updateOperator" parameterType="java.util.Map">
+        UPDATE SYS_OPERATOR
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_PASSWORD != null">SO_PASSWORD=#{SO_PASSWORD},</if>
+            <if test="SO_SALT != null">SO_SALT=#{SO_SALT},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除账号-->
+    <delete id="deleteOperator" parameterType="java.util.Map">
+        DELETE FROM SYS_OPERATOR WHERE ID = #{ID}
+    </delete>
+
+    <!--查询账号登录-->
+    <select id="selectOperatorSub" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT SOS.*,SAI.SAI_NAME
+        FROM(
+            SELECT SOS.*
+            FROM SYS_OPERATOR_SUB SOS
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND SOS.ID = #{ID}
+                </if>
+                <if test="SO_ID != NULL and SO_ID != ''">
+                    AND SOS.SO_ID = #{SO_ID}
+                </if>
+                <if test="SOS_USERNAME != NULL and SOS_USERNAME != ''">
+                    AND SOS.SOS_USERNAME = #{SOS_USERNAME}
+                </if>
+                <if test="NOT_ID != NULL and NOT_ID != ''">
+                    AND SOS.ID != #{NOT_ID}
+                </if>
+            </where>
+        )SOS
+        INNER JOIN SYS_ACCOUNT_INFO SAI ON SAI.SO_ID = SOS.SO_ID
+    </select>
+
+    <!--插入账号登录-->
+    <insert id="insertOperatorSub" parameterType="java.util.Map">
+        INSERT INTO SYS_OPERATOR_SUB
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SOS_USERNAME != null">SOS_USERNAME,</if>
+            <if test="SOS_CREATETIME != null">SOS_CREATETIME,</if>
+            <if test="SOS_REMARK != null">SOS_REMARK,</if>
+            <if test="SOS_USERTYPE != null">SOS_USERTYPE,</if>
+            <if test="SOS_DEFAULT != null">SOS_DEFAULT,</if>
+            <if test="IS_STATUS != null">IS_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SOS_USERNAME != null">#{SOS_USERNAME},</if>
+            <if test="SOS_CREATETIME != null">#{SOS_CREATETIME},</if>
+            <if test="SOS_REMARK != null">#{SOS_REMARK},</if>
+            <if test="SOS_USERTYPE != null">#{SOS_USERTYPE},</if>
+            <if test="SOS_DEFAULT != null">#{SOS_DEFAULT},</if>
+            <if test="IS_STATUS != null">#{IS_STATUS},</if>
+        </trim>
+    </insert>
+
+    <!--编辑账号登录-->
+    <update id="updateOperatorSub" parameterType="java.util.Map">
+        UPDATE SYS_OPERATOR_SUB
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SOS_USERNAME != null">SOS_USERNAME=#{SOS_USERNAME},</if>
+            <if test="SOS_CREATETIME != null">SOS_CREATETIME=#{SOS_CREATETIME},</if>
+            <if test="SOS_REMARK != null">SOS_REMARK=#{SOS_REMARK},</if>
+            <if test="SOS_USERTYPE != null">SOS_USERTYPE=#{SOS_USERTYPE},</if>
+            <if test="SOS_DEFAULT != null">SOS_DEFAULT=#{SOS_DEFAULT},</if>
+            <if test="IS_STATUS != null">IS_STATUS=#{IS_STATUS},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除账号登录-->
+    <delete id="deleteOperatorSub" parameterType="java.util.Map">
+        DELETE FROM SYS_OPERATOR_SUB
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SO_ID != NULL and SO_ID != ''">
+                AND SO_ID = #{SO_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询账号关联角色-->
+    <select id="selectOperatorRole" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_OPERATOR_ROLE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SO_ID != NULL and SO_ID != ''">
+                AND SO_ID = #{SO_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入账号关联角色-->
+    <insert id="insertOperatorRole" parameterType="java.util.Map">
+        INSERT INTO SYS_OPERATOR_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SR_ID != null">SR_ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SR_ID != null">#{SR_ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+        </trim>
+    </insert>
+
+    <!--编辑账号关联角色-->
+    <update id="updateOperatorRole" parameterType="java.util.Map">
+        UPDATE SYS_OPERATOR_ROLE
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SR_ID != null">SR_ID=#{SR_ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除账号关联角色-->
+    <delete id="deleteOperatorRole" parameterType="java.util.Map">
+        DELETE FROM SYS_OPERATOR_ROLE
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SO_ID != NULL and SO_ID != ''">
+                AND SO_ID = #{SO_ID}
+            </if>
+            <if test="SR_ID != NULL and SR_ID != ''">
+                AND SR_ID = #{SR_ID}
+            </if>
+        </where>
+    </delete>
+
+    <!--查询账号信息-->
+    <select id="selectAccountInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM SYS_ACCOUNT_INFO
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入账号信息-->
+    <insert id="insertAccountInfo" parameterType="java.util.Map">
+        INSERT INTO SYS_ACCOUNT_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="SO_ID != null">SO_ID,</if>
+            <if test="SAI_NAME != null">SAI_NAME,</if>
+            <if test="SAI_PHONE != null">SAI_PHONE,</if>
+            <if test="SAI_EMAIL != null">SAI_EMAIL,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{ID},</if>
+            <if test="SO_ID != null">#{SO_ID},</if>
+            <if test="SAI_NAME != null">#{SAI_NAME},</if>
+            <if test="SAI_PHONE != null">#{SAI_PHONE},</if>
+            <if test="SAI_EMAIL != null">#{SAI_EMAIL},</if>
+        </trim>
+    </insert>
+
+    <!--编辑账号信息-->
+    <update id="updateAccountInfo" parameterType="java.util.Map">
+        UPDATE SYS_ACCOUNT_INFO
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="SO_ID != null">SO_ID=#{SO_ID},</if>
+            <if test="SAI_NAME != null">SAI_NAME=#{SAI_NAME},</if>
+            <if test="SAI_PHONE != null">SAI_PHONE=#{SAI_PHONE},</if>
+            <if test="SAI_EMAIL != null">SAI_EMAIL=#{SAI_EMAIL},</if>
+        </set>
+        <where>
+            <if test="ID !=null">AND ID=#{ID}</if>
+            <if test="SEARCH_SO_ID !=null">AND SO_ID=#{SEARCH_SO_ID}</if>
+        </where>
+    </update>
+
+    <!--删除账号信息-->
+    <delete id="deleteAccountInfo" parameterType="java.util.Map">
+        DELETE FROM SYS_ACCOUNT_INFO
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="SO_ID != NULL and SO_ID != ''">
+                AND SO_ID = #{SO_ID}
+            </if>
+        </where>
+    </delete>
+</mapper>

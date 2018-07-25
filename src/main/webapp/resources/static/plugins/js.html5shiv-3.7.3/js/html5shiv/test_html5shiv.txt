@@ -1,0 +1,9 @@
+How to use?
+===========
+
+You can import ``html5shiv`` from ``js.html5shiv`` and ``need`` it where you want
+these resources to be included on a page::
+
+  >>> from js.html5shiv import html5shiv
+  >>> html5shiv.need()
+

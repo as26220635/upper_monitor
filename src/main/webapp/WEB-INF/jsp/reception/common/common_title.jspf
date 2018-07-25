@@ -1,0 +1,21 @@
+<!--
+Created by IntelliJ IDEA.
+User: 余庚鑫
+Date: 2017/4/17
+Time: 23:15
+To change this template use File | Settings | File Templates.
+-->
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<div class="header header-filter" style="background-image: url('reception/assets/img/bg2.jpeg');height:350px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="brand" style="margin-top: 130px;">
+                    <h1 id="header_title">${HEAD_TITLE}</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

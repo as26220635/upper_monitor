@@ -1,0 +1,82 @@
+Metadata-Version: 1.0
+Name: js.html5shiv
+Version: 3.7.3
+Summary: Fanstatic packaging of html5shiv
+Home-page: https://bitbucket.org/fanstatic/js.html5shiv
+Author: Fanstatic Developers
+Author-email: fanstatic@googlegroups.com
+License: BSD
+Description: js.html5shiv
+        ************
+        
+        Introduction
+        ============
+        
+        This library packages `html5shiv`_ for `fanstatic`_.
+        
+        .. _`fanstatic`: http://fanstatic.org
+        .. _`html5shiv`: https://github.com/aFarkas/html5shiv
+        
+        This requires integration between your web framework and ``fanstatic``,
+        and making sure that the original resources (shipped in the ``resources``
+        directory in ``js.html5shiv``) are published to some URL.
+        
+        Updating
+        ========
+        
+        The lateset version of the library can be downloaded using the following
+        commands::
+        
+            cd js/html5shiv/resources
+            wget https://github.com/aFarkas/html5shiv/raw/master/src/html5shiv.js -O html5shiv.js
+            wget https://github.com/aFarkas/html5shiv/raw/master/src/html5shiv-printshiv.js -O html5shiv-printshiv.js
+            wget https://github.com/aFarkas/html5shiv/raw/master/dist/html5shiv.js -O html5shiv.min.js 
+            wget https://github.com/aFarkas/html5shiv/raw/master/dist/html5shiv-printshiv.js -O html5shiv-printshiv.min.js
+        
+        This will ensure the files are named correctly as the original library names
+        both the source and minified versions with the same filenames within its
+        repository.
+        
+        How to use?
+        ===========
+        
+        You can import ``html5shiv`` from ``js.html5shiv`` and ``need`` it where you want
+        these resources to be included on a page::
+        
+          >>> from js.html5shiv import html5shiv
+          >>> html5shiv.need()
+        
+        
+        CHANGES
+        *******
+        
+        3.7.3 (2015-10-06)
+        ==================
+        
+        - Update to 3.7.3.
+        
+        
+        3.6.2-1 (2013-05-04)
+        ====================
+        
+        - Minor packaging fixes.
+          [davidjb]
+        
+        
+        3.6.2 (2013-05-04)
+        ==================
+        
+        - Include minified (dist) versions of libraries.
+          [davidjb]
+        - Update to html5shiv version 3.6.2.
+          [davidjb]
+        - Update package buildout to use ``zc.recipe.egg`` for tests.
+          [davidjb]
+        
+        
+        3.5 (2012-07-04)
+        ================
+        
+        - Initial release.
+        
+Platform: UNKNOWN
