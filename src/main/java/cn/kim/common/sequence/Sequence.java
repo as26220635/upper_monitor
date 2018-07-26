@@ -32,7 +32,7 @@ public class Sequence {
     private static Sequence seq;
 
     static {
-        seq = new Sequence(ConfigProperties.WORKER_ID, ConfigProperties.DATACENTER_ID);
+        seq = new Sequence(0, 0);
     }
 
     /**

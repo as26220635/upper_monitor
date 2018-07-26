@@ -9,9 +9,9 @@ public class initSqlMapper {
 
     public static void main(String[] args) throws IOException {
         //字段
-        String str = "ID\tBEGC_SERIAL\tBEGC_ID\tBEGC_KEY\tBEGC_STATUS\tBEGC_INPUT\tBEGC_NOW\tBEGC_T1\tBEGC_H1\tBEGC_T2\tBEGC_H2\tBEGC_INDEX\tBEGC_VER\tBEGC_NEXT_NUM\tBEGC_MAC\tBEGC_USERNAME\tBEGC_PASSWORD\tBEGC_UPDATE_TIME\tBEGC_ENTRY_TIME";
+        String str = "ID\tBEGC_ID\tBEGCL_SERIAL\tBEGCL_ID\tBEGCL_KEY\tBEGCL_STATUS\tBEGCL_INPUT\tBEGCL_NOW\tBEGCL_T1\tBEGCL_H1\tBEGCL_T2\tBEGCL_H2\tBEGCL_INDEX\tBEGCL_VER\tBEGCL_NEXT_NUM\tBEGCL_MAC\tBEGCL_ENTRY_TIME";
         //表名
-        String tablename = "BUS_ENTRANCE_GUARD_CARD";
+        String tablename = "BUS_ENTRANCE_GUARD_CARD_LOG";
         creatsql(str, tablename);
     }
 

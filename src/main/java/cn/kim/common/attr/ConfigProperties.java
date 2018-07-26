@@ -39,13 +39,9 @@ public class ConfigProperties {
     public static String mappingPath;
 
     /**
-     * 工作ID
+     * 门禁卡接口AES秘钥
      */
-    public static long WORKER_ID = 0;
-    /**
-     * 数据中心ID
-     */
-    public static long DATACENTER_ID = 0;
+    public static String CARD_AES_KEY = "";
 
     @Value("#{config['jdbc.username']}")
     public void setDbUsername(String dbUsername) {
@@ -97,13 +93,8 @@ public class ConfigProperties {
         ConfigProperties.mappingPath = mappingPath;
     }
 
-    @Value("#{config['worker.id']}")
-    public static void setWorkerId(long workerId) {
-        WORKER_ID = workerId;
-    }
-
-    @Value("#{config['datacenter.id']}")
-    public static void setDatacenterId(long datacenterId) {
-        DATACENTER_ID = datacenterId;
+    @Value("#{config['card.aesKey']}")
+    public static void setCardAesKey(String cardAesKey) {
+        CARD_AES_KEY = cardAesKey;
     }
 }

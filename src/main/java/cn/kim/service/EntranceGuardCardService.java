@@ -38,4 +38,11 @@ public interface EntranceGuardCardService extends BaseService {
      * @return
      */
     Map<String, Object> deleteEntranceGuardCard(Map<String, Object> mapParam);
+
+    /**
+     * 插入心跳日志
+     * @param mapParam
+     * @return
+     */
+    Map<String, Object> insertEntranceGuardCardLog(Map<String, Object> mapParam);
 }

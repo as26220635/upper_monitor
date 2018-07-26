@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public abstract class BaseController extends BaseData {
     protected void setActiveUser(ActiveUser user) {
         AuthcUtil.setCurrentUser(user);
     }
-    
+
     /**
      * 获取账号信息
      *
@@ -171,5 +172,18 @@ public abstract class BaseController extends BaseData {
         } else {
             return Attribute.RECEPTION_404;
         }
+    }
+
+    /**
+     * url参数转为Map
+     * @param urlParams
+     * @return
+     */
+    public Map<String, String> urlParamsToMap(String urlParams) {
+        Map<String, String> map = Maps.newHashMapWithExpectedSize(10);
+        for (String keyValue : urlParams.split("&")) {
+            map.put(keyValue.split("=")[0], keyValue.split("=")[1]);
+        }
+        return map;
     }
 }

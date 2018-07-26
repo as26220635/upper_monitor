@@ -62,7 +62,6 @@ public class HttpClient {
         CloseableHttpResponse response = null;
         String content = "";
         try {
-
             //执行get方法
             response = httpclient.execute(httpGet);
             if (response.getStatusLine().getStatusCode() == 200) {

@@ -90,8 +90,15 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
         try {
             Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(6);
             String id = toString(mapParam.get("ID"));
-
-            paramMap.put("ID", id);
+            //根据ID查询是否存在
+            paramMap.put("BEGC_ID", mapParam.get("BEGC_ID"));
+            Map<String, Object> card = this.selectEntranceGuardCard(paramMap);
+            if (isEmpty(card)) {
+                throw new CustomException("门禁卡信息不存在!");
+            }
+            paramMap.clear();
+            paramMap.put("ID", card.get("ID"));
+            paramMap.put("BEGC_ID", mapParam.get("BEGC_ID"));
             paramMap.put("BEGC_SERIAL", mapParam.get("BEGC_SERIAL"));
             paramMap.put("BEGC_KEY", mapParam.get("BEGC_KEY"));
             paramMap.put("BEGC_STATUS", mapParam.get("BEGC_STATUS"));
@@ -108,6 +115,25 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
             paramMap.put("BEGC_UPDATE_TIME", getDate());
 
             baseDao.update(NameSpace.EntranceGuardCardMapper, "updateEntranceGuardCard", paramMap);
+            //插入心跳日志
+            paramMap.clear();
+            paramMap.put("BEGC_ID", card.get("ID"));
+            paramMap.put("BEGCL_SERIAL", mapParam.get("BEGC_SERIAL"));
+            paramMap.put("BEGCL_ID", mapParam.get("BEGC_ID"));
+            paramMap.put("BEGCL_KEY", mapParam.get("BEGC_KEY"));
+            paramMap.put("BEGCL_STATUS", mapParam.get("BEGC_STATUS"));
+            paramMap.put("BEGCL_INPUT", mapParam.get("BEGC_INPUT"));
+            paramMap.put("BEGCL_NOW", mapParam.get("BEGC_NOW"));
+            paramMap.put("BEGCL_T1", mapParam.get("BEGC_T1"));
+            paramMap.put("BEGCL_H1", mapParam.get("BEGC_H1"));
+            paramMap.put("BEGCL_T2", mapParam.get("BEGC_T2"));
+            paramMap.put("BEGCL_H2", mapParam.get("BEGC_H2"));
+            paramMap.put("BEGCL_INDEX", mapParam.get("BEGC_INDEX"));
+            paramMap.put("BEGCL_VER", mapParam.get("BEGC_VER"));
+            paramMap.put("BEGCL_NEXT_NUM", mapParam.get("BEGC_NEXT_NUM"));
+            paramMap.put("BEGCL_MAC", mapParam.get("BEGC_MAC"));
+            this.insertEntranceGuardCardLog(paramMap);
+
             status = STATUS_SUCCESS;
             desc = SAVE_SUCCESS;
 
@@ -145,6 +171,48 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
             resultMap.put(MagicValue.LOG, "删除门禁卡,信息:" + toString(oldMap));
             status = STATUS_SUCCESS;
             desc = DELETE_SUCCESS;
+        } catch (Exception e) {
+            desc = catchException(e, baseDao, resultMap);
+        }
+        resultMap.put(MagicValue.STATUS, status);
+        resultMap.put(MagicValue.DESC, desc);
+        return resultMap;
+    }
+
+    @Override
+    @Transactional
+    public Map<String, Object> insertEntranceGuardCardLog(Map<String, Object> mapParam) {
+        Map<String, Object> resultMap = Maps.newHashMapWithExpectedSize(5);
+        int status = STATUS_ERROR;
+        String desc = SAVE_ERROR;
+        try {
+            Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(16);
+            String id = getId();
+
+            paramMap.put("ID", id);
+            paramMap.put("BEGC_ID", mapParam.get("BEGC_ID"));
+            paramMap.put("BEGCL_SERIAL", mapParam.get("BEGCL_SERIAL"));
+            paramMap.put("BEGCL_ID", mapParam.get("BEGCL_ID"));
+            paramMap.put("BEGCL_KEY", mapParam.get("BEGCL_KEY"));
+            paramMap.put("BEGCL_STATUS", mapParam.get("BEGCL_STATUS"));
+            paramMap.put("BEGCL_INPUT", mapParam.get("BEGCL_INPUT"));
+            paramMap.put("BEGCL_NOW", mapParam.get("BEGCL_NOW"));
+            paramMap.put("BEGCL_T1", mapParam.get("BEGCL_T1"));
+            paramMap.put("BEGCL_H1", mapParam.get("BEGCL_H1"));
+            paramMap.put("BEGCL_T2", mapParam.get("BEGCL_T2"));
+            paramMap.put("BEGCL_H2", mapParam.get("BEGCL_H2"));
+            paramMap.put("BEGCL_INDEX", mapParam.get("BEGCL_INDEX"));
+            paramMap.put("BEGCL_VER", mapParam.get("BEGCL_VER"));
+            paramMap.put("BEGCL_NEXT_NUM", mapParam.get("BEGCL_NEXT_NUM"));
+            paramMap.put("BEGCL_MAC", mapParam.get("BEGCL_MAC"));
+            paramMap.put("BEGCL_ENTRY_TIME", getDate());
+
+            baseDao.insert(NameSpace.EntranceGuardCardMapper, "insertEntranceGuardCardLog", paramMap);
+            resultMap.put(MagicValue.LOG, "添加门禁卡心跳日志:" + toString(paramMap));
+            status = STATUS_SUCCESS;
+            desc = SAVE_SUCCESS;
+
+            resultMap.put("ID", id);
         } catch (Exception e) {
             desc = catchException(e, baseDao, resultMap);
         }

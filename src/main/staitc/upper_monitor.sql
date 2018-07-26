@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 26/07/2018 14:21:59
+ Date: 27/07/2018 00:52:56
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `bus_entrance_guard_card`  (
   `BEGC_SERIAL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的序列号',
   `BEGC_ID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的自定义标识符，请在WEB界面设置',
   `BEGC_KEY` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发送的键值,服务器需要原值返回',
-  `BEGC_STATUS` int(5) NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
+  `BEGC_STATUS` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
   `BEGC_INPUT` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '输入状态16进制值\r\nBit11 复位按钮\r\nBit10 防拆\r\nBit6-9 扩展输入1-4	Bit5 火警输入\r\nBit4 报警输入\r\nBit2-3 门磁1-2\r\nBit0-1 按钮1-2\r\n',
   `BEGC_NOW` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '当前设备时间：前面的14个字节按格式：yyyyMMddHHmmss\r\n后面的2个字节为星期，星期从星期日起，星期日为01\r\n',
   `BEGC_T1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '温度计1',
@@ -35,7 +35,7 @@ CREATE TABLE `bus_entrance_guard_card`  (
   `BEGC_H2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '湿度计2',
   `BEGC_INDEX` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '随机值',
   `BEGC_VER` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '固件详细版本',
-  `BEGC_NEXT_NUM` int(5) UNSIGNED NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
+  `BEGC_NEXT_NUM` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
   `BEGC_MAC` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的MAC地址',
   `BEGC_USERNAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
   `BEGC_PASSWORD` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
@@ -60,7 +60,7 @@ CREATE TABLE `bus_entrance_guard_card_log`  (
   `BEGCL_SERIAL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的序列号',
   `BEGCL_ID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的自定义标识符，请在WEB界面设置',
   `BEGCL_KEY` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发送的键值,服务器需要原值返回',
-  `BEGCL_STATUS` int(5) NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
+  `BEGCL_STATUS` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
   `BEGCL_INPUT` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '输入状态16进制值\r\nBit11 复位按钮\r\nBit10 防拆\r\nBit6-9 扩展输入1-4	Bit5 火警输入\r\nBit4 报警输入\r\nBit2-3 门磁1-2\r\nBit0-1 按钮1-2\r\n',
   `BEGCL_NOW` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '当前设备时间：前面的14个字节按格式：yyyyMMddHHmmss\r\n后面的2个字节为星期，星期从星期日起，星期日为01\r\n',
   `BEGCL_T1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '温度计1',
@@ -69,7 +69,7 @@ CREATE TABLE `bus_entrance_guard_card_log`  (
   `BEGCL_H2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '湿度计2',
   `BEGCL_INDEX` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '随机值',
   `BEGCL_VER` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '固件详细版本',
-  `BEGCL_NEXT_NUM` int(5) UNSIGNED NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
+  `BEGCL_NEXT_NUM` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
   `BEGCL_MAC` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的MAC地址',
   `BEGCL_ENTRY_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '录入时间',
   PRIMARY KEY (`ID`) USING BTREE,
@@ -384,8 +384,6 @@ INSERT INTO `sys_configure_column` VALUES ('44525406132371456', '381634895287418
 INSERT INTO `sys_configure_column` VALUES ('44525553360830464', '38163489528741888', '温度计1', 'BEGC_T1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 40);
 INSERT INTO `sys_configure_column` VALUES ('44525606716571648', '38163489528741888', '湿度计1', 'BEGC_H1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 50);
 INSERT INTO `sys_configure_column` VALUES ('44525695614844928', '38163489528741888', '更新时间', 'BEGC_UPDATE_TIME', 'center', '150px', '', '', '', '0', NULL, '1', '0', 60);
-INSERT INTO `sys_configure_column` VALUES ('44533690310590464', '38163489528741888', '温度计2', 'BEGC_T2', 'center', '100px', '', '', '', '0', NULL, '1', '0', 51);
-INSERT INTO `sys_configure_column` VALUES ('44533767846494208', '38163489528741888', '湿度计2', 'BEGC_H2', 'center', '100px', '', '', '', '0', NULL, '1', '0', 52);
 INSERT INTO `sys_configure_column` VALUES ('5', '2', '名称', 'SB_NAME', 'center', '150px', NULL, NULL, NULL, '0', NULL, '1', '0', 1);
 INSERT INTO `sys_configure_column` VALUES ('6', '2', '操作ID', 'SB_BUTTONID', 'center', '100px', NULL, NULL, NULL, '0', NULL, '1', '0', 2);
 INSERT INTO `sys_configure_column` VALUES ('7', '2', '图标', 'SB_ICON', 'center', '20px', NULL, 'btnClassFunc(targets,field)', NULL, '0', NULL, '1', '0', 3);
@@ -3496,6 +3494,9 @@ INSERT INTO `sys_log` VALUES ('44537316840046592', '1', NULL, '修改菜单', '0
 INSERT INTO `sys_log` VALUES ('44542633879535616', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:10:20', '1', 2);
 INSERT INTO `sys_log` VALUES ('44542778318782464', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:10:55', '1', 2);
 INSERT INTO `sys_log` VALUES ('44544939836571648', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:19:30', '1', 2);
+INSERT INTO `sys_log` VALUES ('44600834398355456', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:01:36', '1', 9);
+INSERT INTO `sys_log` VALUES ('44603062462971904', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:10:28', '1', 2);
+INSERT INTO `sys_log` VALUES ('44603069064806400', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:10:29', '1', 2);
 INSERT INTO `sys_log` VALUES ('480859698233344', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:35', '1', 9);
 INSERT INTO `sys_log` VALUES ('480949980626944', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:56', '1', 9);
 INSERT INTO `sys_log` VALUES ('483274396794880', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:14:10', '1', 9);
@@ -6412,6 +6413,9 @@ INSERT INTO `sys_log_text` VALUES ('44537316865212416', '44537316840046592', '�
 INSERT INTO `sys_log_text` VALUES ('44542633917284352', '44542633879535616', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=160px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
 INSERT INTO `sys_log_text` VALUES ('44542778612383744', '44542778318782464', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=1, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=160px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
 INSERT INTO `sys_log_text` VALUES ('44544940084035584', '44544939836571648', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=1, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=80px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
+INSERT INTO `sys_log_text` VALUES ('44600834813591552', '44600834398355456', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44603062488137728', '44603062462971904', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=湿度计2, SCC_FUNC=, SCC_IS_MERGE=null, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_H2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533767846494208, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=52}');
+INSERT INTO `sys_log_text` VALUES ('44603069127720960', '44603069064806400', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=温度计2, SCC_FUNC=, SCC_IS_MERGE=null, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_T2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533690310590464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=51}');
 INSERT INTO `sys_log_text` VALUES ('480859756953600', '480859698233344', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('480950030958592', '480949980626944', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('483274606510080', '483274396794880', '登录成功!登录地址:未知');
@@ -7622,6 +7626,8 @@ INSERT INTO `sys_value_record` VALUES ('44537316366090240', '1', 'SYS_MENU', '38
 INSERT INTO `sys_value_record` VALUES ('44542633552379904', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:10:20', 2);
 INSERT INTO `sys_value_record` VALUES ('44542777924517888', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:10:55', 2);
 INSERT INTO `sys_value_record` VALUES ('44544939677188096', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"80px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:19:30', 2);
+INSERT INTO `sys_value_record` VALUES ('44603062349725696', '1', 'SYS_CONFIGURE_COLUMN', '44533767846494208', NULL, NULL, '2018-07-26 18:10:28', 3);
+INSERT INTO `sys_value_record` VALUES ('44603068968337408', '1', 'SYS_CONFIGURE_COLUMN', '44533690310590464', NULL, NULL, '2018-07-26 18:10:29', 3);
 
 -- ----------------------------
 -- Table structure for test_process

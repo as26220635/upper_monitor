@@ -106,4 +106,89 @@
     <delete id="deleteEntranceGuardCard" parameterType="java.util.Map">
 		DELETE FROM BUS_ENTRANCE_GUARD_CARD WHERE ID = #{ID}
 	</delete>
+
+    <!--查询-->
+    <select id="selectEntranceGuardCardLog" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM BUS_ENTRANCE_GUARD_CARD_LOG
+        <where>
+            <if test ="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入-->
+    <insert id="insertEntranceGuardCardLog" parameterType="java.util.Map">
+        INSERT INTO BUS_ENTRANCE_GUARD_CARD_LOG
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="BEGC_ID != null">BEGC_ID,</if>
+            <if test="BEGCL_SERIAL != null">BEGCL_SERIAL,</if>
+            <if test="BEGCL_ID != null">BEGCL_ID,</if>
+            <if test="BEGCL_KEY != null">BEGCL_KEY,</if>
+            <if test="BEGCL_STATUS != null">BEGCL_STATUS,</if>
+            <if test="BEGCL_INPUT != null">BEGCL_INPUT,</if>
+            <if test="BEGCL_NOW != null">BEGCL_NOW,</if>
+            <if test="BEGCL_T1 != null">BEGCL_T1,</if>
+            <if test="BEGCL_H1 != null">BEGCL_H1,</if>
+            <if test="BEGCL_T2 != null">BEGCL_T2,</if>
+            <if test="BEGCL_H2 != null">BEGCL_H2,</if>
+            <if test="BEGCL_INDEX != null">BEGCL_INDEX,</if>
+            <if test="BEGCL_VER != null">BEGCL_VER,</if>
+            <if test="BEGCL_NEXT_NUM != null">BEGCL_NEXT_NUM,</if>
+            <if test="BEGCL_MAC != null">BEGCL_MAC,</if>
+            <if test="BEGCL_ENTRY_TIME != null">BEGCL_ENTRY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="BEGC_ID != null">#{BEGC_ID},</if>
+            <if test="BEGCL_SERIAL != null">#{BEGCL_SERIAL},</if>
+            <if test="BEGCL_ID != null">#{BEGCL_ID},</if>
+            <if test="BEGCL_KEY != null">#{BEGCL_KEY},</if>
+            <if test="BEGCL_STATUS != null">#{BEGCL_STATUS},</if>
+            <if test="BEGCL_INPUT != null">#{BEGCL_INPUT},</if>
+            <if test="BEGCL_NOW != null">#{BEGCL_NOW},</if>
+            <if test="BEGCL_T1 != null">#{BEGCL_T1},</if>
+            <if test="BEGCL_H1 != null">#{BEGCL_H1},</if>
+            <if test="BEGCL_T2 != null">#{BEGCL_T2},</if>
+            <if test="BEGCL_H2 != null">#{BEGCL_H2},</if>
+            <if test="BEGCL_INDEX != null">#{BEGCL_INDEX},</if>
+            <if test="BEGCL_VER != null">#{BEGCL_VER},</if>
+            <if test="BEGCL_NEXT_NUM != null">#{BEGCL_NEXT_NUM},</if>
+            <if test="BEGCL_MAC != null">#{BEGCL_MAC},</if>
+            <if test="BEGCL_ENTRY_TIME != null">#{BEGCL_ENTRY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑-->
+    <update id="updateEntranceGuardCardLog" parameterType="java.util.Map">
+        UPDATE BUS_ENTRANCE_GUARD_CARD_LOG
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="BEGC_ID != null">BEGC_ID=#{BEGC_ID},</if>
+            <if test="BEGCL_SERIAL != null">BEGCL_SERIAL=#{BEGCL_SERIAL},</if>
+            <if test="BEGCL_ID != null">BEGCL_ID=#{BEGCL_ID},</if>
+            <if test="BEGCL_KEY != null">BEGCL_KEY=#{BEGCL_KEY},</if>
+            <if test="BEGCL_STATUS != null">BEGCL_STATUS=#{BEGCL_STATUS},</if>
+            <if test="BEGCL_INPUT != null">BEGCL_INPUT=#{BEGCL_INPUT},</if>
+            <if test="BEGCL_NOW != null">BEGCL_NOW=#{BEGCL_NOW},</if>
+            <if test="BEGCL_T1 != null">BEGCL_T1=#{BEGCL_T1},</if>
+            <if test="BEGCL_H1 != null">BEGCL_H1=#{BEGCL_H1},</if>
+            <if test="BEGCL_T2 != null">BEGCL_T2=#{BEGCL_T2},</if>
+            <if test="BEGCL_H2 != null">BEGCL_H2=#{BEGCL_H2},</if>
+            <if test="BEGCL_INDEX != null">BEGCL_INDEX=#{BEGCL_INDEX},</if>
+            <if test="BEGCL_VER != null">BEGCL_VER=#{BEGCL_VER},</if>
+            <if test="BEGCL_NEXT_NUM != null">BEGCL_NEXT_NUM=#{BEGCL_NEXT_NUM},</if>
+            <if test="BEGCL_MAC != null">BEGCL_MAC=#{BEGCL_MAC},</if>
+            <if test="BEGCL_ENTRY_TIME != null">BEGCL_ENTRY_TIME=#{BEGCL_ENTRY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除-->
+    <delete id="deleteEntranceGuardCardLog" parameterType="java.util.Map">
+		DELETE FROM BUS_ENTRANCE_GUARD_CARD_LOG WHERE ID = #{ID}
+	</delete>
 </mapper>
