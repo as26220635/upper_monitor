@@ -39,8 +39,8 @@ public enum NameSpace {
     ProcessFixedMapper("cn.kim.mapper.ProcessFixedMapper"),
     //格式管理
     FormatMapper("cn.kim.mapper.FormatMapper"),
-    //部门管理
-    DivisionMapper("cn.kim.mapper.DivisionMapper");
+    //门禁卡管理
+    EntranceGuardCardMapper("cn.kim.mapper.EntranceGuardCardMapper");
 
     private final String value;
 

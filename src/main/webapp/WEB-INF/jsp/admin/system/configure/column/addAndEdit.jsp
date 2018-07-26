@@ -53,6 +53,11 @@
                     value="${COLUMN.SCC_IS_OPERATION}" defaultValue="0"></s:combobox>
     </div>
     <div class="form-group has-feedback">
+        <label>是否合并操作列:</label>
+        <s:combobox sdtCode="SYS_YES_NO" custom='${fns:validField("SYS_CONFIGURE_COLUMN","SCC_IS_MERGE")}'
+                    value="${COLUMN.SCC_IS_MERGE}"></s:combobox>
+    </div>
+    <div class="form-group has-feedback">
         <label>是否是状态列:</label>
         <s:combobox sdtCode="SYS_YES_NO" custom='${fns:validField("SYS_CONFIGURE_COLUMN","SCC_IS_STATUS")}'
                     value="${COLUMN.SCC_IS_STATUS}" defaultValue="0"></s:combobox>

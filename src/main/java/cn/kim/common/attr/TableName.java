@@ -119,7 +119,7 @@ public class TableName {
     public static final String SYS_VALIDATE_REGEX = "SYS_VALIDATE_REGEX";
 
     /**
-     * 部门
+     * 门禁卡
      */
-    public static final String BUS_DIVISION = "BUS_DIVISION";
+    public static final String BUS_ENTRANCE_GUARD_CARD = "BUS_ENTRANCE_GUARD_CARD";
 }

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kim.mapper.EntranceGuardCardMapper">
+    <!--门禁卡-->
+
+    <!--查询-->
+    <select id="selectEntranceGuardCard" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT * FROM BUS_ENTRANCE_GUARD_CARD
+        <where>
+            <if test ="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+        </where>
+    </select>
+
+    <!--查询-->
+    <select id="selectEntranceGuardCardCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM BUS_ENTRANCE_GUARD_CARD
+        <where>
+            <if test ="NOT_ID != NULL and NOT_ID != ''">
+                AND ID != #{NOT_ID}
+            </if>
+            <if test ="BEGC_ID != NULL and BEGC_ID != ''">
+                AND BEGC_ID = #{BEGC_ID}
+            </if>
+        </where>
+    </select>
+
+    <!--插入-->
+    <insert id="insertEntranceGuardCard" parameterType="java.util.Map">
+        INSERT INTO BUS_ENTRANCE_GUARD_CARD
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="ID != null">ID,</if>
+            <if test="BEGC_SERIAL != null">BEGC_SERIAL,</if>
+            <if test="BEGC_ID != null">BEGC_ID,</if>
+            <if test="BEGC_KEY != null">BEGC_KEY,</if>
+            <if test="BEGC_STATUS != null">BEGC_STATUS,</if>
+            <if test="BEGC_INPUT != null">BEGC_INPUT,</if>
+            <if test="BEGC_NOW != null">BEGC_NOW,</if>
+            <if test="BEGC_T1 != null">BEGC_T1,</if>
+            <if test="BEGC_H1 != null">BEGC_H1,</if>
+            <if test="BEGC_T2 != null">BEGC_T2,</if>
+            <if test="BEGC_H2 != null">BEGC_H2,</if>
+            <if test="BEGC_INDEX != null">BEGC_INDEX,</if>
+            <if test="BEGC_VER != null">BEGC_VER,</if>
+            <if test="BEGC_NEXT_NUM != null">BEGC_NEXT_NUM,</if>
+            <if test="BEGC_MAC != null">BEGC_MAC,</if>
+            <if test="BEGC_USERNAME != null">BEGC_USERNAME,</if>
+            <if test="BEGC_PASSWORD != null">BEGC_PASSWORD,</if>
+            <if test="BEGC_UPDATE_TIME != null">BEGC_UPDATE_TIME,</if>
+            <if test="BEGC_ENTRY_TIME != null">BEGC_ENTRY_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="ID != null">#{ID},</if>
+            <if test="BEGC_SERIAL != null">#{BEGC_SERIAL},</if>
+            <if test="BEGC_ID != null">#{BEGC_ID},</if>
+            <if test="BEGC_KEY != null">#{BEGC_KEY},</if>
+            <if test="BEGC_STATUS != null">#{BEGC_STATUS},</if>
+            <if test="BEGC_INPUT != null">#{BEGC_INPUT},</if>
+            <if test="BEGC_NOW != null">#{BEGC_NOW},</if>
+            <if test="BEGC_T1 != null">#{BEGC_T1},</if>
+            <if test="BEGC_H1 != null">#{BEGC_H1},</if>
+            <if test="BEGC_T2 != null">#{BEGC_T2},</if>
+            <if test="BEGC_H2 != null">#{BEGC_H2},</if>
+            <if test="BEGC_INDEX != null">#{BEGC_INDEX},</if>
+            <if test="BEGC_VER != null">#{BEGC_VER},</if>
+            <if test="BEGC_NEXT_NUM != null">#{BEGC_NEXT_NUM},</if>
+            <if test="BEGC_MAC != null">#{BEGC_MAC},</if>
+            <if test="BEGC_USERNAME != null">#{BEGC_USERNAME},</if>
+            <if test="BEGC_PASSWORD != null">#{BEGC_PASSWORD},</if>
+            <if test="BEGC_UPDATE_TIME != null">#{BEGC_UPDATE_TIME},</if>
+            <if test="BEGC_ENTRY_TIME != null">#{BEGC_ENTRY_TIME},</if>
+        </trim>
+    </insert>
+
+    <!--编辑-->
+    <update id="updateEntranceGuardCard" parameterType="java.util.Map">
+        UPDATE BUS_ENTRANCE_GUARD_CARD
+        <set>
+            <if test="ID != null">ID=#{ID},</if>
+            <if test="BEGC_SERIAL != null">BEGC_SERIAL=#{BEGC_SERIAL},</if>
+            <if test="BEGC_ID != null">BEGC_ID=#{BEGC_ID},</if>
+            <if test="BEGC_KEY != null">BEGC_KEY=#{BEGC_KEY},</if>
+            <if test="BEGC_STATUS != null">BEGC_STATUS=#{BEGC_STATUS},</if>
+            <if test="BEGC_INPUT != null">BEGC_INPUT=#{BEGC_INPUT},</if>
+            <if test="BEGC_NOW != null">BEGC_NOW=#{BEGC_NOW},</if>
+            <if test="BEGC_T1 != null">BEGC_T1=#{BEGC_T1},</if>
+            <if test="BEGC_H1 != null">BEGC_H1=#{BEGC_H1},</if>
+            <if test="BEGC_T2 != null">BEGC_T2=#{BEGC_T2},</if>
+            <if test="BEGC_H2 != null">BEGC_H2=#{BEGC_H2},</if>
+            <if test="BEGC_INDEX != null">BEGC_INDEX=#{BEGC_INDEX},</if>
+            <if test="BEGC_VER != null">BEGC_VER=#{BEGC_VER},</if>
+            <if test="BEGC_NEXT_NUM != null">BEGC_NEXT_NUM=#{BEGC_NEXT_NUM},</if>
+            <if test="BEGC_MAC != null">BEGC_MAC=#{BEGC_MAC},</if>
+            <if test="BEGC_USERNAME != null">BEGC_USERNAME=#{BEGC_USERNAME},</if>
+            <if test="BEGC_PASSWORD != null">BEGC_PASSWORD=#{BEGC_PASSWORD},</if>
+            <if test="BEGC_UPDATE_TIME != null">BEGC_UPDATE_TIME=#{BEGC_UPDATE_TIME},</if>
+            <if test="BEGC_ENTRY_TIME != null">BEGC_ENTRY_TIME=#{BEGC_ENTRY_TIME},</if>
+        </set>
+        <where>
+            <if test="ID !=null">ID=#{ID}</if>
+        </where>
+    </update>
+
+    <!--删除-->
+    <delete id="deleteEntranceGuardCard" parameterType="java.util.Map">
+		DELETE FROM BUS_ENTRANCE_GUARD_CARD WHERE ID = #{ID}
+	</delete>
+</mapper>

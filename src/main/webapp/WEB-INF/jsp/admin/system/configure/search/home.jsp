@@ -78,13 +78,13 @@
 
         model.show({
             title: '删除配置列表搜索',
-            content: '是否删除配置列表搜索:' + data.SCC_NAME,
+            content: '是否删除配置列表搜索:' + data.SCS_NAME,
             class: model.class.DANGER,
             okBtnName: model.btnName.DEL,
             footerModel: model.footerModel.ADMIN,
             isConfirm: true,
             confirm: function ($model) {
-                ajax.del('${CONFIGURE_SEARCH_DELETE_URL}' + id, {}, function (data) {
+                ajax.del('${CONFIGURE_SEARCH_DELETE_URL}/' + id, {}, function (data) {
                     ajaxReturn.data(data, $model, $dataGrid, false);
                 })
             }

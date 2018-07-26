@@ -170,6 +170,7 @@ public class ConfigureServiceImpl extends BaseServiceImpl implements ConfigureSe
             paramMap.put("SCC_FUNC", mapParam.get("SCC_FUNC"));
             paramMap.put("SCC_SDT_CODE", mapParam.get("SCC_SDT_CODE"));
             paramMap.put("SCC_IS_OPERATION", mapParam.get("SCC_IS_OPERATION"));
+            paramMap.put("SCC_IS_MERGE", mapParam.get("SCC_IS_MERGE"));
             paramMap.put("SCC_IS_VISIBLE", mapParam.get("SCC_IS_VISIBLE"));
             paramMap.put("SCC_IS_STATUS", mapParam.get("SCC_IS_STATUS"));
             paramMap.put("SCC_ORDER", mapParam.get("SCC_ORDER"));
@@ -318,7 +319,9 @@ public class ConfigureServiceImpl extends BaseServiceImpl implements ConfigureSe
             paramMap.put("ID", oldMap.get("SC_ID"));
             Map<String, Object> configure = selectConfigure(paramMap);
             //记录日志
+            paramMap.clear();
             paramMap.put("SVR_TABLE_NAME", TableName.SYS_CONFIGURE_SEARCH);
+            paramMap.put("ID", id);
             baseDao.delete(NameSpace.ConfigureMapper, "deleteConfigureSearch", paramMap);
 
             resultMap.put(MagicValue.LOG, "删除配置列表搜索,配置列表:" + toString(configure.get("SC_NAME")) + "搜索:" + toString(oldMap));

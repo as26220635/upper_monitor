@@ -4,11 +4,12 @@
 <%--通用列表--%>
 <%@ include file="/WEB-INF/jsp/admin/component/grid/dataGrid.jsp" %>
 <script>
+    // $dataGridTable.css('display','inline-block');
     //添加
     $('#addBtn').on('click', function () {
-        ajax.getHtml('${DIVISION_ADD_URL}', {}, function (html) {
+        ajax.getHtml('${ENTRANCE_GUARD_CARD_ADD_URL}', {}, function (html) {
                 model.show({
-                    title: '添加部门',
+                    title: '添加门禁卡',
                     content: html,
                     footerModel: model.footerModel.ADMIN,
                     isConfirm: true,
@@ -21,7 +22,7 @@
                         }
                         var params = packFormParams($form);
 
-                        ajax.post('${DIVISION_ADD_URL}', params, function (data) {
+                        ajax.post('${ENTRANCE_GUARD_CARD_ADD_URL}', params, function (data) {
                             ajaxReturn.data(data, $model, $dataGrid, true);
                         })
                     }
@@ -35,12 +36,12 @@
         var data = getRowData(this);
         var id = data.ID;
 
-        ajax.getHtml('${DIVISION_UPDATE_URL}/' + id, {}, function (html) {
+        ajax.getHtml('${ENTRANCE_GUARD_CARD_UPDATE_URL}/' + id, {}, function (html) {
                 model.show({
-                    title: '修改部门',
+                    title: '修改门禁卡',
                     content: html,
                     footerModel: model.footerModel.ADMIN,
-                    <shiro:hasPermission name="INFO:DIVISION_UPDATE_SAVE">
+                    <shiro:hasPermission name="BUS:ENTRANCE_GUARD_CARD_UPDATE_SAVE">
                     isConfirm: true,
                     confirm: function ($model) {
                         var $form = $('#addAndEditForm');
@@ -51,7 +52,7 @@
                         }
                         var params = packFormParams($form);
 
-                        ajax.put('${DIVISION_UPDATE_URL}', params, function (data) {
+                        ajax.put('${ENTRANCE_GUARD_CARD_UPDATE_URL}', params, function (data) {
                             ajaxReturn.data(data, $model, $dataGrid, false);
                         });
                     }
@@ -67,14 +68,14 @@
         var id = data.ID;
 
         model.show({
-            title: '删除部门',
-            content: '是否删除部门:' + data.BD_NAME,
+            title: '删除门禁卡',
+            content: '是否删除门禁卡:' + data.BEGC_ID,
             class: model.class.DANGER,
             okBtnName: model.btnName.DEL,
             footerModel: model.footerModel.ADMIN,
             isConfirm: true,
             confirm: function ($model) {
-                ajax.del('${DIVISION_DELETE_URL}/' + id, {}, function (data) {
+                ajax.del('${ENTRANCE_GUARD_CARD_DELETE_URL}/' + id, {}, function (data) {
                     ajaxReturn.data(data, $model, $dataGrid, false);
                 })
             }

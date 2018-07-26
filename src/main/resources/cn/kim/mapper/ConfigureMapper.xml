@@ -98,6 +98,7 @@
             <if test="SCC_FUNC != null">SCC_FUNC,</if>
             <if test="SCC_SDT_CODE != null">SCC_SDT_CODE,</if>
             <if test="SCC_IS_OPERATION != null">SCC_IS_OPERATION,</if>
+            <if test="SCC_IS_MERGE != null">SCC_IS_MERGE,</if>
             <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE,</if>
             <if test="SCC_IS_STATUS != null">SCC_IS_STATUS,</if>
             <if test="SCC_ORDER != null">SCC_ORDER,</if>
@@ -113,6 +114,7 @@
             <if test="SCC_FUNC != null">#{SCC_FUNC},</if>
             <if test="SCC_SDT_CODE != null">#{SCC_SDT_CODE},</if>
             <if test="SCC_IS_OPERATION != null">#{SCC_IS_OPERATION},</if>
+            <if test="SCC_IS_MERGE != null">#{SCC_IS_MERGE},</if>
             <if test="SCC_IS_VISIBLE != null">#{SCC_IS_VISIBLE},</if>
             <if test="SCC_IS_STATUS != null">#{SCC_IS_STATUS},</if>
             <if test="SCC_ORDER != null">#{SCC_ORDER},</if>
@@ -133,6 +135,7 @@
             <if test="SCC_FUNC != null">SCC_FUNC=#{SCC_FUNC},</if>
             <if test="SCC_SDT_CODE != null">SCC_SDT_CODE=#{SCC_SDT_CODE},</if>
             <if test="SCC_IS_OPERATION != null">SCC_IS_OPERATION=#{SCC_IS_OPERATION},</if>
+            <if test="SCC_IS_MERGE != null">SCC_IS_MERGE=#{SCC_IS_MERGE},</if>
             <if test="SCC_IS_VISIBLE != null">SCC_IS_VISIBLE=#{SCC_IS_VISIBLE},</if>
             <if test="SCC_IS_STATUS != null">SCC_IS_STATUS=#{SCC_IS_STATUS},</if>
             <if test="SCC_ORDER != null">SCC_ORDER=#{SCC_ORDER},</if>

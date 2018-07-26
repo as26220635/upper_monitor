@@ -116,10 +116,36 @@
                 <%--操作按钮--%>
                 <c:when test="${COLUMN.SCC_IS_OPERATION eq Attribute.STATUS_SUCCESS }">
                 formatter: function (value, row, index) {
-                    var operate = <c:forEach items="${LIST_BUTTON}" var="BUTTON">
-                        '<button type="button" class="${BUTTON.SB_CLASS} btn-xs" id="${BUTTON.SB_BUTTONID}" value="' + row.ID + '"  data-index="' + index + '"  onclick="${fns:formatFunc(COLUMN.SCC_FUNC,status.index,COLUMN.SCC_FIELD)}"><i class="${BUTTON.SB_ICON}"></i>${BUTTON.SB_NAME}</button>' +
-                        </c:forEach>
-                        '';
+                    var operate = '';
+                    <c:choose>
+                    <%--合并操作按钮--%>
+                    <c:when test="${COLUMN.SCC_IS_MERGE eq Attribute.STATUS_SUCCESS}">
+                    operate+='<div class="btn-group">';
+                    operate+='<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">操作 <span class="caret"></span></button>';
+                    operate+='<ul class="dropdown-menu" role="menu">';
+                    <c:forEach items="${LIST_BUTTON}" var="BUTTON" varStatus="status">
+                    var btn${status.index} = '<li><a href="javascript:void(0);" data-index="' + index + '"  id="${BUTTON.SB_BUTTONID}" value="' + row.ID + '" onclick="${fns:formatFunc(COLUMN.SCC_FUNC,status.index + 1,COLUMN.SCC_FIELD)}"><i class="${BUTTON.SB_ICON}"></i>${BUTTON.SB_NAME}</button></li>';
+                    if (typeof dataGridButtonFormat == 'function') {
+                        operate += dataGridButtonFormat(row, '${BUTTON.SB_BUTTONID}', btn${status.index});
+                    } else {
+                        operate += btn${status.index};
+                    }
+                    </c:forEach>
+                    operate+='</ul>';
+                    operate+='</div>';
+                    </c:when>
+                    <c:otherwise>
+                    <c:forEach items="${LIST_BUTTON}" var="BUTTON" varStatus="status">
+                    var btn${status.index} = '<button type="button" class="${BUTTON.SB_CLASS} btn-xs" data-index="' + index + '"  id="${BUTTON.SB_BUTTONID}" value="' + row.ID + '" onclick="${fns:formatFunc(COLUMN.SCC_FUNC,status.index + 1,COLUMN.SCC_FIELD)}"><i class="${BUTTON.SB_ICON}"></i>${BUTTON.SB_NAME}</button>';
+                    if (typeof dataGridButtonFormat == 'function') {
+                        operate += dataGridButtonFormat(row, '${BUTTON.SB_BUTTONID}', btn${status.index});
+                    } else {
+                        operate += btn${status.index};
+                    }
+                    </c:forEach>
+                    </c:otherwise>
+                    </c:choose>
+
                     return operate;
                 }
                 </c:when>

@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 25/07/2018 23:56:34
+ Date: 26/07/2018 14:21:59
 */
 
 SET NAMES utf8mb4;
@@ -23,7 +23,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `bus_entrance_guard_card`;
 CREATE TABLE `bus_entrance_guard_card`  (
   `ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `BEGC_SERIAL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的序列号',
+  `BEGC_SERIAL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的序列号',
   `BEGC_ID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的自定义标识符，请在WEB界面设置',
   `BEGC_KEY` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发送的键值,服务器需要原值返回',
   `BEGC_STATUS` int(5) NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
@@ -35,10 +35,43 @@ CREATE TABLE `bus_entrance_guard_card`  (
   `BEGC_H2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '湿度计2',
   `BEGC_INDEX` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '随机值',
   `BEGC_VER` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '固件详细版本',
-  `BEGC_NEXT_NUM` int(5) NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
+  `BEGC_NEXT_NUM` int(5) UNSIGNED NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
   `BEGC_MAC` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的MAC地址',
   `BEGC_USERNAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
-  `BEGC_PASSWORD` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
+  `BEGC_PASSWORD` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
+  `BEGC_UPDATE_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新时间',
+  `BEGC_ENTRY_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '录入时间',
+  PRIMARY KEY (`ID`) USING BTREE,
+  INDEX `BEGC_ID`(`BEGC_ID`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of bus_entrance_guard_card
+-- ----------------------------
+INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', NULL, 'test1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test2', 'test3', '2018-07-26 13:18:12', '2018-07-26 13:18:12');
+
+-- ----------------------------
+-- Table structure for bus_entrance_guard_card_log
+-- ----------------------------
+DROP TABLE IF EXISTS `bus_entrance_guard_card_log`;
+CREATE TABLE `bus_entrance_guard_card_log`  (
+  `ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `BEGC_ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '门禁卡ID',
+  `BEGCL_SERIAL` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的序列号',
+  `BEGCL_ID` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '设备的自定义标识符，请在WEB界面设置',
+  `BEGCL_KEY` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发送的键值,服务器需要原值返回',
+  `BEGCL_STATUS` int(5) NULL DEFAULT NULL COMMENT '当前门状态, 16进制值\r\nBit6 进继电器输出;   Bit7 出继电器输出;\r\nBit4 进锁定;         Bit5 出锁定; \r\nBit2 报警继电器输出; \r\nBit1 出门状态-门磁和继电器都关则表示关;\r\nBit0 进门状态-门磁和继电器都关则表示关;   1开0 关\r\n',
+  `BEGCL_INPUT` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '输入状态16进制值\r\nBit11 复位按钮\r\nBit10 防拆\r\nBit6-9 扩展输入1-4	Bit5 火警输入\r\nBit4 报警输入\r\nBit2-3 门磁1-2\r\nBit0-1 按钮1-2\r\n',
+  `BEGCL_NOW` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '当前设备时间：前面的14个字节按格式：yyyyMMddHHmmss\r\n后面的2个字节为星期，星期从星期日起，星期日为01\r\n',
+  `BEGCL_T1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '温度计1',
+  `BEGCL_H1` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '湿度计1',
+  `BEGCL_T2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '温度计2',
+  `BEGCL_H2` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '湿度计2',
+  `BEGCL_INDEX` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '随机值',
+  `BEGCL_VER` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '固件详细版本',
+  `BEGCL_NEXT_NUM` int(5) UNSIGNED NULL DEFAULT NULL COMMENT '单次刷卡多人通过时，余下还有几个人需要通过。',
+  `BEGCL_MAC` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的MAC地址',
+  `BEGCL_ENTRY_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '录入时间',
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `BEGC_ID`(`BEGC_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -166,7 +199,8 @@ CREATE TABLE `sys_configure`  (
   `SC_IS_SEARCH` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否开启搜索',
   `SC_IS_FILTER` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否开启自定义过滤',
   PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `ID`(`ID`) USING BTREE
+  INDEX `ID`(`ID`) USING BTREE,
+  INDEX `ID_2`(`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -193,7 +227,7 @@ INSERT INTO `sys_configure` VALUES ('3', '角色管理', 'v_role', 'CONVERT(ID,S
 INSERT INTO `sys_configure` VALUES ('33080508233547776', '流程管理-流程进度', 'v_process_schedule', 'CONVERT(ID,SIGNED) DESC', 'admin/system/process/schedule/home', '', '', '1', '1', '');
 INSERT INTO `sys_configure` VALUES ('3316994321416192', '操作员管理', 'v_operator', 'CONVERT(ID,SIGNED) DESC', 'admin/system/operator/home', '', '', '1', '1', NULL);
 INSERT INTO `sys_configure` VALUES ('3545555946962944', '操作员管理-账号管理', 'v_operator_sub', '', 'admin/system/operator/sub/home', '', '', '0', '0', NULL);
-INSERT INTO `sys_configure` VALUES ('38163489528741888', '基础信息管理-部门管理', 'v_division', 'CONVERT(ID,SIGNED) DESC', 'admin/info/division/home', '', '', '1', '1', '');
+INSERT INTO `sys_configure` VALUES ('38163489528741888', '门禁卡管理-门禁卡', 'v_entrance_guard_card', 'CONVERT(ID,SIGNED) DESC', 'admin/bus/entranceGuardCard/home', '', '', '1', '1', '');
 
 -- ----------------------------
 -- Table structure for sys_configure_column
@@ -210,6 +244,7 @@ CREATE TABLE `sys_configure_column`  (
   `SCC_FUNC` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '格式化函数',
   `SCC_SDT_CODE` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典SDT_CODE',
   `SCC_IS_OPERATION` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否是操作列',
+  `SCC_IS_MERGE` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否合并操作列',
   `SCC_IS_VISIBLE` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否隐藏',
   `SCC_IS_STATUS` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否是状态列',
   `SCC_ORDER` int(5) NULL DEFAULT NULL COMMENT '排序',
@@ -221,139 +256,141 @@ CREATE TABLE `sys_configure_column`  (
 -- ----------------------------
 -- Records of sys_configure_column
 -- ----------------------------
-INSERT INTO `sys_configure_column` VALUES ('1', '1', '名称', 'SC_NAME', 'left', '200px', NULL, NULL, NULL, '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('10', '2', '排序', 'SB_ORDER', 'center', '50px', NULL, NULL, NULL, '0', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('12', '2', '操作', '', 'center', '180px', '', '', '', '1', '1', '0', 7);
-INSERT INTO `sys_configure_column` VALUES ('13', '3', '名称', 'SR_NAME', 'center', '200px', '', '', NULL, '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('14', '3', '操作', '', 'center', '200px', '', '', '', '1', '1', '0', 7);
-INSERT INTO `sys_configure_column` VALUES ('18', '1758638922268672', '名称', 'SCC_NAME', 'center', '70px', '', '', NULL, '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('1860152030396416', '1758638922268672', '查询字段', 'SCC_FIELD', 'center', '100px', '', '', NULL, '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('1860905247703040', '1758638922268672', '对齐方式', 'SCC_ALIGN', 'center', '50px', '', '', 'SYS_ALIGN', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('1864436302217216', '1758638922268672', '宽度', 'SCC_WIDTH', 'center', '50px', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('1864567009312768', '1758638922268672', '字典CODE', 'SCC_SDT_CODE', 'center', '100px', '', '', '', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('1864656347987968', '1758638922268672', '是否操作列', 'SCC_IS_OPERATION', 'center', '70px', '', '', 'SYS_YES_NO', '0', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('1864758626091008', '1758638922268672', '是否显示', 'SCC_IS_VISIBLE', 'center', '70px', '', '', 'SYS_YES_NO', '0', '1', '0', 8);
-INSERT INTO `sys_configure_column` VALUES ('1864854247833600', '1758638922268672', '是否状态列', 'SCC_IS_STATUS', 'center', '70px', '', '', 'SYS_YES_NO', '0', '1', '0', 7);
-INSERT INTO `sys_configure_column` VALUES ('1864960447610880', '1758638922268672', '排序', 'SCC_ORDER', 'center', '30px', '', '', '', '0', '1', '0', 9);
-INSERT INTO `sys_configure_column` VALUES ('1865046737027072', '1758638922268672', '操作', '', 'center', '100px', '', '', '', '1', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('1868640605437952', '3', '角色编码', 'SR_CODE', 'center', '100px', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('1868813838581760', '3', '说明', 'SR_EXPLAIN', 'center', '150px', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('1868880834199552', '3', '备注', 'SR_REMARK', 'center', '200px', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('1869275610480640', '3', '类型', 'SR_TYPE', 'center', '50px', '', '', 'SYS_ROLE_TYPE', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('1869396372881408', '3', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 6);
-INSERT INTO `sys_configure_column` VALUES ('2', '1', '视图', 'SC_VIEW', 'left', '200px', NULL, NULL, NULL, '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('20765562036551680', '20764730981351424', '组', 'SVG_GROUP', 'center', '150px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('20765795134996480', '20764730981351424', '组字段', 'SVF_NAMES', 'center', '300px', '', 'formatterValidateFields(targets, field)', '', '0', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('20765840668360704', '20764730981351424', '操作', '', 'center', '150px', '', '', '', '1', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('21038555857944576', '2265709233045504', '组', 'SVG_GROUPS', 'center', '150px', '', 'formatterValidateGroups(targets, field)', '', '0', '1', '0', 65);
-INSERT INTO `sys_configure_column` VALUES ('2158780263432192', '1870969903775744', '名称', 'SCS_NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2158865617518592', '1870969903775744', '查询字段', 'SCS_FIELD', 'center', '', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2158947087679488', '1870969903775744', '字典', 'SCS_SDT_CODE', 'center', '', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2159271412236288', '1870969903775744', '查询条件', 'SCS_METHOD_TYPE', 'center', '', '', '', 'SYS_SEARCH_METHOD', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('2159361338114048', '1870969903775744', '类型', 'SCS_TYPE', 'center', '', '', '', 'SYS_SEARCH_TYPE', '0', '1', '0', 7);
-INSERT INTO `sys_configure_column` VALUES ('2159444662157312', '1870969903775744', '是否显示', 'SCC_IS_VISIBLE', 'center', '', '', '', 'SYS_YES_NO', '0', '1', '0', 8);
-INSERT INTO `sys_configure_column` VALUES ('2159495593590784', '1870969903775744', '排序', 'SCS_ORDER', 'center', '30px', '', '', '', '0', '1', '0', 9);
-INSERT INTO `sys_configure_column` VALUES ('2159557145001984', '1870969903775744', '操作', '', 'center', '180px', '', '', '', '1', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('2178961341677568', '1870969903775744', '备注', 'SCS_REMARK', 'left', '', '', '', '', '0', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('2244934925025280', '2244279544053760', '表名', 'SV_TABLE', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2245043909820416', '2244279544053760', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', '1', '1', 2);
-INSERT INTO `sys_configure_column` VALUES ('2245094707036160', '2244279544053760', '操作', '', 'center', '280px', '', '', '', '1', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2266941783801856', '2265709233045504', '名称', 'SVF_NAME', 'center', '130px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2267042472263680', '2265709233045504', '字段', 'SVF_FIELD', 'center', '130px', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2267136751828992', '2265709233045504', '是否必填', 'SVF_IS_REQUIRED', 'center', '60px', '', '', 'SYS_YES_NO', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('2267227038416896', '2265709233045504', '最大字数', 'SVF_MAX_LENGTH', 'center', '60px', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('2267305589342208', '2265709233045504', '最小字数', 'SVF_MIN_LENGTH', 'center', '60px', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2267444773126144', '2265709233045504', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', '1', '1', 70);
-INSERT INTO `sys_configure_column` VALUES ('2267542622044160', '2265709233045504', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 80);
-INSERT INTO `sys_configure_column` VALUES ('2268804033806336', '2268726246244352', '名称', 'SVR_NAME', 'center', '200px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2268850032738304', '2268726246244352', '正则', 'SVR_REGEX', 'center', '150px', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2268917275820032', '2268726246244352', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('2268978571378688', '2268726246244352', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', '1', '1', 4);
-INSERT INTO `sys_configure_column` VALUES ('2510530543616000', '2268726246244352', '错误消息', 'SVR_REGEX_MESSAGE', 'left', '150px', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2515524864966656', '2265709233045504', '正则', 'SVR_NAME', 'center', '150px', '', '', '', '0', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('26505467689697280', '26491587483664384', '格式名称', 'SF_NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('26505514997252096', '26491587483664384', '格式唯一标识', 'SF_CODE', 'center', '', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('26505581862846464', '26491587483664384', '格式配置年份', 'SF_YEAR', 'center', '', '', '', '', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('26505673726492672', '26491587483664384', '格式配置时间', 'SF_ENTRY_TIME', 'center', '', '', '', '', '0', '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('26505863703298048', '26491587483664384', '操作', '', 'center', '240px', '', '', '', '1', '1', '0', 50);
-INSERT INTO `sys_configure_column` VALUES ('26568881204101120', '26568354160443392', '格式详细名称', 'SFD_NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('26569120757579776', '26568354160443392', '菜单名称', 'SM_NAME', 'center', '', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('26569174163652608', '26568354160443392', '排序', 'SFD_ORDER', 'center', '', '', '', '', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('26569430683090944', '26568354160443392', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', '1', '1', 40);
-INSERT INTO `sys_configure_column` VALUES ('26569508260937728', '26568354160443392', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 50);
-INSERT INTO `sys_configure_column` VALUES ('26725371181268992', '26721805670547456', '流程名称', 'SPD_NAME', 'center', '200px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('26725441578467328', '26721805670547456', '版本', 'SPD_VERSION', 'center', '50px', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('26725572235231232', '26721805670547456', '更新表名', 'SPD_UPDATE_TABLE', 'center', '', '', '', '', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('26725657031475200', '26721805670547456', '更新表名称字段', 'SPD_UPDATE_NAME', 'center', '', '', '', '', '0', '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('26725837801783296', '26721805670547456', '录入时间', 'SDP_ENTRY_TIME', 'center', '150px', '', '', '', '0', '1', '0', 60);
-INSERT INTO `sys_configure_column` VALUES ('26725907158794240', '26721805670547456', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', '1', '1', 70);
-INSERT INTO `sys_configure_column` VALUES ('26725940633534464', '26721805670547456', '操作', '', 'center', '', '', '', '', '1', '1', '0', 80);
-INSERT INTO `sys_configure_column` VALUES ('27188897591066624', '27187947212111872', '步骤名称', 'SPS_NAME', 'center', '', '', '', '', '0', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('27190954163175424', '27187947212111872', '办理角色', 'SR_NAME', 'center', '', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('27191092403240960', '27187947212111872', '流程状态', 'SPS_PROCESS_STATUS', 'center', '', '', '', 'SYS_PROCESS_STATUS', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('27191203975921664', '27187947212111872', '验证超时', 'SPS_IS_OVER_TIME', 'center', '60px', '', '', 'SYS_YES_NO', '0', '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('27191254274015232', '27187947212111872', '超时时间(分)', 'SPS_OVER_TIME', 'center', '90px', '', '', '', '0', '1', '0', 50);
-INSERT INTO `sys_configure_column` VALUES ('27191384893030400', '27187947212111872', '办理类型', 'SPS_STEP_TYPE', 'center', '60px', '', '', 'SYS_STEP_TYPE', '0', '1', '0', 25);
-INSERT INTO `sys_configure_column` VALUES ('27191443244187648', '27187947212111872', '排序', 'SPS_ORDER', 'center', '50px', '', '', '', '0', '1', '0', 60);
-INSERT INTO `sys_configure_column` VALUES ('27191508914405376', '27187947212111872', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 70);
-INSERT INTO `sys_configure_column` VALUES ('28000060813869056', '27999782165282816', '角色名称', 'SR_NAME', 'center', '', '', '', '', '0', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('28000165969264640', '27999782165282816', '角色编码', 'SR_CODE', 'center', '', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('28000216644845568', '27999782165282816', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('28182430565269504', '28020396255084544', 'NAME', 'NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('28182511620194304', '28020396255084544', '操作', '', 'center', '', '', '', '', '1', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('2911711610798080', '2910894828814336', '字典名称', 'SDT_NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2911767181131776', '2910894828814336', '字典编码', 'SDT_CODE', 'center', '', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2911814169919488', '2910894828814336', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 3);
-INSERT INTO `sys_configure_column` VALUES ('2911845136465920', '2910894828814336', '操作', '', 'center', '280px', '', '', '', '1', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('2913356109316096', '2912701923721216', '名称', 'SDI_NAME', 'left', '220px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2913416456962048', '2912701923721216', '信息编码', 'SDI_CODE', 'center', '', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2913455988277248', '2912701923721216', '连接编码', 'SDI_INNERCODE', 'center', '', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2913615233417216', '2912701923721216', '备注', 'SDI_REMARK', 'left', '280px', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('2913660032778240', '2912701923721216', '排序', 'SDI_ORDER', 'center', '30px', '', '', '', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('2913742199193600', '2912701923721216', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 6);
-INSERT INTO `sys_configure_column` VALUES ('2913770057760768', '2912701923721216', '操作', '', 'center', '180px', '', '', '', '1', '1', '0', 7);
-INSERT INTO `sys_configure_column` VALUES ('2997755832172544', '2997414705233920', '菜单名称', 'SM_NAME', 'left', '250px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('2997843275022336', '2997414705233920', '配置列表', 'SC_NAME', 'left', '150px', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('2997919837847552', '2997414705233920', '权限编码', 'SM_CODE', 'left', '150px', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('2997976557420544', '2997414705233920', 'URL地址', 'SM_URL', 'left', '150px', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('2998205407035392', '2997414705233920', '图标', 'SM_CLASSICON', 'center', '30px', '', 'formatterIcon(value, row, index);', '', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('2998269449863168', '2997414705233920', '排序', 'SM_ORDER', 'center', '20px', '', '', '', '0', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('2998347505860608', '2997414705233920', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 7);
-INSERT INTO `sys_configure_column` VALUES ('2998399913689088', '2997414705233920', '操作', '', 'center', '210px', '', '', '', '1', '1', '0', 8);
-INSERT INTO `sys_configure_column` VALUES ('3', '1', 'JSP地址', 'SC_JSP', 'left', '300px', NULL, NULL, NULL, '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('31554657063010304', '28020396255084544', '审核状态', 'PROCESS_STATUS_NAME', 'center', '100px', '', 'processLogFunc(targets, field);', '', '0', '1', '0', 5);
-INSERT INTO `sys_configure_column` VALUES ('3317102362492928', '3316994321416192', '姓名', 'SAI_NAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('3317258654842880', '3316994321416192', '登录账号', 'SOS_USERNAME', 'center', '', '', '', '', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('3317344390610944', '3316994321416192', '手机', 'SAI_PHONE', 'center', '', '', '', '', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('3317375399100416', '3316994321416192', '邮箱', 'SAI_EMAIL', 'center', '', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('3317518018019328', '3316994321416192', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 5);
-INSERT INTO `sys_configure_column` VALUES ('3317579653316608', '3316994321416192', '操作', '', 'center', '400px', '', '', '', '1', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('33262437608194048', '33080508233547776', '流程定义', 'SPD_NAME', 'left', '150px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('33262560820068352', '33080508233547776', '项目名称', 'SPS_TABLE_NAME', 'left', '200px', '', '', '', '0', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('33264112095985664', '33080508233547776', '启动人', 'INITIATOR_NAME', 'center', '100px', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('33264915670106112', '33080508233547776', '当前步骤名称', 'STEP_NAME', 'center', '100px', '', '', '', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('33264993856126976', '33080508233547776', '流程状态', 'PROCESS_STATUS_NAME', 'center', '100px', '', 'processLogFunc(targets, field);', '', '0', '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('33265154850291712', '33080508233547776', '是否作废', 'SPS_IS_CANCEL', 'center', '80px', '', '', 'SYS_YES_NO', '0', '1', '0', 50);
-INSERT INTO `sys_configure_column` VALUES ('33265501832478720', '33080508233547776', '操作', '', 'center', '80px', '', '', '', '1', '1', '0', 60);
-INSERT INTO `sys_configure_column` VALUES ('3545634929901568', '3545555946962944', '登录账号', 'SOS_USERNAME', 'center', '', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('3547200810385408', '3545555946962944', '用户类型', 'SOS_USERTYPE', 'center', '', '', '', 'SYS_OPERATOR_TYPE', '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('3547333325225984', '3545555946962944', '是否默认', 'SOS_DEFAULT', 'center', '80px', '', '', 'SYS_YES_NO', '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('3547388299968512', '3545555946962944', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', '1', '1', 5);
-INSERT INTO `sys_configure_column` VALUES ('3547457338212352', '3545555946962944', '创建时间', 'SOS_CREATETIME', 'center', '', '', '', '', '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('3547490485796864', '3545555946962944', '操作', '', 'center', '', '', '', '', '1', '1', '0', 6);
-INSERT INTO `sys_configure_column` VALUES ('38164004056596480', '38163489528741888', '部门名称', 'BD_NAME', 'center', '150px', '', '', '', '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('38164089465208832', '38163489528741888', '上级部门', 'BD_PARENT_NAME', 'center', '150px', '', '', '', '0', '1', '0', 10);
-INSERT INTO `sys_configure_column` VALUES ('38164146021203968', '38163489528741888', '联系人', 'BD_CONTACTS', 'center', '80px', '', '', '', '0', '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('38164215797645312', '38163489528741888', '手机', 'BD_PHONE', 'center', '100px', '', '', '', '0', '1', '0', 30);
-INSERT INTO `sys_configure_column` VALUES ('38164484337958912', '38163489528741888', '描述', 'BD_DESCRIBE', 'left', '200px', '', '', '', '0', '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('38164554567385088', '38163489528741888', '操作', '', 'center', '160px', '', '', '', '1', '1', '0', 50);
-INSERT INTO `sys_configure_column` VALUES ('38446985522446336', '38163489528741888', '排序', 'BD_ORDER', 'center', '50px', '', '', '', '0', '1', '0', 45);
-INSERT INTO `sys_configure_column` VALUES ('4', '1', '操作', '', 'center', '320px', '', '', '', '1', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('5', '2', '名称', 'SB_NAME', 'center', '150px', NULL, NULL, NULL, '0', '1', '0', 1);
-INSERT INTO `sys_configure_column` VALUES ('6', '2', '操作ID', 'SB_BUTTONID', 'center', '100px', NULL, NULL, NULL, '0', '1', '0', 2);
-INSERT INTO `sys_configure_column` VALUES ('7', '2', '图标', 'SB_ICON', 'center', '20px', NULL, 'btnClassFunc(targets,field)', NULL, '0', '1', '0', 3);
-INSERT INTO `sys_configure_column` VALUES ('8', '2', '权限编码', 'SB_CODE', 'center', '100px', NULL, NULL, NULL, '0', '1', '0', 4);
-INSERT INTO `sys_configure_column` VALUES ('9', '2', '按钮类型', 'SB_TYPE_NAME', 'center', '70px', NULL, NULL, NULL, '0', '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('1', '1', '名称', 'SC_NAME', 'left', '200px', NULL, NULL, NULL, '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('10', '2', '排序', 'SB_ORDER', 'center', '50px', NULL, NULL, NULL, '0', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('12', '2', '操作', '', 'center', '180px', '', '', '', '1', NULL, '1', '0', 7);
+INSERT INTO `sys_configure_column` VALUES ('13', '3', '名称', 'SR_NAME', 'center', '200px', '', '', NULL, '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('14', '3', '操作', '', 'center', '200px', '', '', '', '1', NULL, '1', '0', 7);
+INSERT INTO `sys_configure_column` VALUES ('18', '1758638922268672', '名称', 'SCC_NAME', 'center', '70px', '', '', NULL, '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('1860152030396416', '1758638922268672', '查询字段', 'SCC_FIELD', 'center', '100px', '', '', NULL, '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('1860905247703040', '1758638922268672', '对齐方式', 'SCC_ALIGN', 'center', '50px', '', '', 'SYS_ALIGN', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('1864436302217216', '1758638922268672', '宽度', 'SCC_WIDTH', 'center', '50px', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('1864567009312768', '1758638922268672', '字典CODE', 'SCC_SDT_CODE', 'center', '100px', '', '', '', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('1864656347987968', '1758638922268672', '是否操作列', 'SCC_IS_OPERATION', 'center', '70px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('1864758626091008', '1758638922268672', '是否显示', 'SCC_IS_VISIBLE', 'center', '70px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 8);
+INSERT INTO `sys_configure_column` VALUES ('1864854247833600', '1758638922268672', '是否状态列', 'SCC_IS_STATUS', 'center', '70px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 7);
+INSERT INTO `sys_configure_column` VALUES ('1864960447610880', '1758638922268672', '排序', 'SCC_ORDER', 'center', '30px', '', '', '', '0', NULL, '1', '0', 9);
+INSERT INTO `sys_configure_column` VALUES ('1865046737027072', '1758638922268672', '操作', '', 'center', '100px', '', '', '', '1', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('1868640605437952', '3', '角色编码', 'SR_CODE', 'center', '100px', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('1868813838581760', '3', '说明', 'SR_EXPLAIN', 'center', '150px', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('1868880834199552', '3', '备注', 'SR_REMARK', 'center', '200px', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('1869275610480640', '3', '类型', 'SR_TYPE', 'center', '50px', '', '', 'SYS_ROLE_TYPE', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('1869396372881408', '3', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 6);
+INSERT INTO `sys_configure_column` VALUES ('2', '1', '视图', 'SC_VIEW', 'left', '200px', NULL, NULL, NULL, '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('20765562036551680', '20764730981351424', '组', 'SVG_GROUP', 'center', '150px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('20765795134996480', '20764730981351424', '组字段', 'SVF_NAMES', 'center', '300px', '', 'formatterValidateFields(targets, field)', '', '0', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('20765840668360704', '20764730981351424', '操作', '', 'center', '150px', '', '', '', '1', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('21038555857944576', '2265709233045504', '组', 'SVG_GROUPS', 'center', '150px', '', 'formatterValidateGroups(targets, field)', '', '0', NULL, '1', '0', 65);
+INSERT INTO `sys_configure_column` VALUES ('2158780263432192', '1870969903775744', '名称', 'SCS_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2158865617518592', '1870969903775744', '查询字段', 'SCS_FIELD', 'center', '', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2158947087679488', '1870969903775744', '字典', 'SCS_SDT_CODE', 'center', '', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2159271412236288', '1870969903775744', '查询条件', 'SCS_METHOD_TYPE', 'center', '', '', '', 'SYS_SEARCH_METHOD', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('2159361338114048', '1870969903775744', '类型', 'SCS_TYPE', 'center', '', '', '', 'SYS_SEARCH_TYPE', '0', NULL, '1', '0', 7);
+INSERT INTO `sys_configure_column` VALUES ('2159444662157312', '1870969903775744', '是否显示', 'SCC_IS_VISIBLE', 'center', '', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 8);
+INSERT INTO `sys_configure_column` VALUES ('2159495593590784', '1870969903775744', '排序', 'SCS_ORDER', 'center', '30px', '', '', '', '0', NULL, '1', '0', 9);
+INSERT INTO `sys_configure_column` VALUES ('2159557145001984', '1870969903775744', '操作', '', 'center', '180px', '', '', '', '1', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('2178961341677568', '1870969903775744', '备注', 'SCS_REMARK', 'left', '', '', '', '', '0', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('2244934925025280', '2244279544053760', '表名', 'SV_TABLE', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2245043909820416', '2244279544053760', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '1', 2);
+INSERT INTO `sys_configure_column` VALUES ('2245094707036160', '2244279544053760', '操作', '', 'center', '280px', '', '', '', '1', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2266941783801856', '2265709233045504', '名称', 'SVF_NAME', 'center', '130px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2267042472263680', '2265709233045504', '字段', 'SVF_FIELD', 'center', '130px', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2267136751828992', '2265709233045504', '是否必填', 'SVF_IS_REQUIRED', 'center', '60px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('2267227038416896', '2265709233045504', '最大字数', 'SVF_MAX_LENGTH', 'center', '60px', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('2267305589342208', '2265709233045504', '最小字数', 'SVF_MIN_LENGTH', 'center', '60px', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2267444773126144', '2265709233045504', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '1', 70);
+INSERT INTO `sys_configure_column` VALUES ('2267542622044160', '2265709233045504', '操作', '', 'center', '160px', '', '', '', '1', NULL, '1', '0', 80);
+INSERT INTO `sys_configure_column` VALUES ('2268804033806336', '2268726246244352', '名称', 'SVR_NAME', 'center', '200px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2268850032738304', '2268726246244352', '正则', 'SVR_REGEX', 'center', '150px', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2268917275820032', '2268726246244352', '操作', '', 'center', '160px', '', '', '', '1', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('2268978571378688', '2268726246244352', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '1', 4);
+INSERT INTO `sys_configure_column` VALUES ('2510530543616000', '2268726246244352', '错误消息', 'SVR_REGEX_MESSAGE', 'left', '150px', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2515524864966656', '2265709233045504', '正则', 'SVR_NAME', 'center', '150px', '', '', '', '0', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('26505467689697280', '26491587483664384', '格式名称', 'SF_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('26505514997252096', '26491587483664384', '格式唯一标识', 'SF_CODE', 'center', '', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('26505581862846464', '26491587483664384', '格式配置年份', 'SF_YEAR', 'center', '', '', '', '', '0', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('26505673726492672', '26491587483664384', '格式配置时间', 'SF_ENTRY_TIME', 'center', '', '', '', '', '0', NULL, '1', '0', 40);
+INSERT INTO `sys_configure_column` VALUES ('26505863703298048', '26491587483664384', '操作', '', 'center', '240px', '', '', '', '1', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('26568881204101120', '26568354160443392', '格式详细名称', 'SFD_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('26569120757579776', '26568354160443392', '菜单名称', 'SM_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('26569174163652608', '26568354160443392', '排序', 'SFD_ORDER', 'center', '', '', '', '', '0', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('26569430683090944', '26568354160443392', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '1', 40);
+INSERT INTO `sys_configure_column` VALUES ('26569508260937728', '26568354160443392', '操作', '', 'center', '160px', '', '', '', '1', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('26725371181268992', '26721805670547456', '流程名称', 'SPD_NAME', 'center', '200px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('26725441578467328', '26721805670547456', '版本', 'SPD_VERSION', 'center', '50px', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('26725572235231232', '26721805670547456', '更新表名', 'SPD_UPDATE_TABLE', 'center', '', '', '', '', '0', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('26725657031475200', '26721805670547456', '更新表名称字段', 'SPD_UPDATE_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 40);
+INSERT INTO `sys_configure_column` VALUES ('26725837801783296', '26721805670547456', '录入时间', 'SDP_ENTRY_TIME', 'center', '150px', '', '', '', '0', NULL, '1', '0', 60);
+INSERT INTO `sys_configure_column` VALUES ('26725907158794240', '26721805670547456', '状态', 'IS_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '1', 70);
+INSERT INTO `sys_configure_column` VALUES ('26725940633534464', '26721805670547456', '操作', '', 'center', '', '', '', '', '1', NULL, '1', '0', 80);
+INSERT INTO `sys_configure_column` VALUES ('27188897591066624', '27187947212111872', '步骤名称', 'SPS_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('27190954163175424', '27187947212111872', '办理角色', 'SR_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('27191092403240960', '27187947212111872', '流程状态', 'SPS_PROCESS_STATUS', 'center', '', '', '', 'SYS_PROCESS_STATUS', '0', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('27191203975921664', '27187947212111872', '验证超时', 'SPS_IS_OVER_TIME', 'center', '60px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 40);
+INSERT INTO `sys_configure_column` VALUES ('27191254274015232', '27187947212111872', '超时时间(分)', 'SPS_OVER_TIME', 'center', '90px', '', '', '', '0', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('27191384893030400', '27187947212111872', '办理类型', 'SPS_STEP_TYPE', 'center', '60px', '', '', 'SYS_STEP_TYPE', '0', NULL, '1', '0', 25);
+INSERT INTO `sys_configure_column` VALUES ('27191443244187648', '27187947212111872', '排序', 'SPS_ORDER', 'center', '50px', '', '', '', '0', NULL, '1', '0', 60);
+INSERT INTO `sys_configure_column` VALUES ('27191508914405376', '27187947212111872', '操作', '', 'center', '160px', '', '', '', '1', NULL, '1', '0', 70);
+INSERT INTO `sys_configure_column` VALUES ('28000060813869056', '27999782165282816', '角色名称', 'SR_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('28000165969264640', '27999782165282816', '角色编码', 'SR_CODE', 'center', '', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('28000216644845568', '27999782165282816', '操作', '', 'center', '160px', '', '', '', '1', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('28182430565269504', '28020396255084544', 'NAME', 'NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('28182511620194304', '28020396255084544', '操作', '', 'center', '', '', '', '', '1', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('2911711610798080', '2910894828814336', '字典名称', 'SDT_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2911767181131776', '2910894828814336', '字典编码', 'SDT_CODE', 'center', '', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2911814169919488', '2910894828814336', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 3);
+INSERT INTO `sys_configure_column` VALUES ('2911845136465920', '2910894828814336', '操作', '', 'center', '280px', '', '', '', '1', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('2913356109316096', '2912701923721216', '名称', 'SDI_NAME', 'left', '220px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2913416456962048', '2912701923721216', '信息编码', 'SDI_CODE', 'center', '', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2913455988277248', '2912701923721216', '连接编码', 'SDI_INNERCODE', 'center', '', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2913615233417216', '2912701923721216', '备注', 'SDI_REMARK', 'left', '280px', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('2913660032778240', '2912701923721216', '排序', 'SDI_ORDER', 'center', '30px', '', '', '', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('2913742199193600', '2912701923721216', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 6);
+INSERT INTO `sys_configure_column` VALUES ('2913770057760768', '2912701923721216', '操作', '', 'center', '180px', '', '', '', '1', NULL, '1', '0', 7);
+INSERT INTO `sys_configure_column` VALUES ('2997755832172544', '2997414705233920', '菜单名称', 'SM_NAME', 'left', '250px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('2997843275022336', '2997414705233920', '配置列表', 'SC_NAME', 'left', '150px', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('2997919837847552', '2997414705233920', '权限编码', 'SM_CODE', 'left', '150px', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('2997976557420544', '2997414705233920', 'URL地址', 'SM_URL', 'left', '150px', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('2998205407035392', '2997414705233920', '图标', 'SM_CLASSICON', 'center', '30px', '', 'formatterIcon(value, row, index);', '', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('2998269449863168', '2997414705233920', '排序', 'SM_ORDER', 'center', '20px', '', '', '', '0', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('2998347505860608', '2997414705233920', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 7);
+INSERT INTO `sys_configure_column` VALUES ('2998399913689088', '2997414705233920', '操作', '', 'center', '210px', '', '', '', '1', NULL, '1', '0', 8);
+INSERT INTO `sys_configure_column` VALUES ('3', '1', 'JSP地址', 'SC_JSP', 'left', '300px', NULL, NULL, NULL, '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('31554657063010304', '28020396255084544', '审核状态', 'PROCESS_STATUS_NAME', 'center', '100px', '', 'processLogFunc(targets, field);', '', '0', NULL, '1', '0', 5);
+INSERT INTO `sys_configure_column` VALUES ('3317102362492928', '3316994321416192', '姓名', 'SAI_NAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('3317258654842880', '3316994321416192', '登录账号', 'SOS_USERNAME', 'center', '', '', '', '', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('3317344390610944', '3316994321416192', '手机', 'SAI_PHONE', 'center', '', '', '', '', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('3317375399100416', '3316994321416192', '邮箱', 'SAI_EMAIL', 'center', '', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('3317518018019328', '3316994321416192', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 5);
+INSERT INTO `sys_configure_column` VALUES ('3317579653316608', '3316994321416192', '操作', '', 'center', '400px', '', '', '', '1', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('33262437608194048', '33080508233547776', '流程定义', 'SPD_NAME', 'left', '150px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('33262560820068352', '33080508233547776', '项目名称', 'SPS_TABLE_NAME', 'left', '200px', '', '', '', '0', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('33264112095985664', '33080508233547776', '启动人', 'INITIATOR_NAME', 'center', '100px', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('33264915670106112', '33080508233547776', '当前步骤名称', 'STEP_NAME', 'center', '100px', '', '', '', '0', NULL, '1', '0', 30);
+INSERT INTO `sys_configure_column` VALUES ('33264993856126976', '33080508233547776', '流程状态', 'PROCESS_STATUS_NAME', 'center', '100px', '', 'processLogFunc(targets, field);', '', '0', NULL, '1', '0', 40);
+INSERT INTO `sys_configure_column` VALUES ('33265154850291712', '33080508233547776', '是否作废', 'SPS_IS_CANCEL', 'center', '80px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('33265501832478720', '33080508233547776', '操作', '', 'center', '80px', '', '', '', '1', NULL, '1', '0', 60);
+INSERT INTO `sys_configure_column` VALUES ('3545634929901568', '3545555946962944', '登录账号', 'SOS_USERNAME', 'center', '', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('3547200810385408', '3545555946962944', '用户类型', 'SOS_USERTYPE', 'center', '', '', '', 'SYS_OPERATOR_TYPE', '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('3547333325225984', '3545555946962944', '是否默认', 'SOS_DEFAULT', 'center', '80px', '', '', 'SYS_YES_NO', '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('3547388299968512', '3545555946962944', '状态', 'IS_STATUS', 'center', '30px', '', '', '', '0', NULL, '1', '1', 5);
+INSERT INTO `sys_configure_column` VALUES ('3547457338212352', '3545555946962944', '创建时间', 'SOS_CREATETIME', 'center', '', '', '', '', '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('3547490485796864', '3545555946962944', '操作', '', 'center', '', '', '', '', '1', NULL, '1', '0', 6);
+INSERT INTO `sys_configure_column` VALUES ('38164004056596480', '38163489528741888', '设备ID', 'BEGC_ID', 'center', '150px', '', '', '', '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('38164554567385088', '38163489528741888', '操作', '', 'center', '80px', '', '', '', '1', '1', '1', '0', 70);
+INSERT INTO `sys_configure_column` VALUES ('4', '1', '操作', '', 'center', '320px', '', '', '', '1', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('44525272946442240', '38163489528741888', '状态', 'BEGC_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '0', 10);
+INSERT INTO `sys_configure_column` VALUES ('44525406132371456', '38163489528741888', '版本', 'BEGC_VER', 'center', '100px', '', '', '', '0', NULL, '1', '0', 20);
+INSERT INTO `sys_configure_column` VALUES ('44525553360830464', '38163489528741888', '温度计1', 'BEGC_T1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 40);
+INSERT INTO `sys_configure_column` VALUES ('44525606716571648', '38163489528741888', '湿度计1', 'BEGC_H1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('44525695614844928', '38163489528741888', '更新时间', 'BEGC_UPDATE_TIME', 'center', '150px', '', '', '', '0', NULL, '1', '0', 60);
+INSERT INTO `sys_configure_column` VALUES ('44533690310590464', '38163489528741888', '温度计2', 'BEGC_T2', 'center', '100px', '', '', '', '0', NULL, '1', '0', 51);
+INSERT INTO `sys_configure_column` VALUES ('44533767846494208', '38163489528741888', '湿度计2', 'BEGC_H2', 'center', '100px', '', '', '', '0', NULL, '1', '0', 52);
+INSERT INTO `sys_configure_column` VALUES ('5', '2', '名称', 'SB_NAME', 'center', '150px', NULL, NULL, NULL, '0', NULL, '1', '0', 1);
+INSERT INTO `sys_configure_column` VALUES ('6', '2', '操作ID', 'SB_BUTTONID', 'center', '100px', NULL, NULL, NULL, '0', NULL, '1', '0', 2);
+INSERT INTO `sys_configure_column` VALUES ('7', '2', '图标', 'SB_ICON', 'center', '20px', NULL, 'btnClassFunc(targets,field)', NULL, '0', NULL, '1', '0', 3);
+INSERT INTO `sys_configure_column` VALUES ('8', '2', '权限编码', 'SB_CODE', 'center', '100px', NULL, NULL, NULL, '0', NULL, '1', '0', 4);
+INSERT INTO `sys_configure_column` VALUES ('9', '2', '按钮类型', 'SB_TYPE_NAME', 'center', '70px', NULL, NULL, NULL, '0', NULL, '1', '0', 5);
 
 -- ----------------------------
 -- Table structure for sys_configure_search
@@ -414,8 +451,7 @@ INSERT INTO `sys_configure_search` VALUES ('33265870629240832', '330805082335477
 INSERT INTO `sys_configure_search` VALUES ('33266027097751552', '33080508233547776', '流程状态', 'SPS_AUDIT_STATUS', 'SYS_PROCESS_STATUS', '1', '2', '', '1', 30);
 INSERT INTO `sys_configure_search` VALUES ('33266132563525632', '33080508233547776', '是否作废', 'SPS_IS_CANCEL', 'SYS_YES_NO', '1', '2', '', '1', 40);
 INSERT INTO `sys_configure_search` VALUES ('3547613181771776', '3545555946962944', 'SO_ID', 'SO_ID', '', '1', '1', '', '0', 999);
-INSERT INTO `sys_configure_search` VALUES ('38164645629919232', '38163489528741888', '部门名称', 'BD_NAME', '', '4', '1', '', '1', 1);
-INSERT INTO `sys_configure_search` VALUES ('38164690009849856', '38163489528741888', '联系人', 'BD_CONTACTS', '', '4', '1', '', '1', 10);
+INSERT INTO `sys_configure_search` VALUES ('38164645629919232', '38163489528741888', '设备ID', 'BEGC_ID', '', '4', '1', '', '1', 1);
 INSERT INTO `sys_configure_search` VALUES ('39603098028605440', '2997414705233920', '名称', 'SM_NAME', '', '4', '1', '', '1', 1);
 
 -- ----------------------------
@@ -3403,6 +3439,63 @@ INSERT INTO `sys_log` VALUES ('44317059802202112', '1', NULL, '修改菜单', '0
 INSERT INTO `sys_log` VALUES ('44317073207197696', '1', NULL, '删除菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-25 23:14:03', '1', 2);
 INSERT INTO `sys_log` VALUES ('44317708208046080', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-25 23:16:34', '1', 9);
 INSERT INTO `sys_log` VALUES ('44319491600941056', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-25 23:23:39', '1', 2);
+INSERT INTO `sys_log` VALUES ('44523743929696256', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:55:17', '1', 9);
+INSERT INTO `sys_log` VALUES ('44524043746934784', '1', NULL, '修改配置列表', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:56:28', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524154023575552', '1', NULL, '添加菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:56:54', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524382529257472', '1', NULL, '添加菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:57:49', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524470395731968', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:58:10', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524571679784960', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:58:34', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524663325327360', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:58:56', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524871807401984', '1', NULL, '添加菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:59:46', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524912085303296', '1', NULL, '设置菜单按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-26 12:59:55', '1', 2);
+INSERT INTO `sys_log` VALUES ('44524991517032448', '1', NULL, '设置菜单按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:14', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525092675256320', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:38', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525100094980096', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:40', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525108198375424', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:42', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525115513241600', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:44', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525121813086208', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:00:45', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525202507300864', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:01:04', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525273269403648', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:01:21', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525406799265792', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:01:53', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525449384034304', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:02:03', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525554220662784', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:02:28', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525607148584960', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:02:41', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525695870697472', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:03:02', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525723251113984', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:03:09', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525780096516096', '1', NULL, '修改配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:03:22', '1', 2);
+INSERT INTO `sys_log` VALUES ('44525831342522368', '1', NULL, '修改配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:03:34', '1', 2);
+INSERT INTO `sys_log` VALUES ('44526230342467584', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:05:09', '1', 9);
+INSERT INTO `sys_log` VALUES ('44526337225916416', '1', NULL, '设置角色菜单权限', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:05:35', '1', 2);
+INSERT INTO `sys_log` VALUES ('44526362635010048', '1', NULL, '设置角色菜单按钮权限', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:05:41', '1', 2);
+INSERT INTO `sys_log` VALUES ('44526378078437376', '1', NULL, '设置角色菜单按钮权限', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:05:45', '1', 2);
+INSERT INTO `sys_log` VALUES ('44526472114733056', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:06:07', '1', 9);
+INSERT INTO `sys_log` VALUES ('44527319821320192', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:09:29', '1', 9);
+INSERT INTO `sys_log` VALUES ('44527481172000768', '1', NULL, '修改配置列表', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:10:08', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527727235039232', '1', NULL, '修改验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:06', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527773506600960', '1', NULL, '删除验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:17', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527792334831616', '1', NULL, '添加验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:22', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527852846055424', '1', NULL, '添加验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:36', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527902699552768', '1', NULL, '添加验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:48', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527922920292352', '1', NULL, '修改验证字段', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:11:53', '1', 2);
+INSERT INTO `sys_log` VALUES ('44527972174004224', '1', NULL, '添加验证', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:12:05', '1', 2);
+INSERT INTO `sys_log` VALUES ('44528018860802048', '1', NULL, '添加门禁卡', '0:0:0:0:0:0:0:1', 0, '2018-07-26 13:12:16', '1', 2);
+INSERT INTO `sys_log` VALUES ('44528481198931968', '1', NULL, '添加门禁卡', '0:0:0:0:0:0:0:1', 0, '2018-07-26 13:14:06', '1', 2);
+INSERT INTO `sys_log` VALUES ('44529100773130240', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:16:34', '1', 9);
+INSERT INTO `sys_log` VALUES ('44529322647617536', '1', NULL, '添加门禁卡', '0:0:0:0:0:0:0:1', 0, '2018-07-26 13:17:27', '1', 2);
+INSERT INTO `sys_log` VALUES ('44529512179826688', '1', NULL, '添加门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:18:12', '1', 2);
+INSERT INTO `sys_log` VALUES ('44531622317391872', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:26:35', '1', 2);
+INSERT INTO `sys_log` VALUES ('44533412878352384', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:33:42', '1', 9);
+INSERT INTO `sys_log` VALUES ('44533690868432896', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:34:48', '1', 2);
+INSERT INTO `sys_log` VALUES ('44533720778014720', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:34:55', '1', 2);
+INSERT INTO `sys_log` VALUES ('44533768249147392', '1', NULL, '添加配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:35:07', '1', 2);
+INSERT INTO `sys_log` VALUES ('44535049382526976', '1', NULL, '修改门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:40:12', '1', 2);
+INSERT INTO `sys_log` VALUES ('44535967968657408', '1', NULL, '删除配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:43:51', '1', 2);
+INSERT INTO `sys_log` VALUES ('44536221241704448', '1', NULL, '删除配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:44:51', '1', 2);
+INSERT INTO `sys_log` VALUES ('44536805210456064', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:47:11', '1', 2);
+INSERT INTO `sys_log` VALUES ('44537316840046592', '1', NULL, '修改菜单', '0:0:0:0:0:0:0:1', 1, '2018-07-26 13:49:13', '1', 2);
+INSERT INTO `sys_log` VALUES ('44542633879535616', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:10:20', '1', 2);
+INSERT INTO `sys_log` VALUES ('44542778318782464', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:10:55', '1', 2);
+INSERT INTO `sys_log` VALUES ('44544939836571648', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 14:19:30', '1', 2);
 INSERT INTO `sys_log` VALUES ('480859698233344', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:35', '1', 9);
 INSERT INTO `sys_log` VALUES ('480949980626944', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:56', '1', 9);
 INSERT INTO `sys_log` VALUES ('483274396794880', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:14:10', '1', 9);
@@ -6262,6 +6355,63 @@ INSERT INTO `sys_log_text` VALUES ('44317059835756544', '44317059802202112', '�
 INSERT INTO `sys_log_text` VALUES ('44317073534353408', '44317073207197696', '删除菜单,信息:{SM_URL=admin/dataGrid/, SC_NAME=基础信息管理-部门管理, SM_URL_PARAMS=, SM_PARENT_NAME=门店管理, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=1, SM_CODE=INFO:DIVISION, SM_NAME=部门管理, SM_PARENTID=38116041032728576, SPD_ID=, ID=38161659570683904, SC_ID=38163489528741888, SM_CLASSICON=mdi mdi-division, SM_IS_EXPAND=, SPD_NAME=null}');
 INSERT INTO `sys_log_text` VALUES ('44317708279349248', '44317708208046080', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('44319491634495488', '44319491600941056', '更新菜单,更新前:{SM_URL=, SC_NAME=null, SM_URL_PARAMS=, SM_PARENT_NAME=null, SM_IS_LEAF=1, IS_STATUS=1, SM_TYPE=1, SM_ORDER=20, SM_CODE=INFO, SM_NAME=门店管理, SM_PARENTID=0, SPD_ID=, ID=38116041032728576, SC_ID=, SM_CLASSICON=mdi mdi-information-variant, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=0, IS_STATUS=null, SM_ORDER=20, SM_CODE=INFO, SM_NAME=门店管理, SM_PARENTID=0, SPD_ID=, ID=38116041032728576, SC_ID=, SM_CLASSICON=mdi mdi-information-variant, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44523744076496896', '44523743929696256', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44524044006981632', '44524043746934784', '更新配置列表,更新前:{SC_IS_PAGING=1, SC_NAME=基础信息管理-部门管理, SC_JSP=admin/info/division/home, SC_VIEW=v_division, SC_IS_SEARCH=1, SC_IS_SELECT=, ID=38163489528741888, SC_ORDER_BY=CONVERT(ID,SIGNED) DESC, SC_IS_SINGLE=, SC_IS_FILTER=},更新后:{SC_IS_PAGING=1, SVR_TABLE_NAME=SYS_CONFIGURE, SC_NAME=门禁卡管理-门禁卡, SC_JSP=admin/sub/entranceGuardCard/home, SC_VIEW=v_entrance_guard_card, SC_IS_SEARCH=1, SC_IS_SELECT=, ID=38163489528741888, SC_ORDER_BY=CONVERT(ID,SIGNED) DESC, SC_IS_SINGLE=, SC_IS_FILTER=}');
+INSERT INTO `sys_log_text` VALUES ('44524154048741376', '44524154023575552', '添加菜单:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=1, IS_STATUS=1, SM_TYPE=1, SM_ORDER=10, SM_CODE=, SM_NAME=门禁卡管理, SM_PARENTID=0, SPD_ID=, ID=44524153474121728, SC_ID=, SM_CLASSICON=, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524382575394816', '44524382529257472', '添加菜单:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD, SM_NAME=门禁卡信息, SM_PARENTID=44524153474121728, SPD_ID=, ID=44524381983997952, SC_ID=38163489528741888, SM_CLASSICON=, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524470429286400', '44524470395731968', '更新菜单,更新前:{SM_URL=, SC_NAME=门禁卡管理-门禁卡, SM_URL_PARAMS=, SM_PARENT_NAME=门禁卡管理, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD, SM_NAME=门禁卡信息, SM_PARENTID=44524153474121728, SPD_ID=, ID=44524381983997952, SC_ID=38163489528741888, SM_CLASSICON=, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=admin/dataGrid/, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=0, IS_STATUS=null, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD, SM_NAME=门禁卡信息, SM_PARENTID=44524153474121728, SPD_ID=, ID=44524381983997952, SC_ID=38163489528741888, SM_CLASSICON=mdi mdi-account-card-details, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524572044689408', '44524571679784960', '更新菜单,更新前:{SM_URL=, SC_NAME=null, SM_URL_PARAMS=, SM_PARENT_NAME=null, SM_IS_LEAF=1, IS_STATUS=1, SM_TYPE=1, SM_ORDER=10, SM_CODE=, SM_NAME=门禁卡管理, SM_PARENTID=0, SPD_ID=, ID=44524153474121728, SC_ID=, SM_CLASSICON=, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=1, IS_STATUS=null, SM_ORDER=10, SM_CODE=, SM_NAME=门禁卡管理, SM_PARENTID=0, SPD_ID=, ID=44524153474121728, SC_ID=, SM_CLASSICON=mdi mdi-cards-variant, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524663618928640', '44524663325327360', '更新菜单,更新前:{SM_URL=, SC_NAME=null, SM_URL_PARAMS=, SM_PARENT_NAME=null, SM_IS_LEAF=1, IS_STATUS=1, SM_TYPE=1, SM_ORDER=10, SM_CODE=, SM_NAME=门禁卡管理, SM_PARENTID=0, SPD_ID=, ID=44524153474121728, SC_ID=, SM_CLASSICON=mdi mdi-cards-variant, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=1, IS_STATUS=null, SM_ORDER=10, SM_CODE=BUS, SM_NAME=门禁卡管理, SM_PARENTID=0, SPD_ID=, ID=44524153474121728, SC_ID=, SM_CLASSICON=mdi mdi-cards-variant, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524871824179200', '44524871807401984', '添加菜单:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD_UPDATE, SM_NAME=编辑, SM_PARENTID=44524381983997952, SPD_ID=, ID=44524871295696896, SC_ID=, SM_CLASSICON=, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44524912114663424', '44524912085303296', '菜单:编辑,旧按钮:,新按钮:[763206804963328]');
+INSERT INTO `sys_log_text` VALUES ('44524991546392576', '44524991517032448', '菜单:门禁卡信息,旧按钮:,新按钮:[1, 793777245519872, 793562643955712]');
+INSERT INTO `sys_log_text` VALUES ('44525092696227840', '44525092675256320', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=排序, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=50px, SCC_FIELD=BD_ORDER, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38446985522446336, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=45}');
+INSERT INTO `sys_log_text` VALUES ('44525100128534528', '44525100094980096', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=描述, SCC_FUNC=, SCC_ALIGN=left, SCC_IS_STATUS=0, SCC_WIDTH=200px, SCC_FIELD=BD_DESCRIBE, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38164484337958912, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=40}');
+INSERT INTO `sys_log_text` VALUES ('44525108223541248', '44525108198375424', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=手机, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BD_PHONE, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38164215797645312, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=30}');
+INSERT INTO `sys_log_text` VALUES ('44525115542601728', '44525115513241600', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=联系人, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=80px, SCC_FIELD=BD_CONTACTS, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38164146021203968, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=20}');
+INSERT INTO `sys_log_text` VALUES ('44525121838252032', '44525121813086208', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=上级部门, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BD_PARENT_NAME, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38164089465208832, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=10}');
+INSERT INTO `sys_log_text` VALUES ('44525202951897088', '44525202507300864', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=设备ID, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_ID, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=38164004056596480, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=1}');
+INSERT INTO `sys_log_text` VALUES ('44525273290375168', '44525273269403648', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=状态, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_STATUS, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525272946442240, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=10}');
+INSERT INTO `sys_log_text` VALUES ('44525406828625920', '44525406799265792', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=版本, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_VER, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525406132371456, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=20}');
+INSERT INTO `sys_log_text` VALUES ('44525449413394432', '44525449384034304', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=MAC, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_MAC, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525449035907072, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=30}');
+INSERT INTO `sys_log_text` VALUES ('44525554254217216', '44525554220662784', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=温度计1, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_T1, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525553360830464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=40}');
+INSERT INTO `sys_log_text` VALUES ('44525607177945088', '44525607148584960', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=湿度计1, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_H1, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525606716571648, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=50}');
+INSERT INTO `sys_log_text` VALUES ('44525696361431040', '44525695870697472', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=更新时间, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_UPDATE_TIME, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525695614844928, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=60}');
+INSERT INTO `sys_log_text` VALUES ('44525723276279808', '44525723251113984', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=160px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
+INSERT INTO `sys_log_text` VALUES ('44525780117487616', '44525780096516096', '更新配置列表搜索,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_ID, SVR_TABLE_NAME=SYS_CONFIGURE_SEARCH, SCS_NAME=设备ID, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=38164645629919232, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=1}');
+INSERT INTO `sys_log_text` VALUES ('44525831468351488', '44525831342522368', '更新配置列表搜索,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_MAC, SVR_TABLE_NAME=SYS_CONFIGURE_SEARCH, SCS_NAME=MAC, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=38164690009849856, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=10}');
+INSERT INTO `sys_log_text` VALUES ('44526230589931520', '44526230342467584', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44526337259470848', '44526337225916416', '角色:超级管理员,旧菜单:[1757509987598336, 1448716162564096, 3547951557246976, 2258969972178944, 2258672239509504, 26571410583322624, 26511186237325312, 26571551922978816, 2269941063483392, 38116041032728576, 33081241360138240, 2163861868249088, 23657888534757376, 13358417838080, 28019952082485248, 21130604443598848, 26715728707059712, 20766815625936896, 21131205961318400, 1560059138015232, 26577844645658624, 26476504758091776, 1, 3316536806735872, 2, 1451155909509120, 26845813934129152, 3, 4103758959083520, 26714856669315072, 7, 2163592187084800, 26577007949119488, 8, 26579469829406720, 9, 1846593582006272, 1427690443767808, 2910350022279168],新菜单:[1757509987598336, 3547951557246976, 1448716162564096, 2258969972178944, 26571410583322624, 2258672239509504, 44524381983997952, 26571551922978816, 26511186237325312, 44524871295696896, 2269941063483392, 38116041032728576, 33081241360138240, 23657888534757376, 2163861868249088, 28019952082485248, 13358417838080, 21130604443598848, 26715728707059712, 44524153474121728, 20766815625936896, 21131205961318400, 26577844645658624, 1560059138015232, 26476504758091776, 3316536806735872, 1, 2, 26845813934129152, 4103758959083520, 1451155909509120, 3, 26714856669315072, 7, 26577007949119488, 2163592187084800, 8, 26579469829406720, 9, 1846593582006272, 1427690443767808, 2910350022279168]');
+INSERT INTO `sys_log_text` VALUES ('44526362748256256', '44526362635010048', '角色:超级管理员,菜单名称:门禁卡信息,旧按钮:,新按钮:[1, 793777245519872, 793562643955712]');
+INSERT INTO `sys_log_text` VALUES ('44526378107797504', '44526378078437376', '角色:超级管理员,菜单名称:编辑,旧按钮:,新按钮:[763206804963328]');
+INSERT INTO `sys_log_text` VALUES ('44526472156676096', '44526472114733056', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44527319972315136', '44527319821320192', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44527481671122944', '44527481172000768', '更新配置列表,更新前:{SC_IS_PAGING=1, SC_NAME=门禁卡管理-门禁卡, SC_JSP=admin/sub/entranceGuardCard/home, SC_VIEW=v_entrance_guard_card, SC_IS_SEARCH=1, SC_IS_SELECT=, ID=38163489528741888, SC_ORDER_BY=CONVERT(ID,SIGNED) DESC, SC_IS_SINGLE=, SC_IS_FILTER=},更新后:{SC_IS_PAGING=1, SVR_TABLE_NAME=SYS_CONFIGURE, SC_NAME=门禁卡管理-门禁卡, SC_JSP=admin/bus/entranceGuardCard/home, SC_VIEW=v_entrance_guard_card, SC_IS_SEARCH=1, SC_IS_SELECT=, ID=38163489528741888, SC_ORDER_BY=CONVERT(ID,SIGNED) DESC, SC_IS_SINGLE=, SC_IS_FILTER=}');
+INSERT INTO `sys_log_text` VALUES ('44527727260205056', '44527727235039232', '更新验证,更新前:{IS_STATUS=1, SV_TABLE=BUS_DIVISION, ID=38170193364516864},更新后:{IS_STATUS=null, SVR_TABLE_NAME=SYS_VALIDATE, ID=38170193364516864, SV_TABLE=BUS_ENTRANCE_GUARD_CARD}');
+INSERT INTO `sys_log_text` VALUES ('44527773531766784', '44527773506600960', '删除验证,信息:{IS_STATUS=1, SV_TABLE=BUS_ENTRANCE_GUARD_CARD, ID=38170193364516864}');
+INSERT INTO `sys_log_text` VALUES ('44527792393551872', '44527792334831616', '添加验证:{IS_STATUS=1, SVR_TABLE_NAME=SYS_VALIDATE, ID=44527791844098048, SV_TABLE=BUS_ENTRANCE_GUARD_CARD}');
+INSERT INTO `sys_log_text` VALUES ('44527852867026944', '44527852846055424', '添加验证字段:{SVF_IS_REQUIRED=0, SVF_MAX_LENGTH=10, IS_STATUS=1, SVR_TABLE_NAME=sys_validate_field, SVF_MIN_LENGTH=, ID=44527852275630080, SVF_NAME=设备ID, SVF_FIELD=BEGC_ID, SV_ID=44527791844098048, SVR_ID=}');
+INSERT INTO `sys_log_text` VALUES ('44527902728912896', '44527902699552768', '添加验证字段:{SVF_IS_REQUIRED=1, SVF_MAX_LENGTH=20, IS_STATUS=1, SVR_TABLE_NAME=sys_validate_field, SVF_MIN_LENGTH=, ID=44527902305288192, SVF_NAME=用户名, SVF_FIELD=BEGC_USERNAME, SV_ID=44527791844098048, SVR_ID=}');
+INSERT INTO `sys_log_text` VALUES ('44527923218087936', '44527922920292352', '更新验证字段,更新前:{SVF_IS_REQUIRED=0, SVF_MAX_LENGTH=10, IS_STATUS=1, SVR_REGEX=null, SVR_REGEX_MESSAGE=null, SVF_MIN_LENGTH=, ID=44527852275630080, SVF_NAME=设备ID, SVF_FIELD=BEGC_ID, SV_ID=44527791844098048, SVR_NAME=null, SVR_ID=},更新后:{SVF_IS_REQUIRED=1, SVF_MAX_LENGTH=10, IS_STATUS=null, SVR_TABLE_NAME=sys_validate_field, SVF_MIN_LENGTH=, ID=44527852275630080, SVF_NAME=设备ID, SVF_FIELD=BEGC_ID, SV_ID=44527791844098048, SVR_ID=}');
+INSERT INTO `sys_log_text` VALUES ('44527972203364352', '44527972174004224', '添加验证字段:{SVF_IS_REQUIRED=1, SVF_MAX_LENGTH=20, IS_STATUS=1, SVR_TABLE_NAME=sys_validate_field, SVF_MIN_LENGTH=, ID=44527971670687744, SVF_NAME=密码, SVF_FIELD=BEGC_PASSWORD, SV_ID=44527791844098048, SVR_ID=}');
+INSERT INTO `sys_log_text` VALUES ('44528018902745088', '44528018860802048', '网络异常,请联系管理员!');
+INSERT INTO `sys_log_text` VALUES ('44528481232486400', '44528481198931968', '网络异常,请联系管理员!');
+INSERT INTO `sys_log_text` VALUES ('44529100907347968', '44529100773130240', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44529322689560576', '44529322647617536', '网络异常,请联系管理员!');
+INSERT INTO `sys_log_text` VALUES ('44529512217575424', '44529512179826688', '添加门禁卡:{BEGC_USERNAME=test2, SVR_TABLE_NAME=BUS_ENTRANCE_GUARD_CARD, BEGC_ID=失败, ID=44529511408074752, BEGC_ENTRY_TIME=2018-07-26 13:18:12, BEGC_PASSWORD=test3}');
+INSERT INTO `sys_log_text` VALUES ('44531622342557696', '44531622317391872', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=MAC, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_MAC, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525449035907072, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=30}');
+INSERT INTO `sys_log_text` VALUES ('44533413016764416', '44533412878352384', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44533690914570240', '44533690868432896', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=BEGC_T2, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=温度计2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533690310590464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=51}');
+INSERT INTO `sys_log_text` VALUES ('44533721075810304', '44533720778014720', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=温度计2, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_T2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533690310590464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=51}');
+INSERT INTO `sys_log_text` VALUES ('44533768282701824', '44533768249147392', '添加配置列表字段,配置列表:门禁卡管理-门禁卡,字段参数{SCC_NAME=湿度计2, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_H2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533767846494208, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=52}');
+INSERT INTO `sys_log_text` VALUES ('44535049764208640', '44535049382526976', '更新门禁卡,更新前:{BEGC_UPDATE_TIME=null, BEGC_VER=null, BEGC_SERIAL=null, BEGC_H2=null, BEGC_STATUS=null, BEGC_INDEX=null, BEGC_H1=null, BEGC_NEXT_NUM=null, BEGC_ENTRY_TIME=2018-07-26 13:18:12, BEGC_MAC=null, BEGC_INPUT=null, BEGC_USERNAME=test2, BEGC_NOW=null, BEGC_ID=失败, ID=44529511408074752, BEGC_T2=null, BEGC_KEY=null, BEGC_T1=null, BEGC_PASSWORD=test3},更新后:{BEGC_USERNAME=test2, SVR_TABLE_NAME=BUS_ENTRANCE_GUARD_CARD, BEGC_ID=test1, ID=44529511408074752, BEGC_PASSWORD=test3}');
+INSERT INTO `sys_log_text` VALUES ('44535967993823232', '44535967968657408', '删除配置列表搜索,配置列表:门禁卡管理-门禁卡搜索:{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_MAC, SCS_NAME=MAC, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=38164690009849856, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=10}');
+INSERT INTO `sys_log_text` VALUES ('44536221266870272', '44536221241704448', '删除配置列表搜索,配置列表:门禁卡管理-门禁卡搜索:{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_MAC, SCS_NAME=MAC, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=38164690009849856, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=10}');
+INSERT INTO `sys_log_text` VALUES ('44536805239816192', '44536805210456064', '更新菜单,更新前:{SM_URL=admin/dataGrid/, SC_NAME=门禁卡管理-门禁卡, SM_URL_PARAMS=, SM_PARENT_NAME=门禁卡管理, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD, SM_NAME=门禁卡信息, SM_PARENTID=44524153474121728, SPD_ID=, ID=44524381983997952, SC_ID=38163489528741888, SM_CLASSICON=mdi mdi-account-card-details, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=admin/dataGrid/, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=0, IS_STATUS=null, SM_ORDER=1, SM_CODE=BUS:ENTRANCE_GUARD_CARD, SM_NAME=门禁卡, SM_PARENTID=44524153474121728, SPD_ID=, ID=44524381983997952, SC_ID=38163489528741888, SM_CLASSICON=mdi mdi-account-card-details, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44537316865212416', '44537316840046592', '更新菜单,更新前:{SM_URL=, SC_NAME=null, SM_URL_PARAMS=, SM_PARENT_NAME=null, SM_IS_LEAF=0, IS_STATUS=1, SM_TYPE=1, SM_ORDER=20, SM_CODE=INFO, SM_NAME=门店管理, SM_PARENTID=0, SPD_ID=, ID=38116041032728576, SC_ID=, SM_CLASSICON=mdi mdi-information-variant, SM_IS_EXPAND=, SPD_NAME=null},更新后:{SM_URL=, SVR_TABLE_NAME=SYS_MENU, SM_URL_PARAMS=, SM_IS_LEAF=1, IS_STATUS=null, SM_ORDER=20, SM_CODE=INFO, SM_NAME=门店管理, SM_PARENTID=0, SPD_ID=, ID=38116041032728576, SC_ID=, SM_CLASSICON=mdi mdi-information-variant, SM_IS_EXPAND=}');
+INSERT INTO `sys_log_text` VALUES ('44542633917284352', '44542633879535616', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=160px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
+INSERT INTO `sys_log_text` VALUES ('44542778612383744', '44542778318782464', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=1, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=160px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
+INSERT INTO `sys_log_text` VALUES ('44544940084035584', '44544939836571648', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=操作, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=1, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=80px, SCC_FIELD=, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=1, ID=38164554567385088, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=70}');
 INSERT INTO `sys_log_text` VALUES ('480859756953600', '480859698233344', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('480950030958592', '480949980626944', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('483274606510080', '483274396794880', '登录成功!登录地址:未知');
@@ -6407,8 +6557,11 @@ INSERT INTO `sys_menu` VALUES ('3', '2', NULL, '按钮管理', '1', 'SYSTEM:BUTT
 INSERT INTO `sys_menu` VALUES ('33081241360138240', '33080508233547776', '', '流程进度', '26577007949119488', 'SYSTEM:PROCESS_SCHEDULE', 'admin/dataGrid/', '', 'mdi mdi-stack-overflow', '0', '', '1', 10, 1);
 INSERT INTO `sys_menu` VALUES ('3316536806735872', '', NULL, '编辑', '13358417838080', 'SYSTEM:OPERATOR_UPDATE', '', NULL, '', '0', '', '1', 1, 1);
 INSERT INTO `sys_menu` VALUES ('3547951557246976', '3545555946962944', NULL, '账户管理', '13358417838080', 'SYSTEM:OPERATOR_SUB', 'admin/dataGrid/', NULL, '', '0', '', '1', 2, 1);
-INSERT INTO `sys_menu` VALUES ('38116041032728576', '', '', '门店管理', '0', 'INFO', '', '', 'mdi mdi-information-variant', '0', '', '1', 20, 1);
+INSERT INTO `sys_menu` VALUES ('38116041032728576', '', '', '门店管理', '0', 'INFO', '', '', 'mdi mdi-information-variant', '1', '', '1', 20, 1);
 INSERT INTO `sys_menu` VALUES ('4103758959083520', '', NULL, '编辑', '9', 'SYSTEM:ROLE_UPDATE', '', NULL, '', '0', '', '1', 1, 1);
+INSERT INTO `sys_menu` VALUES ('44524153474121728', '', '', '门禁卡管理', '0', 'BUS', '', '', 'mdi mdi-cards-variant', '1', '', '1', 10, 1);
+INSERT INTO `sys_menu` VALUES ('44524381983997952', '38163489528741888', '', '门禁卡', '44524153474121728', 'BUS:ENTRANCE_GUARD_CARD', 'admin/dataGrid/', '', 'mdi mdi-account-card-details', '0', '', '1', 1, 1);
+INSERT INTO `sys_menu` VALUES ('44524871295696896', '', '', '编辑', '44524381983997952', 'BUS:ENTRANCE_GUARD_CARD_UPDATE', '', '', '', '0', '', '1', 1, 1);
 INSERT INTO `sys_menu` VALUES ('7', '2244279544053760', NULL, '验证管理', '1', 'SYSTEM:VALIDATE', 'admin/dataGrid/', NULL, 'mdi mdi-security', '0', NULL, '1', 3, 1);
 INSERT INTO `sys_menu` VALUES ('8', '1', NULL, '配置列表管理', '1', 'SYSTEM:CONFIGURE', 'admin/dataGrid/', NULL, 'mdi mdi-view-list', '0', NULL, '1', 4, 1);
 INSERT INTO `sys_menu` VALUES ('9', '3', NULL, '角色管理', '1', 'SYSTEM:ROLE', 'admin/dataGrid/', NULL, 'mdi mdi-account-settings-variant', '0', '', '1', 6, 1);
@@ -6524,6 +6677,10 @@ INSERT INTO `sys_menu_button` VALUES ('3548048898654208', '3547951557246976', '7
 INSERT INTO `sys_menu_button` VALUES ('3548048915431424', '3547951557246976', '793562643955712');
 INSERT INTO `sys_menu_button` VALUES ('4086872657625088', '3547951557246976', '1795360737460224');
 INSERT INTO `sys_menu_button` VALUES ('4103794426118144', '4103758959083520', '763206804963328');
+INSERT INTO `sys_menu_button` VALUES ('44524911904948224', '44524871295696896', '763206804963328');
+INSERT INTO `sys_menu_button` VALUES ('44524991064047616', '44524381983997952', '1');
+INSERT INTO `sys_menu_button` VALUES ('44524991126962176', '44524381983997952', '793777245519872');
+INSERT INTO `sys_menu_button` VALUES ('44524991143739392', '44524381983997952', '793562643955712');
 
 -- ----------------------------
 -- Table structure for sys_operator
@@ -6968,6 +7125,10 @@ INSERT INTO `sys_role_button` VALUES ('4113066069327872', '4086505521807360', '1
 INSERT INTO `sys_role_button` VALUES ('4113066144825344', '4086505521807360', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('4113066157408256', '4086505521807360', '1795360737460224');
 INSERT INTO `sys_role_button` VALUES ('4113072776019968', '4086505521807360', '793777245519872');
+INSERT INTO `sys_role_button` VALUES ('44526362349797376', '44526336701628416', '1');
+INSERT INTO `sys_role_button` VALUES ('44526362412711936', '44526336701628416', '793777245519872');
+INSERT INTO `sys_role_button` VALUES ('44526362446266368', '44526336701628416', '793562643955712');
+INSERT INTO `sys_role_button` VALUES ('44526377843556352', '44526336978452480', '763206804963328');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -7040,6 +7201,9 @@ INSERT INTO `sys_role_menu` VALUES ('4103830098673664', '1', '4103758959083520')
 INSERT INTO `sys_role_menu` VALUES ('4104615775698944', '4095556896948224', '1');
 INSERT INTO `sys_role_menu` VALUES ('4104615863779328', '4095556896948224', '2');
 INSERT INTO `sys_role_menu` VALUES ('4104615880556544', '4095556896948224', '3');
+INSERT INTO `sys_role_menu` VALUES ('44526336701628416', '1', '44524381983997952');
+INSERT INTO `sys_role_menu` VALUES ('44526336978452480', '1', '44524871295696896');
+INSERT INTO `sys_role_menu` VALUES ('44526337012006912', '1', '44524153474121728');
 INSERT INTO `sys_role_menu` VALUES ('5', '1', '9');
 
 -- ----------------------------
@@ -7079,7 +7243,7 @@ INSERT INTO `sys_validate` VALUES ('2916411848523776', 'SYS_DICT_INFO', 1);
 INSERT INTO `sys_validate` VALUES ('33085808659398656', 'SYS_PROCESS_SCHEDULE_CANCEL', 1);
 INSERT INTO `sys_validate` VALUES ('3318522176339968', 'SYS_OPERATOR_SUB', 1);
 INSERT INTO `sys_validate` VALUES ('3318588060467200', 'SYS_ACCOUNT_INFO', 1);
-INSERT INTO `sys_validate` VALUES ('38170193364516864', 'BUS_DIVISION', 1);
+INSERT INTO `sys_validate` VALUES ('44527791844098048', 'BUS_ENTRANCE_GUARD_CARD', 1);
 
 -- ----------------------------
 -- Table structure for sys_validate_field
@@ -7202,14 +7366,9 @@ INSERT INTO `sys_validate_field` VALUES ('3318901077180416', '3318522176339968',
 INSERT INTO `sys_validate_field` VALUES ('3319050180493312', '3318588060467200', '姓名', 'SAI_NAME', '1', '', '50', '2523171857104896', 1);
 INSERT INTO `sys_validate_field` VALUES ('3319111320862720', '3318588060467200', '手机', 'SAI_PHONE', '0', '', '', '2511317080473600', 1);
 INSERT INTO `sys_validate_field` VALUES ('3319156837449728', '3318588060467200', '邮箱', 'SAI_EMAIL', '0', '', '', '2511177288515584', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170275589652480', '38170193364516864', '部门名称', 'BD_NAME', '1', '', '50', '', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170315582341120', '38170193364516864', '联系人', 'BD_CONTACTS', '0', '', '25', '', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170393927745536', '38170193364516864', '手机', 'BD_PHONE', '0', '', '', '2511317080473600', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170437598838784', '38170193364516864', '固定电话', 'BD_FIXED_PHONE', '0', '', '', '2511430095994880', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170467474866176', '38170193364516864', '邮箱', 'BD_EMAIL', '0', '', '', '2511177288515584', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170504644788224', '38170193364516864', '地址', 'BD_ADDRESS', '0', '', '150', '', 1);
-INSERT INTO `sys_validate_field` VALUES ('38170537758818304', '38170193364516864', '描述', 'BD_DESCRIBE', '0', '', '250', '', 1);
-INSERT INTO `sys_validate_field` VALUES ('38442666630840320', '38170193364516864', '排序', 'BD_ORDER', '1', '', '5', '2510375538917376', 1);
+INSERT INTO `sys_validate_field` VALUES ('44527852275630080', '44527791844098048', '设备ID', 'BEGC_ID', '1', '', '10', '', 1);
+INSERT INTO `sys_validate_field` VALUES ('44527902305288192', '44527791844098048', '用户名', 'BEGC_USERNAME', '1', '', '20', '', 1);
+INSERT INTO `sys_validate_field` VALUES ('44527971670687744', '44527791844098048', '密码', 'BEGC_PASSWORD', '1', '', '20', '', 1);
 
 -- ----------------------------
 -- Table structure for sys_validate_group
@@ -7420,6 +7579,49 @@ INSERT INTO `sys_value_record` VALUES ('44317059357605888', '1', 'SYS_MENU', '38
 INSERT INTO `sys_value_record` VALUES ('44317072309616640', '1', 'SYS_MENU', '38161659570683904', NULL, NULL, '2018-07-25 23:14:02', 3);
 INSERT INTO `sys_value_record` VALUES ('44317072703881216', '1', 'SYS_MENU', '38162771866550272', NULL, NULL, '2018-07-25 23:14:02', 3);
 INSERT INTO `sys_value_record` VALUES ('44319491294756864', '1', 'SYS_MENU', '38116041032728576', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"IS_STATUS\":1,\"SM_ORDER\":20,\"SM_CODE\":\"INFO\",\"SM_NAME\":\"门店管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"38116041032728576\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-information-variant\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"SM_ORDER\":\"20\",\"SM_CODE\":\"INFO\",\"SM_NAME\":\"门店管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"38116041032728576\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-information-variant\",\"SM_IS_EXPAND\":\"\"}', '2018-07-25 23:23:39', 2);
+INSERT INTO `sys_value_record` VALUES ('44524043453333504', '1', 'SYS_CONFIGURE', '38163489528741888', '{\"SC_IS_PAGING\":\"1\",\"SC_NAME\":\"基础信息管理-部门管理\",\"SC_JSP\":\"admin/info/division/home\",\"SC_VIEW\":\"v_division\",\"SC_IS_SEARCH\":\"1\",\"SC_IS_SELECT\":\"\",\"ID\":\"38163489528741888\",\"SC_ORDER_BY\":\"CONVERT(ID,SIGNED) DESC\",\"SC_IS_SINGLE\":\"\",\"SC_IS_FILTER\":\"\"}', '{\"SC_NAME\":\"门禁卡管理-门禁卡\",\"SC_JSP\":\"admin/sub/entranceGuardCard/home\",\"SC_VIEW\":\"v_entrance_guard_card\",\"SC_ORDER_BY\":\"CONVERT(ID,SIGNED) DESC\",\"SC_IS_PAGING\":\"1\",\"SC_IS_SEARCH\":\"1\",\"SC_IS_SELECT\":\"\",\"ID\":\"38163489528741888\",\"SC_IS_SINGLE\":\"\",\"SC_IS_FILTER\":\"\"}', '2018-07-26 12:56:28', 2);
+INSERT INTO `sys_value_record` VALUES ('44524153583173632', '1', 'SYS_MENU', '44524153474121728', NULL, '{\"SM_URL\":\"\",\"SVR_TABLE_NAME\":\"SYS_MENU\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"IS_STATUS\":1,\"SM_TYPE\":\"1\",\"SM_ORDER\":\"10\",\"SM_CODE\":\"\",\"SM_NAME\":\"门禁卡管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"44524153474121728\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:56:54', 1);
+INSERT INTO `sys_value_record` VALUES ('44524382025940992', '1', 'SYS_MENU', '44524381983997952', NULL, '{\"SM_URL\":\"\",\"SVR_TABLE_NAME\":\"SYS_MENU\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"IS_STATUS\":1,\"SM_TYPE\":\"1\",\"SM_ORDER\":\"1\",\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD\",\"SM_NAME\":\"门禁卡信息\",\"SM_PARENTID\":\"44524153474121728\",\"SPD_ID\":\"\",\"ID\":\"44524381983997952\",\"SC_ID\":\"38163489528741888\",\"SM_CLASSICON\":\"\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:57:49', 1);
+INSERT INTO `sys_value_record` VALUES ('44524470001467392', '1', 'SYS_MENU', '44524381983997952', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"IS_STATUS\":1,\"SM_ORDER\":1,\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD\",\"SM_NAME\":\"门禁卡信息\",\"SM_PARENTID\":\"44524153474121728\",\"SPD_ID\":\"\",\"ID\":\"44524381983997952\",\"SC_ID\":\"38163489528741888\",\"SM_CLASSICON\":\"\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"admin/dataGrid/\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"SM_ORDER\":\"1\",\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD\",\"SM_NAME\":\"门禁卡信息\",\"SM_PARENTID\":\"44524153474121728\",\"SPD_ID\":\"\",\"ID\":\"44524381983997952\",\"SC_ID\":\"38163489528741888\",\"SM_CLASSICON\":\"mdi mdi-account-card-details\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:58:10', 2);
+INSERT INTO `sys_value_record` VALUES ('44524571163885568', '1', 'SYS_MENU', '44524153474121728', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"IS_STATUS\":1,\"SM_ORDER\":10,\"SM_CODE\":\"\",\"SM_NAME\":\"门禁卡管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"44524153474121728\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"SM_ORDER\":\"10\",\"SM_CODE\":\"\",\"SM_NAME\":\"门禁卡管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"44524153474121728\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-cards-variant\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:58:34', 2);
+INSERT INTO `sys_value_record` VALUES ('44524663182721024', '1', 'SYS_MENU', '44524153474121728', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"IS_STATUS\":1,\"SM_ORDER\":10,\"SM_CODE\":\"\",\"SM_NAME\":\"门禁卡管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"44524153474121728\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-cards-variant\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"SM_ORDER\":\"10\",\"SM_CODE\":\"BUS\",\"SM_NAME\":\"门禁卡管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"44524153474121728\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-cards-variant\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:58:56', 2);
+INSERT INTO `sys_value_record` VALUES ('44524871367000064', '1', 'SYS_MENU', '44524871295696896', NULL, '{\"SM_URL\":\"\",\"SVR_TABLE_NAME\":\"SYS_MENU\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"IS_STATUS\":1,\"SM_TYPE\":\"1\",\"SM_ORDER\":\"1\",\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD_UPDATE\",\"SM_NAME\":\"编辑\",\"SM_PARENTID\":\"44524381983997952\",\"SPD_ID\":\"\",\"ID\":\"44524871295696896\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 12:59:45', 1);
+INSERT INTO `sys_value_record` VALUES ('44525092276797440', '1', 'SYS_CONFIGURE_COLUMN', '38446985522446336', NULL, NULL, '2018-07-26 13:00:38', 3);
+INSERT INTO `sys_value_record` VALUES ('44525100011094016', '1', 'SYS_CONFIGURE_COLUMN', '38164484337958912', NULL, NULL, '2018-07-26 13:00:40', 3);
+INSERT INTO `sys_value_record` VALUES ('44525108122877952', '1', 'SYS_CONFIGURE_COLUMN', '38164215797645312', NULL, NULL, '2018-07-26 13:00:42', 3);
+INSERT INTO `sys_value_record` VALUES ('44525115420966912', '1', 'SYS_CONFIGURE_COLUMN', '38164146021203968', NULL, NULL, '2018-07-26 13:00:44', 3);
+INSERT INTO `sys_value_record` VALUES ('44525121699840000', '1', 'SYS_CONFIGURE_COLUMN', '38164089465208832', NULL, NULL, '2018-07-26 13:00:45', 3);
+INSERT INTO `sys_value_record` VALUES ('44525202373083136', '1', 'SYS_CONFIGURE_COLUMN', '38164004056596480', '{\"SCC_NAME\":\"部门名称\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BD_NAME\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"38164004056596480\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":1}', '{\"SCC_NAME\":\"设备ID\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BEGC_ID\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"38164004056596480\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"1\"}', '2018-07-26 13:01:04', 2);
+INSERT INTO `sys_value_record` VALUES ('44525272984190976', '1', 'SYS_CONFIGURE_COLUMN', '44525272946442240', NULL, '{\"SCC_NAME\":\"状态\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_STATUS\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525272946442240\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"10\"}', '2018-07-26 13:01:21', 1);
+INSERT INTO `sys_value_record` VALUES ('44525406174314496', '1', 'SYS_CONFIGURE_COLUMN', '44525406132371456', NULL, '{\"SCC_NAME\":\"版本\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_VER\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525406132371456\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"20\"}', '2018-07-26 13:01:53', 1);
+INSERT INTO `sys_value_record` VALUES ('44525449073655808', '1', 'SYS_CONFIGURE_COLUMN', '44525449035907072', NULL, '{\"SCC_NAME\":\"MAC\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BEGC_MAC\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525449035907072\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"30\"}', '2018-07-26 13:02:03', 1);
+INSERT INTO `sys_value_record` VALUES ('44525553734123520', '1', 'SYS_CONFIGURE_COLUMN', '44525553360830464', NULL, '{\"SCC_NAME\":\"温度计1\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_T1\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525553360830464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"40\"}', '2018-07-26 13:02:28', 1);
+INSERT INTO `sys_value_record` VALUES ('44525606750126080', '1', 'SYS_CONFIGURE_COLUMN', '44525606716571648', NULL, '{\"SCC_NAME\":\"湿度计1\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_H1\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525606716571648\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"50\"}', '2018-07-26 13:02:41', 1);
+INSERT INTO `sys_value_record` VALUES ('44525695656787968', '1', 'SYS_CONFIGURE_COLUMN', '44525695614844928', NULL, '{\"SCC_NAME\":\"更新时间\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BEGC_UPDATE_TIME\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525695614844928\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"60\"}', '2018-07-26 13:03:02', 1);
+INSERT INTO `sys_value_record` VALUES ('44525722869432320', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":50}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 13:03:08', 2);
+INSERT INTO `sys_value_record` VALUES ('44525779693862912', '1', 'SYS_CONFIGURE_SEARCH', '38164645629919232', '{\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCS_FIELD\":\"BD_NAME\",\"SCS_NAME\":\"部门名称\",\"SCS_SDT_CODE\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"38164645629919232\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\",\"SCS_ORDER\":1}', '{\"SCS_FIELD\":\"BEGC_ID\",\"SCS_NAME\":\"设备ID\",\"SCS_SDT_CODE\":\"\",\"SCS_ORDER\":\"1\",\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"38164645629919232\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\"}', '2018-07-26 13:03:22', 2);
+INSERT INTO `sys_value_record` VALUES ('44525831157972992', '1', 'SYS_CONFIGURE_SEARCH', '38164690009849856', '{\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCS_FIELD\":\"BD_CONTACTS\",\"SCS_NAME\":\"联系人\",\"SCS_SDT_CODE\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"38164690009849856\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\",\"SCS_ORDER\":10}', '{\"SCS_FIELD\":\"BEGC_MAC\",\"SCS_NAME\":\"MAC\",\"SCS_SDT_CODE\":\"\",\"SCS_ORDER\":\"10\",\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"38164690009849856\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\"}', '2018-07-26 13:03:34', 2);
+INSERT INTO `sys_value_record` VALUES ('44527481050365952', '1', 'SYS_CONFIGURE', '38163489528741888', '{\"SC_IS_PAGING\":\"1\",\"SC_NAME\":\"门禁卡管理-门禁卡\",\"SC_JSP\":\"admin/sub/entranceGuardCard/home\",\"SC_VIEW\":\"v_entrance_guard_card\",\"SC_IS_SEARCH\":\"1\",\"SC_IS_SELECT\":\"\",\"ID\":\"38163489528741888\",\"SC_ORDER_BY\":\"CONVERT(ID,SIGNED) DESC\",\"SC_IS_SINGLE\":\"\",\"SC_IS_FILTER\":\"\"}', '{\"SC_NAME\":\"门禁卡管理-门禁卡\",\"SC_JSP\":\"admin/bus/entranceGuardCard/home\",\"SC_VIEW\":\"v_entrance_guard_card\",\"SC_ORDER_BY\":\"CONVERT(ID,SIGNED) DESC\",\"SC_IS_PAGING\":\"1\",\"SC_IS_SEARCH\":\"1\",\"SC_IS_SELECT\":\"\",\"ID\":\"38163489528741888\",\"SC_IS_SINGLE\":\"\",\"SC_IS_FILTER\":\"\"}', '2018-07-26 13:10:08', 2);
+INSERT INTO `sys_value_record` VALUES ('44527726807220224', '1', 'SYS_VALIDATE', '38170193364516864', '{\"IS_STATUS\":1,\"SV_TABLE\":\"BUS_DIVISION\",\"ID\":\"38170193364516864\"}', '{\"SV_TABLE\":\"BUS_ENTRANCE_GUARD_CARD\",\"ID\":\"38170193364516864\"}', '2018-07-26 13:11:06', 2);
+INSERT INTO `sys_value_record` VALUES ('44527773208805376', '1', 'SYS_VALIDATE', '38170193364516864', NULL, NULL, '2018-07-26 13:11:17', 3);
+INSERT INTO `sys_value_record` VALUES ('44527791907012608', '1', 'SYS_VALIDATE', '44527791844098048', NULL, '{\"IS_STATUS\":1,\"SVR_TABLE_NAME\":\"SYS_VALIDATE\",\"ID\":\"44527791844098048\",\"SV_TABLE\":\"BUS_ENTRANCE_GUARD_CARD\"}', '2018-07-26 13:11:22', 1);
+INSERT INTO `sys_value_record` VALUES ('44527852376293376', '1', 'sys_validate_field', '44527852275630080', NULL, '{\"SVF_IS_REQUIRED\":\"0\",\"SVF_MAX_LENGTH\":\"10\",\"IS_STATUS\":1,\"SVR_TABLE_NAME\":\"sys_validate_field\",\"SVF_MIN_LENGTH\":\"\",\"ID\":\"44527852275630080\",\"SVF_NAME\":\"设备ID\",\"SVF_FIELD\":\"BEGC_ID\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"\"}', '2018-07-26 13:11:36', 1);
+INSERT INTO `sys_value_record` VALUES ('44527902364008448', '1', 'sys_validate_field', '44527902305288192', NULL, '{\"SVF_IS_REQUIRED\":\"1\",\"SVF_MAX_LENGTH\":\"20\",\"IS_STATUS\":1,\"SVR_TABLE_NAME\":\"sys_validate_field\",\"SVF_MIN_LENGTH\":\"\",\"ID\":\"44527902305288192\",\"SVF_NAME\":\"用户名\",\"SVF_FIELD\":\"BEGC_USERNAME\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"\"}', '2018-07-26 13:11:48', 1);
+INSERT INTO `sys_value_record` VALUES ('44527922446336000', '1', 'sys_validate_field', '44527852275630080', '{\"SVF_IS_REQUIRED\":\"0\",\"SVF_MAX_LENGTH\":\"10\",\"IS_STATUS\":1,\"SVF_MIN_LENGTH\":\"\",\"ID\":\"44527852275630080\",\"SVF_NAME\":\"设备ID\",\"SVF_FIELD\":\"BEGC_ID\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"\"}', '{\"SVF_MIN_LENGTH\":\"\",\"SVF_NAME\":\"设备ID\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"\",\"SVF_IS_REQUIRED\":\"1\",\"SVF_MAX_LENGTH\":\"10\",\"ID\":\"44527852275630080\",\"SVF_FIELD\":\"BEGC_ID\"}', '2018-07-26 13:11:53', 2);
+INSERT INTO `sys_value_record` VALUES ('44527971729408000', '1', 'sys_validate_field', '44527971670687744', NULL, '{\"SVF_IS_REQUIRED\":\"1\",\"SVF_MAX_LENGTH\":\"20\",\"IS_STATUS\":1,\"SVR_TABLE_NAME\":\"sys_validate_field\",\"SVF_MIN_LENGTH\":\"\",\"ID\":\"44527971670687744\",\"SVF_NAME\":\"密码\",\"SVF_FIELD\":\"BEGC_PASSWORD\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"\"}', '2018-07-26 13:12:05', 1);
+INSERT INTO `sys_value_record` VALUES ('44529511508738048', '1', 'BUS_ENTRANCE_GUARD_CARD', '44529511408074752', NULL, '{\"BEGC_USERNAME\":\"test2\",\"SVR_TABLE_NAME\":\"BUS_ENTRANCE_GUARD_CARD\",\"BEGC_ID\":\"失败\",\"ID\":\"44529511408074752\",\"BEGC_ENTRY_TIME\":\"2018-07-26 13:18:12\",\"BEGC_PASSWORD\":\"test3\"}', '2018-07-26 13:18:12', 1);
+INSERT INTO `sys_value_record` VALUES ('44531622032179200', '1', 'SYS_CONFIGURE_COLUMN', '44525449035907072', NULL, NULL, '2018-07-26 13:26:35', 3);
+INSERT INTO `sys_value_record` VALUES ('44533690432225280', '1', 'SYS_CONFIGURE_COLUMN', '44533690310590464', NULL, '{\"SCC_NAME\":\"BEGC_T2\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"温度计2\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44533690310590464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"51\"}', '2018-07-26 13:34:48', 1);
+INSERT INTO `sys_value_record` VALUES ('44533720698322944', '1', 'SYS_CONFIGURE_COLUMN', '44533690310590464', '{\"SCC_NAME\":\"BEGC_T2\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"温度计2\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44533690310590464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":51}', '{\"SCC_NAME\":\"温度计2\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_T2\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44533690310590464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"51\"}', '2018-07-26 13:34:55', 2);
+INSERT INTO `sys_value_record` VALUES ('44533767901020160', '1', 'SYS_CONFIGURE_COLUMN', '44533767846494208', NULL, '{\"SCC_NAME\":\"湿度计2\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_COLUMN\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_H2\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44533767846494208\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"52\"}', '2018-07-26 13:35:07', 1);
+INSERT INTO `sys_value_record` VALUES ('44535049298640896', '1', 'BUS_ENTRANCE_GUARD_CARD', '44529511408074752', '{\"BEGC_USERNAME\":\"test2\",\"BEGC_ID\":\"失败\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"test3\"}', '{\"BEGC_USERNAME\":\"test2\",\"BEGC_ID\":\"test1\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"test3\"}', '2018-07-26 13:40:12', 2);
+INSERT INTO `sys_value_record` VALUES ('44535967498895360', '1', 'SYS_CONFIGURE_SEARCH', '38163489528741888', NULL, NULL, '2018-07-26 13:43:51', 3);
+INSERT INTO `sys_value_record` VALUES ('44536220931325952', '1', 'SYS_CONFIGURE_SEARCH', '38164690009849856', NULL, NULL, '2018-07-26 13:44:51', 3);
+INSERT INTO `sys_value_record` VALUES ('44536804627447808', '1', 'SYS_MENU', '44524381983997952', '{\"SM_URL\":\"admin/dataGrid/\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"IS_STATUS\":1,\"SM_ORDER\":1,\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD\",\"SM_NAME\":\"门禁卡信息\",\"SM_PARENTID\":\"44524153474121728\",\"SPD_ID\":\"\",\"ID\":\"44524381983997952\",\"SC_ID\":\"38163489528741888\",\"SM_CLASSICON\":\"mdi mdi-account-card-details\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"admin/dataGrid/\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"SM_ORDER\":\"1\",\"SM_CODE\":\"BUS:ENTRANCE_GUARD_CARD\",\"SM_NAME\":\"门禁卡\",\"SM_PARENTID\":\"44524153474121728\",\"SPD_ID\":\"\",\"ID\":\"44524381983997952\",\"SC_ID\":\"38163489528741888\",\"SM_CLASSICON\":\"mdi mdi-account-card-details\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 13:47:11', 2);
+INSERT INTO `sys_value_record` VALUES ('44537316366090240', '1', 'SYS_MENU', '38116041032728576', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"0\",\"IS_STATUS\":1,\"SM_ORDER\":20,\"SM_CODE\":\"INFO\",\"SM_NAME\":\"门店管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"38116041032728576\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-information-variant\",\"SM_IS_EXPAND\":\"\"}', '{\"SM_URL\":\"\",\"SM_URL_PARAMS\":\"\",\"SM_IS_LEAF\":\"1\",\"SM_ORDER\":\"20\",\"SM_CODE\":\"INFO\",\"SM_NAME\":\"门店管理\",\"SM_PARENTID\":\"0\",\"SPD_ID\":\"\",\"ID\":\"38116041032728576\",\"SC_ID\":\"\",\"SM_CLASSICON\":\"mdi mdi-information-variant\",\"SM_IS_EXPAND\":\"\"}', '2018-07-26 13:49:13', 2);
+INSERT INTO `sys_value_record` VALUES ('44542633552379904', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:10:20', 2);
+INSERT INTO `sys_value_record` VALUES ('44542777924517888', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:10:55', 2);
+INSERT INTO `sys_value_record` VALUES ('44544939677188096', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"80px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:19:30', 2);
 
 -- ----------------------------
 -- Table structure for test_process
@@ -7484,10 +7686,10 @@ DROP VIEW IF EXISTS `v_dict_type`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_dict_type` AS select `sdt`.`ID` AS `ID`,`sdt`.`SDT_NAME` AS `SDT_NAME`,`sdt`.`SDT_CODE` AS `SDT_CODE`,`sdt`.`IS_STATUS` AS `IS_STATUS` from `sys_dict_type` `sdt`;
 
 -- ----------------------------
--- View structure for v_division
+-- View structure for v_entrance_guard_card
 -- ----------------------------
-DROP VIEW IF EXISTS `v_division`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_division` AS select `bd`.`ID` AS `ID`,`bd`.`BD_PARENT_ID` AS `BD_PARENT_ID`,`bd`.`BD_NAME` AS `BD_NAME`,`bd`.`BD_CONTACTS` AS `BD_CONTACTS`,`bd`.`BD_PHONE` AS `BD_PHONE`,`bd`.`BD_FIXED_PHONE` AS `BD_FIXED_PHONE`,`bd`.`BD_EMAIL` AS `BD_EMAIL`,`bd`.`BD_ADDRESS` AS `BD_ADDRESS`,`bd`.`BD_DESCRIBE` AS `BD_DESCRIBE`,`bd`.`BD_ORDER` AS `BD_ORDER`,`bd`.`BD_ENTER_TIME` AS `BD_ENTER_TIME`,`pbd`.`BD_NAME` AS `BD_PARENT_NAME` from (`bus_division` `bd` left join `bus_division` `pbd` on((`pbd`.`ID` = `bd`.`BD_PARENT_ID`)));
+DROP VIEW IF EXISTS `v_entrance_guard_card`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_entrance_guard_card` AS select `begc`.`ID` AS `ID`,`begc`.`BEGC_SERIAL` AS `BEGC_SERIAL`,`begc`.`BEGC_ID` AS `BEGC_ID`,`begc`.`BEGC_KEY` AS `BEGC_KEY`,`begc`.`BEGC_STATUS` AS `BEGC_STATUS`,`begc`.`BEGC_INPUT` AS `BEGC_INPUT`,`begc`.`BEGC_NOW` AS `BEGC_NOW`,`begc`.`BEGC_T1` AS `BEGC_T1`,`begc`.`BEGC_H1` AS `BEGC_H1`,`begc`.`BEGC_T2` AS `BEGC_T2`,`begc`.`BEGC_H2` AS `BEGC_H2`,`begc`.`BEGC_INDEX` AS `BEGC_INDEX`,`begc`.`BEGC_VER` AS `BEGC_VER`,`begc`.`BEGC_NEXT_NUM` AS `BEGC_NEXT_NUM`,`begc`.`BEGC_MAC` AS `BEGC_MAC`,`begc`.`BEGC_USERNAME` AS `BEGC_USERNAME`,`begc`.`BEGC_PASSWORD` AS `BEGC_PASSWORD`,`begc`.`BEGC_UPDATE_TIME` AS `BEGC_UPDATE_TIME`,`begc`.`BEGC_ENTRY_TIME` AS `BEGC_ENTRY_TIME` from `bus_entrance_guard_card` `begc`;
 
 -- ----------------------------
 -- View structure for v_format

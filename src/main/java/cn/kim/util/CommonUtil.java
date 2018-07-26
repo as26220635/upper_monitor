@@ -48,11 +48,13 @@ public class CommonUtil {
     /**
      * 不加密字段
      */
-    public static Map<String, String> NO_ENCRYPT_FIELDS = Maps.newHashMapWithExpectedSize(2);
+    public static Map<String, String> NO_ENCRYPT_FIELDS = Maps.newHashMapWithExpectedSize(4);
 
     static {
         NO_ENCRYPT_FIELDS.put("SCC_WIDTH", "SCC_WIDTH");
         NO_ENCRYPT_FIELDS.put("SB_BUTTONID", "SB_BUTTONID");
+        NO_ENCRYPT_FIELDS.put("BEGC_ID", "BEGC_ID");
+        NO_ENCRYPT_FIELDS.put("BEGC_KEY", "BEGC_KEY");
     }
 
     @Autowired
