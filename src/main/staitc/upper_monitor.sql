@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 27/07/2018 12:11:26
+ Date: 27/07/2018 17:53:51
 */
 
 SET NAMES utf8mb4;
@@ -50,7 +50,7 @@ CREATE TABLE `bus_entrance_guard_card`  (
 -- ----------------------------
 -- Records of bus_entrance_guard_card
 -- ----------------------------
-INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, 'admin', '888888', 6, '0:0:0:0:0:0:0:1', '2018-07-27 12:09:58', '2018-07-26 13:18:12');
+INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', 'R12034', 'R12034', '23685', '0', '0000', '2018060217181207', '5.0', '1.2', '33.3', '12.0', '11571', '135', '0', '0004A33CCCB2', 'admin', '888888', 6, '0:0:0:0:0:0:0:1', '2018-07-27 16:06:29', '2018-07-26 13:18:12');
 
 -- ----------------------------
 -- Table structure for bus_entrance_guard_card_log
@@ -84,6 +84,10 @@ CREATE TABLE `bus_entrance_guard_card_log`  (
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874221796458496', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:07:57');
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874642610978816', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:09:37');
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874729311436800', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:09:58');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44922667916066816', '44529511408074752', 'R12034', 'R12034', '23685', '03', '0000', '2018060217181207', '00', '00', '00', '00', '11571', '135', '0', '0004A33CCCB2', '2018-07-27 15:20:28');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44926173678927872', '44529511408074752', 'R12034', 'R12034', '18940', '03', '0000', '2018060217190707', '00', '00', '00', '00', '29978', '135', '0', '0004A33CCCB2', '2018-07-27 15:34:23');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44932135244529664', '44529511408074752', 'R12034', 'R12034', '18940', '0', '0000', '2018060217190707', '00', '00', '00', '00', '29978', '135', '0', '0004A33CCCB2', '2018-07-27 15:58:05');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44934248372633600', '44529511408074752', 'R12034', 'R12034', '23685', '0', '0000', '2018060217181207', '5.0', '1.2', '33.3', '12.0', '11571', '135', '0', '0004A33CCCB2', '2018-07-27 16:06:29');
 
 -- ----------------------------
 -- Table structure for bus_store
@@ -184,8 +188,10 @@ INSERT INTO `sys_button` VALUES ('3008659554566144', '设置角色', 'setRole', 
 INSERT INTO `sys_button` VALUES ('33081849764904960', '作废', 'cancel', '', 'btn btn-danger', 'mdi mdi-cancel', 'CANCEL', 98, '1');
 INSERT INTO `sys_button` VALUES ('33267466964566016', '作废信息', 'cancelInfo', '', 'btn btn-info', 'mdi mdi-information-outline', 'CANCEL_INFO', 98, '1');
 INSERT INTO `sys_button` VALUES ('3375831514611712', '设置账号', 'setSub', '', 'btn btn-primary', 'mdi mdi-account-group', 'SET_SUB', 10, '1');
+INSERT INTO `sys_button` VALUES ('44942142308614144', '详细', 'detail', '', 'btn btn-default', 'mdi mdi-details', 'DETAIL', 0, '1');
+INSERT INTO `sys_button` VALUES ('44948151529897984', '遥控', 'control', '', 'btn btn-info', 'mdi mdi-xbox-controller', 'CONTROL', 1, '1');
 INSERT INTO `sys_button` VALUES ('763206804963328', '保存', 'save', '', 'btn btn-primary', 'mdi mdi-content-save', 'SAVE', 2, '0');
-INSERT INTO `sys_button` VALUES ('793562643955712', '编辑', 'edit', '', 'btn btn-success', 'mdi mdi-table-edit', 'UPDATE', 1, '1');
+INSERT INTO `sys_button` VALUES ('793562643955712', '编辑', 'edit', '', 'btn btn-success', 'mdi mdi-table-edit', 'UPDATE', 2, '1');
 INSERT INTO `sys_button` VALUES ('793777245519872', '删除', 'del', '', 'btn btn-danger', 'mdi mdi-table-row-remove', 'DELETE', 99, '1');
 INSERT INTO `sys_button` VALUES ('794877562454016', '设置按钮', 'setButton', 'setButton', 'btn btn-warning', 'mdi mdi-menu', 'SET_MENU', 3, '1');
 INSERT INTO `sys_button` VALUES ('795677957292032', '设置列', 'setColumn', '', 'btn btn-warning', 'mdi mdi-table-row', 'SET_COLUMN', 4, '1');
@@ -3513,6 +3519,37 @@ INSERT INTO `sys_log` VALUES ('44872120227856384', '1', NULL, '删除配置列�
 INSERT INTO `sys_log` VALUES ('44872176066625536', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:59:49', '1', 2);
 INSERT INTO `sys_log` VALUES ('44872652342427648', '1', NULL, '修改门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-27 12:01:43', '1', 2);
 INSERT INTO `sys_log` VALUES ('44872813466615808', '1', NULL, '添加配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-27 12:02:21', '1', 2);
+INSERT INTO `sys_log` VALUES ('44922840503287808', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 15:21:09', '1', 9);
+INSERT INTO `sys_log` VALUES ('44926669768622080', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 15:36:22', '1', 1);
+INSERT INTO `sys_log` VALUES ('44932013576159232', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 15:57:36', '1', 1);
+INSERT INTO `sys_log` VALUES ('44934044978249728', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:05:40', '1', 9);
+INSERT INTO `sys_log` VALUES ('44935296399179776', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:10:38', '1', 1);
+INSERT INTO `sys_log` VALUES ('44935543733092352', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:11:37', '1', 1);
+INSERT INTO `sys_log` VALUES ('44938693802196992', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:24:08', '1', 1);
+INSERT INTO `sys_log` VALUES ('44938951382794240', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:25:10', '1', 1);
+INSERT INTO `sys_log` VALUES ('44938982563250176', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:25:17', '1', 1);
+INSERT INTO `sys_log` VALUES ('44939238180913152', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:26:18', '1', 1);
+INSERT INTO `sys_log` VALUES ('44939281109614592', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:26:28', '1', 1);
+INSERT INTO `sys_log` VALUES ('44939388269887488', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:26:54', '1', 1);
+INSERT INTO `sys_log` VALUES ('44939459313008640', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:27:11', '1', 1);
+INSERT INTO `sys_log` VALUES ('44940353349877760', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:30:44', '1', 1);
+INSERT INTO `sys_log` VALUES ('44940405891923968', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:30:57', '1', 1);
+INSERT INTO `sys_log` VALUES ('44940472241618944', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:31:12', '1', 1);
+INSERT INTO `sys_log` VALUES ('44940640525484032', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:31:53', '1', 1);
+INSERT INTO `sys_log` VALUES ('44941158119374848', NULL, NULL, '刷卡请求', '0:0:0:0:0:0:0:1', 0, '2018-07-27 16:33:56', '1', 1);
+INSERT INTO `sys_log` VALUES ('44941297466736640', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:34:29', '1', 9);
+INSERT INTO `sys_log` VALUES ('44942142551883776', '1', NULL, '添加按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:37:51', '1', 2);
+INSERT INTO `sys_log` VALUES ('44942204531113984', '1', NULL, '设置菜单按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:38:05', '1', 2);
+INSERT INTO `sys_log` VALUES ('44942264878759936', '1', NULL, '设置角色菜单按钮权限', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:38:20', '1', 2);
+INSERT INTO `sys_log` VALUES ('44945452021317632', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 16:51:00', '1', 9);
+INSERT INTO `sys_log` VALUES ('44947790815559680', '1', NULL, '修改按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:00:17', '1', 2);
+INSERT INTO `sys_log` VALUES ('44948151840276480', '1', NULL, '添加按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:01:43', '1', 2);
+INSERT INTO `sys_log` VALUES ('44948194135638016', '1', NULL, '修改按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:01:53', '1', 2);
+INSERT INTO `sys_log` VALUES ('44948240755326976', '1', NULL, '设置菜单按钮', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:02:05', '1', 2);
+INSERT INTO `sys_log` VALUES ('44948316491874304', '1', NULL, '设置角色菜单按钮权限', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:02:23', '1', 2);
+INSERT INTO `sys_log` VALUES ('44955402663624704', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:30:32', '1', 9);
+INSERT INTO `sys_log` VALUES ('44959179986698240', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:45:33', '1', 9);
+INSERT INTO `sys_log` VALUES ('44959453312712704', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-27 17:46:38', '1', 2);
 INSERT INTO `sys_log` VALUES ('480859698233344', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:35', '1', 9);
 INSERT INTO `sys_log` VALUES ('480949980626944', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:56', '1', 9);
 INSERT INTO `sys_log` VALUES ('483274396794880', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:14:10', '1', 9);
@@ -6439,6 +6476,37 @@ INSERT INTO `sys_log_text` VALUES ('44872120261410816', '44872120227856384', '�
 INSERT INTO `sys_log_text` VALUES ('44872176091791360', '44872176066625536', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=IP地址, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_IP, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525553360830464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=40}');
 INSERT INTO `sys_log_text` VALUES ('44872652371787776', '44872652342427648', '更新门禁卡,更新前:{BEGC_UPDATE_TIME=2018-07-26 13:18:12, BEGC_VER=null, BEGC_SERIAL=null, BEGC_IP=null, BEGC_H2=null, BEGC_STATUS=null, BEGC_INDEX=null, BEGC_H1=null, BEGC_TIME=5, BEGC_NEXT_NUM=null, BEGC_ENTRY_TIME=2018-07-26 13:18:12, BEGC_MAC=null, BEGC_INPUT=null, BEGC_USERNAME=admin, BEGC_NOW=null, BEGC_ID=U10061, ID=44529511408074752, BEGC_T2=null, BEGC_KEY=null, BEGC_T1=null, BEGC_PASSWORD=888888},更新后:{BEGC_USERNAME=admin, SVR_TABLE_NAME=BUS_ENTRANCE_GUARD_CARD, BEGC_ID=U10061, ID=44529511408074752, BEGC_TIME=6, BEGC_PASSWORD=888888}');
 INSERT INTO `sys_log_text` VALUES ('44872813491781632', '44872813466615808', '添加配置列表搜索,配置列表:门禁卡管理-门禁卡,搜索参数{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_IP, SVR_TABLE_NAME=SYS_CONFIGURE_SEARCH, SCS_NAME=IP地址, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=44872813068156928, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=20}');
+INSERT INTO `sys_log_text` VALUES ('44922840666865664', '44922840503287808', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44926669873479680', '44926669768622080', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44932013718765568', '44932013576159232', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44934045028581376', '44934044978249728', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44935296424345600', '44935296399179776', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44935543770841088', '44935543733092352', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44938693894471680', '44938693802196992', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44938951416348672', '44938951382794240', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44938982596804608', '44938982563250176', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44939238210273280', '44939238180913152', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44939281143169024', '44939281109614592', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44939388311830528', '44939388269887488', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44939459350757376', '44939459313008640', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44940353437958144', '44940353349877760', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44940405925478400', '44940405891923968', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44940472270979072', '44940472241618944', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44940640554844160', '44940640525484032', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44941158161317888', '44941158119374848', '刷卡请求,接收数据:{\"Status\":\"03\",\"Serial\":\"R12034\",\"Input\":\"0000\",\"Ver\":\"135\",\"DataLen\":\"24\",\"Reader\":\"1\",\"Index\":\"7876\",\"ID\":\"R12034\",\"type\":\"9\",\"MAC\":\"0004A33CCCB2\",\"Card\":\"ODIwNDM0MjE3NDQwMDIwNA==\"},返回参数:{\"Time\":6,\"AcsRes\":0,\"ActIndex\":1}');
+INSERT INTO `sys_log_text` VALUES ('44941297814863872', '44941297466736640', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44942142744821760', '44942142551883776', '添加按钮:{SB_CODE=DETAIL, SVR_TABLE_NAME=SYS_BUTTON, SB_FUNC=, SB_CLASS=btn btn-default, SB_ORDER=0, SB_BUTTONID=detail, SB_ICON=mdi mdi-details, ID=44942142308614144, SB_TYPE=1, SB_NAME=详细}');
+INSERT INTO `sys_log_text` VALUES ('44942204560474112', '44942204531113984', '菜单:门禁卡,旧按钮:[1, 793777245519872, 793562643955712],新按钮:[1, 793777245519872, 793562643955712, 44942142308614144]');
+INSERT INTO `sys_log_text` VALUES ('44942264916508672', '44942264878759936', '角色:超级管理员,菜单名称:门禁卡,旧按钮:[1, 793777245519872, 793562643955712],新按钮:[1, 793777245519872, 793562643955712, 44942142308614144]');
+INSERT INTO `sys_log_text` VALUES ('44945452218449920', '44945452021317632', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44947790920417280', '44947790815559680', '更新按钮,更新前:{SB_CODE=UPDATE, SB_FUNC=, SB_CLASS=btn btn-success, SB_ORDER=1, SB_BUTTONID=edit, SB_ICON=mdi mdi-table-edit, ID=793562643955712, SB_TYPE_NAME=列表按钮, SB_TYPE=1, SB_NAME=编辑},更新后:{SB_CODE=UPDATE, SVR_TABLE_NAME=SYS_BUTTON, SB_FUNC=, SB_CLASS=btn btn-success, SB_ORDER=2, SB_BUTTONID=edit, SB_ICON=mdi mdi-table-edit, ID=793562643955712, SB_TYPE=1, SB_NAME=编辑}');
+INSERT INTO `sys_log_text` VALUES ('44948151869636608', '44948151840276480', '添加按钮:{SB_CODE=CONTROL, SVR_TABLE_NAME=SYS_BUTTON, SB_FUNC=, SB_CLASS=btn btn-info, SB_ORDER=1, SB_BUTTONID=control, SB_ICON=mdi mdi-xbox-controller, ID=44948151529897984, SB_TYPE=0, SB_NAME=遥控}');
+INSERT INTO `sys_log_text` VALUES ('44948194156609536', '44948194135638016', '更新按钮,更新前:{SB_CODE=CONTROL, SB_FUNC=, SB_CLASS=btn btn-info, SB_ORDER=1, SB_BUTTONID=control, SB_ICON=mdi mdi-xbox-controller, ID=44948151529897984, SB_TYPE_NAME=顶部按钮, SB_TYPE=0, SB_NAME=遥控},更新后:{SB_CODE=CONTROL, SVR_TABLE_NAME=SYS_BUTTON, SB_FUNC=, SB_CLASS=btn btn-info, SB_ORDER=1, SB_BUTTONID=control, SB_ICON=mdi mdi-xbox-controller, ID=44948151529897984, SB_TYPE=1, SB_NAME=遥控}');
+INSERT INTO `sys_log_text` VALUES ('44948240780492800', '44948240755326976', '菜单:门禁卡,旧按钮:[44942142308614144, 1, 793777245519872, 793562643955712],新按钮:[1, 793777245519872, 793562643955712, 44948151529897984, 44942142308614144]');
+INSERT INTO `sys_log_text` VALUES ('44948316517040128', '44948316491874304', '角色:超级管理员,菜单名称:门禁卡,旧按钮:[44942142308614144, 1, 793777245519872, 793562643955712],新按钮:[1, 793777245519872, 793562643955712, 44948151529897984, 44942142308614144]');
+INSERT INTO `sys_log_text` VALUES ('44955403380850688', '44955402663624704', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44959180112527360', '44959179986698240', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44959453350461440', '44959453312712704', '遥控门禁:R12034,动作:0');
 INSERT INTO `sys_log_text` VALUES ('480859756953600', '480859698233344', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('480950030958592', '480949980626944', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('483274606510080', '483274396794880', '登录成功!登录地址:未知');
@@ -6708,6 +6776,8 @@ INSERT INTO `sys_menu_button` VALUES ('44524911904948224', '44524871295696896', 
 INSERT INTO `sys_menu_button` VALUES ('44524991064047616', '44524381983997952', '1');
 INSERT INTO `sys_menu_button` VALUES ('44524991126962176', '44524381983997952', '793777245519872');
 INSERT INTO `sys_menu_button` VALUES ('44524991143739392', '44524381983997952', '793562643955712');
+INSERT INTO `sys_menu_button` VALUES ('44942204132655104', '44524381983997952', '44942142308614144');
+INSERT INTO `sys_menu_button` VALUES ('44948240369451008', '44524381983997952', '44948151529897984');
 
 -- ----------------------------
 -- Table structure for sys_operator
@@ -7156,6 +7226,8 @@ INSERT INTO `sys_role_button` VALUES ('44526362349797376', '44526336701628416', 
 INSERT INTO `sys_role_button` VALUES ('44526362412711936', '44526336701628416', '793777245519872');
 INSERT INTO `sys_role_button` VALUES ('44526362446266368', '44526336701628416', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('44526377843556352', '44526336978452480', '763206804963328');
+INSERT INTO `sys_role_button` VALUES ('44942264484495360', '44526336701628416', '44942142308614144');
+INSERT INTO `sys_role_button` VALUES ('44948316122775552', '44526336701628416', '44948151529897984');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -7658,6 +7730,10 @@ INSERT INTO `sys_value_record` VALUES ('44872119980392448', '1', 'SYS_CONFIGURE_
 INSERT INTO `sys_value_record` VALUES ('44872175731081216', '1', 'SYS_CONFIGURE_COLUMN', '44525553360830464', '{\"SCC_NAME\":\"温度计1\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_T1\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525553360830464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":40}', '{\"SCC_NAME\":\"IP地址\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BEGC_IP\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525553360830464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"40\"}', '2018-07-27 11:59:49', 2);
 INSERT INTO `sys_value_record` VALUES ('44872652036243456', '1', 'BUS_ENTRANCE_GUARD_CARD', '44529511408074752', '{\"BEGC_TIME\":5,\"BEGC_USERNAME\":\"admin\",\"BEGC_ID\":\"U10061\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"888888\"}', '{\"BEGC_TIME\":\"6\",\"BEGC_USERNAME\":\"admin\",\"BEGC_ID\":\"U10061\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"888888\"}', '2018-07-27 12:01:43', 2);
 INSERT INTO `sys_value_record` VALUES ('44872813118488576', '1', 'SYS_CONFIGURE_SEARCH', '44872813068156928', NULL, '{\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCS_FIELD\":\"BEGC_IP\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_SEARCH\",\"SCS_NAME\":\"IP地址\",\"SCS_SDT_CODE\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"44872813068156928\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\",\"SCS_ORDER\":\"20\"}', '2018-07-27 12:02:21', 1);
+INSERT INTO `sys_value_record` VALUES ('44942142405083136', '1', 'SYS_BUTTON', '44942142308614144', NULL, '{\"SB_CODE\":\"DETAIL\",\"SVR_TABLE_NAME\":\"SYS_BUTTON\",\"SB_FUNC\":\"\",\"SB_CLASS\":\"btn btn-default\",\"SB_ORDER\":\"0\",\"SB_BUTTONID\":\"detail\",\"SB_ICON\":\"mdi mdi-details\",\"ID\":\"44942142308614144\",\"SB_TYPE\":\"1\",\"SB_NAME\":\"详细\"}', '2018-07-27 16:37:51', 1);
+INSERT INTO `sys_value_record` VALUES ('44947790672953344', '1', 'SYS_BUTTON', '793562643955712', '{\"SB_CODE\":\"UPDATE\",\"SB_FUNC\":\"\",\"SB_CLASS\":\"btn btn-success\",\"SB_ORDER\":1,\"SB_BUTTONID\":\"edit\",\"SB_ICON\":\"mdi mdi-table-edit\",\"ID\":\"793562643955712\",\"SB_TYPE\":\"1\",\"SB_NAME\":\"编辑\"}', '{\"SB_CODE\":\"UPDATE\",\"SB_CLASS\":\"btn btn-success\",\"SB_ORDER\":\"2\",\"SB_BUTTONID\":\"edit\",\"SB_ICON\":\"mdi mdi-table-edit\",\"SB_TYPE\":\"1\",\"SB_FUNC\":\"\",\"ID\":\"793562643955712\",\"SB_NAME\":\"编辑\"}', '2018-07-27 17:00:17', 2);
+INSERT INTO `sys_value_record` VALUES ('44948151571841024', '1', 'SYS_BUTTON', '44948151529897984', NULL, '{\"SB_CODE\":\"CONTROL\",\"SVR_TABLE_NAME\":\"SYS_BUTTON\",\"SB_FUNC\":\"\",\"SB_CLASS\":\"btn btn-info\",\"SB_ORDER\":\"1\",\"SB_BUTTONID\":\"control\",\"SB_ICON\":\"mdi mdi-xbox-controller\",\"ID\":\"44948151529897984\",\"SB_TYPE\":\"0\",\"SB_NAME\":\"遥控\"}', '2018-07-27 17:01:43', 1);
+INSERT INTO `sys_value_record` VALUES ('44948193913339904', '1', 'SYS_BUTTON', '44948151529897984', '{\"SB_CODE\":\"CONTROL\",\"SB_FUNC\":\"\",\"SB_CLASS\":\"btn btn-info\",\"SB_ORDER\":1,\"SB_BUTTONID\":\"control\",\"SB_ICON\":\"mdi mdi-xbox-controller\",\"ID\":\"44948151529897984\",\"SB_TYPE\":\"0\",\"SB_NAME\":\"遥控\"}', '{\"SB_CODE\":\"CONTROL\",\"SB_CLASS\":\"btn btn-info\",\"SB_ORDER\":\"1\",\"SB_BUTTONID\":\"control\",\"SB_ICON\":\"mdi mdi-xbox-controller\",\"SB_TYPE\":\"1\",\"SB_FUNC\":\"\",\"ID\":\"44948151529897984\",\"SB_NAME\":\"遥控\"}', '2018-07-27 17:01:53', 2);
 
 -- ----------------------------
 -- Table structure for test_process

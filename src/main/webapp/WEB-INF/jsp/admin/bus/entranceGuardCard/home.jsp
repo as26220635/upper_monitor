@@ -31,6 +31,36 @@
         );
     });
 
+    //详细
+    $dataGridTable.find('tbody').on('click', '#detail', function () {
+        var data = getRowData(this);
+        var id = data.ID;
+
+        ajax.getHtml('${ENTRANCE_GUARD_CARD_DETAIL_URL}/' + id, {}, function (html) {
+                model.show({
+                    title: '查看门禁卡详细',
+                    content: html,
+                    footerModel: model.footerModel.ADMIN,
+                });
+            }
+        );
+    });
+
+    //操控
+    $dataGridTable.find('tbody').on('click', '#control', function () {
+        var data = getRowData(this);
+        var id = data.ID;
+
+        ajax.getHtml('${ENTRANCE_GUARD_CARD_CONTROL_URL}/' + id, {}, function (html) {
+                model.show({
+                    title: '遥控门禁:' + data.BEGC_ID,
+                    content: html,
+                    footerModel: model.footerModel.ADMIN,
+                });
+            }
+        );
+    });
+
     //修改
     $dataGridTable.find('tbody').on('click', '#edit', function () {
         var data = getRowData(this);

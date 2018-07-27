@@ -651,3 +651,11 @@ table.dataTable tbody tr.selected {
         margin-right: 0px;
     }
 }
+.row .form-group{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.row.btn-group button{
+    margin: 5px;
+}

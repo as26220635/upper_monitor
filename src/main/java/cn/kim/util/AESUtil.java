@@ -61,7 +61,7 @@ public class AESUtil {
     }
 
     // 加密
-    public static String encrypt(String sSrc, String sKey) throws Exception {
+    public static String encrypt(String sSrc, String sKey, boolean isHex) throws Exception {
         if (sKey == null) {
             System.out.print("Key为空null");
             return null;
@@ -74,11 +74,15 @@ public class AESUtil {
         byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
 
         ////此处使用BASE64做转码功能，同时能起到2次加密的作用。
-        return parseByte2HexStr(encrypted);
+        if (isHex) {
+            return parseByte2HexStr(encrypted);
+        } else {
+            return new String(new BASE64Encoder().encode(encrypted));
+        }
     }
 
     // 解密
-    public static String decrypt(String sSrc, String sKey) throws Exception {
+    public static String decrypt(String sSrc, String sKey, boolean isHex) throws Exception {
         try {
             // 判断Key是否正确
             if (sKey == null) {
@@ -92,7 +96,13 @@ public class AESUtil {
 
 
             try {
-                byte[] original = cipher.doFinal(parseHexStr2Byte(sSrc));
+                byte[] var1 = null;
+                if (isHex) {
+                    var1 = parseHexStr2Byte(sSrc);
+                } else {
+                    var1 = new BASE64Decoder().decodeBuffer(sSrc);
+                }
+                byte[] original = cipher.doFinal(var1);
                 String originalString = new String(original, "utf-8");
                 return originalString;
             } catch (Exception e) {

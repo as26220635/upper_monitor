@@ -172,9 +172,11 @@
 <%--流程进度列表--%>
 <c:set var="PROCESS_SCHEDULE_BASE_URL" value="${PROCESS_BASE_URL}schedule/"/>
 <c:set var="PROCESS_SCHEDULE_CANCEL_URL" value="${PROCESS_SCHEDULE_BASE_URL}cancel"/>
-<%--部门--%>
+<%--门禁卡--%>
 <c:set var="ENTRANCE_GUARD_CARD_BASE_URL" value="${MANAGER_URL}entranceGuardCard/"/>
 <c:set var="ENTRANCE_GUARD_CARD_ADD_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}add"/>
+<c:set var="ENTRANCE_GUARD_CARD_DETAIL_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}detail"/>
+<c:set var="ENTRANCE_GUARD_CARD_CONTROL_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}control"/>
 <c:set var="ENTRANCE_GUARD_CARD_UPDATE_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}update"/>
 <c:set var="ENTRANCE_GUARD_CARD_DELETE_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}delete"/>
 <c:set var="ENTRANCE_GUARD_CARD_TREE_DATA_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}tree"/>

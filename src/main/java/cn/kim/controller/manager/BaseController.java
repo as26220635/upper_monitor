@@ -183,7 +183,10 @@ public abstract class BaseController extends BaseData {
     public Map<String, String> urlParamsToMap(String urlParams) {
         Map<String, String> map = Maps.newHashMapWithExpectedSize(10);
         for (String keyValue : urlParams.split("&")) {
-            map.put(keyValue.split("=")[0], keyValue.split("=")[1]);
+            int startValueIndex = keyValue.indexOf("=");
+            if (startValueIndex != -1) {
+                map.put(keyValue.substring(0, startValueIndex), keyValue.substring(startValueIndex + 1, keyValue.length()));
+            }
         }
         return map;
     }
@@ -197,7 +200,7 @@ public abstract class BaseController extends BaseData {
     public Map<String, String> urlParamsToMap(Map<String, String[]> paramMap) {
         Map<String, String> map = Maps.newHashMapWithExpectedSize(10);
         for (String key : paramMap.keySet()) {
-            if(!isEmpty(paramMap.get(key))){
+            if (!isEmpty(paramMap.get(key))) {
                 map.put(key, paramMap.get(key)[0]);
             }
         }

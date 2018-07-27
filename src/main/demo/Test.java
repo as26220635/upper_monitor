@@ -1,8 +1,5 @@
 import cn.kim.common.attr.ConfigProperties;
-import cn.kim.util.AESUtil;
-import cn.kim.util.DateUtil;
-import cn.kim.util.HttpClient;
-import cn.kim.util.HttpUtil;
+import cn.kim.util.*;
 import com.google.common.collect.Maps;
 import org.apache.commons.codec.DecoderException;
 import org.springframework.util.Base64Utils;
@@ -18,12 +15,21 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) throws Exception {
-        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-        System.out.println(AESUtil.decrypt("2B6D5851B9D6B67ACE56FB3319BA6EE7B7D865049851587D4F56CB62D9BF605D8CD429C9874CF86119066087FC76E1D14AC37098352183F12B7E12261BCABD69F16B4B4EC679A1AEECFA7433E031B6889BBC36C45BBC12F824311AAC354E0A34B2C976834AB4377D09481461D93D06F17429FF1068C19A0898A65732CD9F60A808BAA1455FBAFF275A4413BC55AC4D49E6DE47441C8C3C633B2ECBC1EDB29979ADC1075CE3FBD3A7906D27DF8C0FF412C3F4D8A45DFC8C51BE569F4918DD55F749431AC6D4185D3999D7292260921C41B11960DF546F59C363443B3E570567F3F83302B80B8BA91A3B2675F899C5A3E9","abcdefgh20161234"));
+//        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+//        System.out.println(AESUtil.decrypt("InXDNDnoG2qNwYIMqE4Bb5TKU7fdErfVYWVu444acfQ5bKQL+lBslDwp3Jp5XCnPOxI+ePpJpSgA3FV53GNqYYNzeOohQuZiEOilmnhbZU4G1cqF0RqD6+kGKT2AlnIJPLxgKXSe1ps9jadGEMxgYKnbZau9j/N8G0Oc9h83PAjA0ZdcXMeugN2bgHLIFoKmk6qGT+4Mc+QlshFaczyIMw==", "abcdefgh20161234", false));
+//        int a = Integer.parseInt("02",16);
+//        System.out.println((a & 0xfc) | ((~a) & 0x03));
+        System.out.println(TextUtil.base64Decrypt("ODIwNDM0MjE3NDQwMDIwNA"));
     }
 
-    public static String asciiToString(String value)
-    {
+    public int Byte2Int(Byte[]bytes) {
+        return (bytes[0]&0xff)<<24
+                | (bytes[1]&0xff)<<16
+                | (bytes[2]&0xff)<<8
+                | (bytes[3]&0xff);
+    }
+
+    public static String asciiToString(String value) {
         StringBuffer sbu = new StringBuffer();
         String[] chars = value.split(",");
         for (int i = 0; i < chars.length; i++) {

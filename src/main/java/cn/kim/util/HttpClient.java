@@ -1,6 +1,10 @@
 package cn.kim.util;
 
+import cn.kim.common.attr.Attribute;
+import cn.kim.common.attr.MagicValue;
+import com.google.common.collect.Maps;
 import org.apache.http.Consts;
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
@@ -8,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,9 +39,17 @@ public class HttpClient {
      * @param url 请求路径
      * @return json
      */
-    public String get(String url, Map<String, String> params) {
+    public Map<String, Object> get(String url, Map<String, String> params) {
+        return get(url, null, params);
+    }
+
+    public Map<String, Object> get(String url, Map<String, String> headerMap, Map<String, String> params) {
+        Map<String, Object> resultMap = Maps.newHashMapWithExpectedSize(2);
+        resultMap.put(MagicValue.STATUS, Attribute.STATUS_ERROR);
+
         //实例化httpclient
         CloseableHttpClient httpclient = HttpClients.createDefault();
+
         //处理参数
         String str = "";
         if (!ValidateUtil.isEmpty(params)) {
@@ -57,7 +70,12 @@ public class HttpClient {
                 .setConnectTimeout(5000).setConnectionRequestTimeout(1000)
                 .setSocketTimeout(5000).build();
         httpGet.setConfig(requestConfig);
-
+        //header头
+        if (!ValidateUtil.isEmpty(headerMap)) {
+            headerMap.keySet().forEach(key -> {
+                httpGet.setHeader(key, headerMap.get(key));
+            });
+        }
         //请求结果
         CloseableHttpResponse response = null;
         String content = "";
@@ -66,14 +84,23 @@ public class HttpClient {
             response = httpclient.execute(httpGet);
             if (response.getStatusLine().getStatusCode() == 200) {
                 content = EntityUtils.toString(response.getEntity(), "utf-8");
+                resultMap.put(MagicValue.STATUS, Attribute.STATUS_SUCCESS);
+                resultMap.put(MagicValue.DESC, content);
             }
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            resultMap.put(MagicValue.DESC, "网络连接失败！");
+        } catch (HttpHostConnectException e) {
+            resultMap.put(MagicValue.DESC, "网络连接失败!");
         } catch (IOException e) {
-            e.printStackTrace();
+            resultMap.put(MagicValue.DESC, e.getMessage());
         }
+
         logger.info("GET请求，URL:" + url + str);
-        return content;
+        return resultMap;
+    }
+
+    public Map<String, Object> post(String url, Map<String, String> params) {
+        return post(url, null, params);
     }
 
     /**
@@ -83,7 +110,9 @@ public class HttpClient {
      * @param params 参数
      * @return json
      */
-    public String post(String url, Map<String, String> params) {
+    public Map<String, Object> post(String url, Map<String, String> headerMap, Map<String, String> params) {
+        Map<String, Object> resultMap = Maps.newHashMapWithExpectedSize(2);
+        resultMap.put(MagicValue.STATUS, Attribute.STATUS_ERROR);
         //实例化httpClient
         CloseableHttpClient httpclient = HttpClients.createDefault();
         //实例化post方法
@@ -92,6 +121,13 @@ public class HttpClient {
                 .setConnectTimeout(5000).setConnectionRequestTimeout(1000)
                 .setSocketTimeout(5000).build();
         httpPost.setConfig(requestConfig);
+        //header头
+        if (!ValidateUtil.isEmpty(headerMap)) {
+            headerMap.keySet().forEach(key -> {
+                httpPost.setHeader(key, headerMap.get(key));
+            });
+        }
+
         //处理参数
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         Set<String> keySet = params.keySet();
@@ -110,13 +146,17 @@ public class HttpClient {
             response = httpclient.execute(httpPost);
             if (response.getStatusLine().getStatusCode() == 200) {
                 content = EntityUtils.toString(response.getEntity(), "utf-8");
+                resultMap.put(MagicValue.STATUS, Attribute.STATUS_SUCCESS);
+                resultMap.put(MagicValue.DESC, content);
             }
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            resultMap.put(MagicValue.DESC, "网络连接失败！");
+        } catch (HttpHostConnectException e) {
+            resultMap.put(MagicValue.DESC, "网络连接失败!");
         } catch (IOException e) {
-            e.printStackTrace();
+            resultMap.put(MagicValue.DESC, e.getMessage());
         }
         logger.info("POST请求，URL:" + url + "，参数:" + nvps.toString());
-        return content;
+        return resultMap;
     }
 }

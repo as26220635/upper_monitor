@@ -1,6 +1,7 @@
 package cn.kim.controller.api;
 
 import cn.kim.common.attr.ConfigProperties;
+import cn.kim.common.eu.CardType;
 import cn.kim.common.eu.UseType;
 import cn.kim.controller.manager.BaseController;
 import cn.kim.exception.CustomException;
@@ -44,7 +45,7 @@ public class EntranceGuardCardApiController extends BaseController {
                 //没有参数说明是未加密数据
                 dataMap = urlParamsToMap(request.getParameterMap());
             } else {
-                dataMap = decryptParamsToMap(data);
+                dataMap = decryptParamsToMap(data.replaceAll(" ", "+"));
             }
 
             String serial = dataMap.get("Serial");
@@ -64,7 +65,22 @@ public class EntranceGuardCardApiController extends BaseController {
             String ver = dataMap.get("Ver");
             String nextNum = dataMap.get("NextNum");
             String mac = dataMap.get("MAC");
+            String ip = dataMap.get("IP");
 
+            status = hexConvert16(status);
+
+            if (!isEmpty(t1) && !"00".equals(t1)) {
+                t1 = toString(TextUtil.toDouble(t1) / 10);
+            }
+            if (!isEmpty(t2) && !"00".equals(t2)) {
+                t2 = toString(TextUtil.toDouble(t2) / 10);
+            }
+            if (!isEmpty(h1) && !"00".equals(h1)) {
+                h1 = toString(TextUtil.toDouble(h1) / 10);
+            }
+            if (!isEmpty(h2) && !"00".equals(h2)) {
+                h2 = toString(TextUtil.toDouble(h2) / 10);
+            }
             Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(16);
             paramMap.put("BEGC_SERIAL", serial);
             paramMap.put("BEGC_ID", id);
@@ -81,7 +97,11 @@ public class EntranceGuardCardApiController extends BaseController {
             paramMap.put("BEGC_NEXT_NUM", nextNum);
             paramMap.put("BEGC_MAC", mac);
             //获取设备所在的公网IP
-            paramMap.put("BEGC_IP", HttpUtil.getIpAddr(request));
+            if (isEmpty(ip)) {
+                paramMap.put("BEGC_IP", HttpUtil.getIpAddr(request));
+            } else {
+                paramMap.put("BEGC_IP", ip);
+            }
             //更新门禁卡信息和插入心跳日志
             entranceGuardCardService.updateEntranceGuardCard(paramMap);
             //解析NOW日期 判断日期是否有误 有误返回当前服务器日期
@@ -114,7 +134,7 @@ public class EntranceGuardCardApiController extends BaseController {
                 //没有参数说明是未加密数据
                 dataMap = urlParamsToMap(request.getParameterMap());
             } else {
-                dataMap = decryptParamsToMap(data);
+                dataMap = decryptParamsToMap(data.replaceAll(" ", "+"));
             }
 
             //接收到的卡号、密码、二维码、身份证号码等
@@ -123,21 +143,29 @@ public class EntranceGuardCardApiController extends BaseController {
                 throw new CustomException("参数错误！");
             }
 //            接收到的数据类型
-//            0=普通卡
-//            1=串口232接口输入字符串,如二维码等
-//            2=密码
-//            6=二代证数据
-//            7=二进制数据（BCD），用于串口输入
-//            8=大数据包，用于串口输入
-//            9=base64编码，用于串口输入
-//            10=指纹数据
-            String type = dataMap.get("type");
+//            0 = 卡；
+//            1 = 串口232接口输入字符串,如二维码等；
+//            2 = 密码；
+//            3 = 按钮请求；
+//            6 = 二代证数据；
+//            9 = Base64编码数据，用于串口输入；
+//            10 = 指纹数据；
+//            11 = 指静脉数据；
+//            12 = RFID卡；
+//            13 = 人脸；
+            int type = toInt(dataMap.get("type"));
             String serial = dataMap.get("Serial");
             String id = dataMap.get("ID");
             String reader = dataMap.get("Reader");
             String status = dataMap.get("Status");
             String index = dataMap.get("Index");
             String mac = dataMap.get("MAC");
+
+            //base64解密
+            if (CardType.ORCODE.getType() == type || CardType.CHINA.getType() == type || CardType.BASE64.getType() == type || CardType.VIEN_FINGER.getType() == type || CardType.FACE.getType() == type) {
+                card = TextUtil.base64Decrypt(card);
+            }
+            status = hexConvert16(status);
 
             //根据ID找到门禁卡
             Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(1);
@@ -195,7 +223,7 @@ public class EntranceGuardCardApiController extends BaseController {
     private Map<String, String> decryptParamsToMap(String data) throws Exception {
         //解密
         //参数转为Map
-        return urlParamsToMap(AESUtil.decrypt(data, ConfigProperties.CARD_AES_KEY));
+        return urlParamsToMap(AESUtil.decrypt(data, ConfigProperties.CARD_AES_KEY, false));
     }
 
     /**
@@ -206,6 +234,17 @@ public class EntranceGuardCardApiController extends BaseController {
      * @throws Exception
      */
     private String resultEncryptJson(JSONObject jsonObject) throws Exception {
-        return "DATAS={" + AESUtil.encrypt(jsonObject.toJSONString(), ConfigProperties.CARD_AES_KEY) + "}";
+        return "DATAS={" + AESUtil.encrypt(jsonObject.toJSONString(), ConfigProperties.CARD_AES_KEY, true) + "}";
+    }
+
+    /**
+     * 16进制转换
+     *
+     * @param status
+     * @return
+     */
+    public String hexConvert16(String status) {
+        int s = Integer.parseInt(status, 16);
+        return toString((s & 0xfc) | ((~s) & 0x03));
     }
 }

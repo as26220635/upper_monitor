@@ -10,6 +10,9 @@
             <if test="ID != NULL and ID != ''">
                 AND ID = #{ID}
             </if>
+            <if test="BEGC_ID != NULL and BEGC_ID != ''">
+                AND BEGC_ID = #{BEGC_ID}
+            </if>
         </where>
     </select>
 

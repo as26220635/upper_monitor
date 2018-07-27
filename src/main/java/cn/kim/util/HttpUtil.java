@@ -106,11 +106,11 @@ public class HttpUtil {
     public static Map<String, String> getIpAddressName(String ip) {
         Map<String, String> result = Maps.newHashMapWithExpectedSize(12);
 
-        Map<String, String> params =  Maps.newHashMapWithExpectedSize(1);
+        Map<String, String> params = Maps.newHashMapWithExpectedSize(1);
         params.put("ip", ip);
         HttpClient httpClient = new HttpClient();
-        String content = httpClient.get(ConfigProperties.TAOBAO_IP, params);
-        JSONObject jsonObject = JSONObject.parseObject(content);
+        Map<String, Object> getMap = httpClient.get(ConfigProperties.TAOBAO_IP, params);
+        JSONObject jsonObject = JSONObject.parseObject(TextUtil.toString(getMap.get(MagicValue.DESC)));
 
         if (ValidateUtil.isEmpty(jsonObject) || ValidateUtil.isEmpty(jsonObject.get("data"))) {
             result.put("code", "1");
