@@ -1,7 +1,7 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : db
+ Source Server         : me
  Source Server Type    : MySQL
  Source Server Version : 80011
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 27/07/2018 00:52:56
+ Date: 27/07/2018 12:11:26
 */
 
 SET NAMES utf8mb4;
@@ -39,6 +39,8 @@ CREATE TABLE `bus_entrance_guard_card`  (
   `BEGC_MAC` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备的MAC地址',
   `BEGC_USERNAME` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
   `BEGC_PASSWORD` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
+  `BEGC_TIME` int(2) NULL DEFAULT 5 COMMENT '继电器动作时间,也就是继电器保持动作多少秒。',
+  `BEGC_IP` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '门禁卡的IP地址',
   `BEGC_UPDATE_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '更新时间',
   `BEGC_ENTRY_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '录入时间',
   PRIMARY KEY (`ID`) USING BTREE,
@@ -48,7 +50,7 @@ CREATE TABLE `bus_entrance_guard_card`  (
 -- ----------------------------
 -- Records of bus_entrance_guard_card
 -- ----------------------------
-INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', NULL, 'test1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test2', 'test3', '2018-07-26 13:18:12', '2018-07-26 13:18:12');
+INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, 'admin', '888888', 6, '0:0:0:0:0:0:0:1', '2018-07-27 12:09:58', '2018-07-26 13:18:12');
 
 -- ----------------------------
 -- Table structure for bus_entrance_guard_card_log
@@ -75,6 +77,13 @@ CREATE TABLE `bus_entrance_guard_card_log`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `BEGC_ID`(`BEGC_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of bus_entrance_guard_card_log
+-- ----------------------------
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874221796458496', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:07:57');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874642610978816', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:09:37');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('44874729311436800', '44529511408074752', 'U10061', 'U10061', '20631', '03', NULL, '2017011811194704', NULL, NULL, NULL, NULL, '7440\0\0\0\0\0', NULL, NULL, NULL, '2018-07-27 12:09:58');
 
 -- ----------------------------
 -- Table structure for bus_store
@@ -381,8 +390,7 @@ INSERT INTO `sys_configure_column` VALUES ('38164554567385088', '381634895287418
 INSERT INTO `sys_configure_column` VALUES ('4', '1', '操作', '', 'center', '320px', '', '', '', '1', NULL, '1', '0', 4);
 INSERT INTO `sys_configure_column` VALUES ('44525272946442240', '38163489528741888', '状态', 'BEGC_STATUS', 'center', '100px', '', '', '', '0', NULL, '1', '0', 10);
 INSERT INTO `sys_configure_column` VALUES ('44525406132371456', '38163489528741888', '版本', 'BEGC_VER', 'center', '100px', '', '', '', '0', NULL, '1', '0', 20);
-INSERT INTO `sys_configure_column` VALUES ('44525553360830464', '38163489528741888', '温度计1', 'BEGC_T1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 40);
-INSERT INTO `sys_configure_column` VALUES ('44525606716571648', '38163489528741888', '湿度计1', 'BEGC_H1', 'center', '100px', '', '', '', '0', NULL, '1', '0', 50);
+INSERT INTO `sys_configure_column` VALUES ('44525553360830464', '38163489528741888', 'IP地址', 'BEGC_IP', 'center', '150px', '', '', '', '0', '', '1', '0', 40);
 INSERT INTO `sys_configure_column` VALUES ('44525695614844928', '38163489528741888', '更新时间', 'BEGC_UPDATE_TIME', 'center', '150px', '', '', '', '0', NULL, '1', '0', 60);
 INSERT INTO `sys_configure_column` VALUES ('5', '2', '名称', 'SB_NAME', 'center', '150px', NULL, NULL, NULL, '0', NULL, '1', '0', 1);
 INSERT INTO `sys_configure_column` VALUES ('6', '2', '操作ID', 'SB_BUTTONID', 'center', '100px', NULL, NULL, NULL, '0', NULL, '1', '0', 2);
@@ -451,6 +459,7 @@ INSERT INTO `sys_configure_search` VALUES ('33266132563525632', '330805082335477
 INSERT INTO `sys_configure_search` VALUES ('3547613181771776', '3545555946962944', 'SO_ID', 'SO_ID', '', '1', '1', '', '0', 999);
 INSERT INTO `sys_configure_search` VALUES ('38164645629919232', '38163489528741888', '设备ID', 'BEGC_ID', '', '4', '1', '', '1', 1);
 INSERT INTO `sys_configure_search` VALUES ('39603098028605440', '2997414705233920', '名称', 'SM_NAME', '', '4', '1', '', '1', 1);
+INSERT INTO `sys_configure_search` VALUES ('44872813068156928', '38163489528741888', 'IP地址', 'BEGC_IP', '', '4', '1', '', '1', 20);
 
 -- ----------------------------
 -- Table structure for sys_dict_info
@@ -3497,6 +3506,13 @@ INSERT INTO `sys_log` VALUES ('44544939836571648', '1', NULL, '修改配置列�
 INSERT INTO `sys_log` VALUES ('44600834398355456', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:01:36', '1', 9);
 INSERT INTO `sys_log` VALUES ('44603062462971904', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:10:28', '1', 2);
 INSERT INTO `sys_log` VALUES ('44603069064806400', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-26 18:10:29', '1', 2);
+INSERT INTO `sys_log` VALUES ('44871617532133376', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:57:36', '1', 9);
+INSERT INTO `sys_log` VALUES ('44871756464259072', '1', NULL, '添加验证', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:58:09', '1', 2);
+INSERT INTO `sys_log` VALUES ('44872010899128320', '1', NULL, '修改门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:59:10', '1', 2);
+INSERT INTO `sys_log` VALUES ('44872120227856384', '1', NULL, '删除配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:59:36', '1', 2);
+INSERT INTO `sys_log` VALUES ('44872176066625536', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-07-27 11:59:49', '1', 2);
+INSERT INTO `sys_log` VALUES ('44872652342427648', '1', NULL, '修改门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-07-27 12:01:43', '1', 2);
+INSERT INTO `sys_log` VALUES ('44872813466615808', '1', NULL, '添加配置列表搜索', '0:0:0:0:0:0:0:1', 1, '2018-07-27 12:02:21', '1', 2);
 INSERT INTO `sys_log` VALUES ('480859698233344', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:35', '1', 9);
 INSERT INTO `sys_log` VALUES ('480949980626944', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:56', '1', 9);
 INSERT INTO `sys_log` VALUES ('483274396794880', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:14:10', '1', 9);
@@ -6416,6 +6432,13 @@ INSERT INTO `sys_log_text` VALUES ('44544940084035584', '44544939836571648', '�
 INSERT INTO `sys_log_text` VALUES ('44600834813591552', '44600834398355456', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('44603062488137728', '44603062462971904', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=湿度计2, SCC_FUNC=, SCC_IS_MERGE=null, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_H2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533767846494208, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=52}');
 INSERT INTO `sys_log_text` VALUES ('44603069127720960', '44603069064806400', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=温度计2, SCC_FUNC=, SCC_IS_MERGE=null, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_T2, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44533690310590464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=51}');
+INSERT INTO `sys_log_text` VALUES ('44871617632796672', '44871617532133376', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('44871756632031232', '44871756464259072', '添加验证字段:{SVF_IS_REQUIRED=1, SVF_MAX_LENGTH=2, IS_STATUS=1, SVR_TABLE_NAME=sys_validate_field, SVF_MIN_LENGTH=, ID=44871756279709696, SVF_NAME=继电器动作时间, SVF_FIELD=BEGC_TIME, SV_ID=44527791844098048, SVR_ID=2510375538917376}');
+INSERT INTO `sys_log_text` VALUES ('44872010928488448', '44872010899128320', '更新门禁卡,更新前:{BEGC_UPDATE_TIME=2018-07-26 13:18:12, BEGC_VER=null, BEGC_SERIAL=null, BEGC_IP=null, BEGC_H2=null, BEGC_STATUS=null, BEGC_INDEX=null, BEGC_H1=null, BEGC_TIME=5, BEGC_NEXT_NUM=null, BEGC_ENTRY_TIME=2018-07-26 13:18:12, BEGC_MAC=null, BEGC_INPUT=null, BEGC_USERNAME=test2, BEGC_NOW=null, BEGC_ID=test1, ID=44529511408074752, BEGC_T2=null, BEGC_KEY=null, BEGC_T1=null, BEGC_PASSWORD=test3},更新后:{BEGC_USERNAME=admin, SVR_TABLE_NAME=BUS_ENTRANCE_GUARD_CARD, BEGC_ID=U10061, ID=44529511408074752, BEGC_TIME=5, BEGC_PASSWORD=888888}');
+INSERT INTO `sys_log_text` VALUES ('44872120261410816', '44872120227856384', '删除配置列表字段,配置列表:门禁卡管理-门禁卡字段:{SCC_NAME=湿度计1, SCC_FUNC=, SCC_IS_MERGE=null, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_H1, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525606716571648, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=50}');
+INSERT INTO `sys_log_text` VALUES ('44872176091791360', '44872176066625536', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=IP地址, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=150px, SCC_FIELD=BEGC_IP, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=44525553360830464, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=, SCC_ORDER=40}');
+INSERT INTO `sys_log_text` VALUES ('44872652371787776', '44872652342427648', '更新门禁卡,更新前:{BEGC_UPDATE_TIME=2018-07-26 13:18:12, BEGC_VER=null, BEGC_SERIAL=null, BEGC_IP=null, BEGC_H2=null, BEGC_STATUS=null, BEGC_INDEX=null, BEGC_H1=null, BEGC_TIME=5, BEGC_NEXT_NUM=null, BEGC_ENTRY_TIME=2018-07-26 13:18:12, BEGC_MAC=null, BEGC_INPUT=null, BEGC_USERNAME=admin, BEGC_NOW=null, BEGC_ID=U10061, ID=44529511408074752, BEGC_T2=null, BEGC_KEY=null, BEGC_T1=null, BEGC_PASSWORD=888888},更新后:{BEGC_USERNAME=admin, SVR_TABLE_NAME=BUS_ENTRANCE_GUARD_CARD, BEGC_ID=U10061, ID=44529511408074752, BEGC_TIME=6, BEGC_PASSWORD=888888}');
+INSERT INTO `sys_log_text` VALUES ('44872813491781632', '44872813466615808', '添加配置列表搜索,配置列表:门禁卡管理-门禁卡,搜索参数{SCS_METHOD_TYPE=4, SCS_TYPE=1, SCS_FIELD=BEGC_IP, SVR_TABLE_NAME=SYS_CONFIGURE_SEARCH, SCS_NAME=IP地址, SCS_SDT_CODE=, SCC_IS_VISIBLE=1, ID=44872813068156928, SC_ID=38163489528741888, SCS_REMARK=, SCS_ORDER=20}');
 INSERT INTO `sys_log_text` VALUES ('480859756953600', '480859698233344', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('480950030958592', '480949980626944', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('483274606510080', '483274396794880', '登录成功!登录地址:未知');
@@ -7373,6 +7396,7 @@ INSERT INTO `sys_validate_field` VALUES ('3319156837449728', '3318588060467200',
 INSERT INTO `sys_validate_field` VALUES ('44527852275630080', '44527791844098048', '设备ID', 'BEGC_ID', '1', '', '10', '', 1);
 INSERT INTO `sys_validate_field` VALUES ('44527902305288192', '44527791844098048', '用户名', 'BEGC_USERNAME', '1', '', '20', '', 1);
 INSERT INTO `sys_validate_field` VALUES ('44527971670687744', '44527791844098048', '密码', 'BEGC_PASSWORD', '1', '', '20', '', 1);
+INSERT INTO `sys_validate_field` VALUES ('44871756279709696', '44527791844098048', '继电器动作时间', 'BEGC_TIME', '1', '', '2', '2510375538917376', 1);
 
 -- ----------------------------
 -- Table structure for sys_validate_group
@@ -7628,6 +7652,12 @@ INSERT INTO `sys_value_record` VALUES ('44542777924517888', '1', 'SYS_CONFIGURE_
 INSERT INTO `sys_value_record` VALUES ('44544939677188096', '1', 'SYS_CONFIGURE_COLUMN', '38164554567385088', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"160px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":70}', '{\"SCC_NAME\":\"操作\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"1\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"80px\",\"SCC_FIELD\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"1\",\"ID\":\"38164554567385088\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"70\"}', '2018-07-26 14:19:30', 2);
 INSERT INTO `sys_value_record` VALUES ('44603062349725696', '1', 'SYS_CONFIGURE_COLUMN', '44533767846494208', NULL, NULL, '2018-07-26 18:10:28', 3);
 INSERT INTO `sys_value_record` VALUES ('44603068968337408', '1', 'SYS_CONFIGURE_COLUMN', '44533690310590464', NULL, NULL, '2018-07-26 18:10:29', 3);
+INSERT INTO `sys_value_record` VALUES ('44871756359401472', '1', 'sys_validate_field', '44871756279709696', NULL, '{\"SVF_IS_REQUIRED\":\"1\",\"SVF_MAX_LENGTH\":\"2\",\"IS_STATUS\":1,\"SVR_TABLE_NAME\":\"sys_validate_field\",\"SVF_MIN_LENGTH\":\"\",\"ID\":\"44871756279709696\",\"SVF_NAME\":\"继电器动作时间\",\"SVF_FIELD\":\"BEGC_TIME\",\"SV_ID\":\"44527791844098048\",\"SVR_ID\":\"2510375538917376\"}', '2018-07-27 11:58:09', 1);
+INSERT INTO `sys_value_record` VALUES ('44872010647470080', '1', 'BUS_ENTRANCE_GUARD_CARD', '44529511408074752', '{\"BEGC_TIME\":5,\"BEGC_USERNAME\":\"test2\",\"BEGC_ID\":\"test1\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"test3\"}', '{\"BEGC_TIME\":\"5\",\"BEGC_USERNAME\":\"admin\",\"BEGC_ID\":\"U10061\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"888888\"}', '2018-07-27 11:59:10', 2);
+INSERT INTO `sys_value_record` VALUES ('44872119980392448', '1', 'SYS_CONFIGURE_COLUMN', '44525606716571648', NULL, NULL, '2018-07-27 11:59:36', 3);
+INSERT INTO `sys_value_record` VALUES ('44872175731081216', '1', 'SYS_CONFIGURE_COLUMN', '44525553360830464', '{\"SCC_NAME\":\"温度计1\",\"SCC_FUNC\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_T1\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525553360830464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":40}', '{\"SCC_NAME\":\"IP地址\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"150px\",\"SCC_FIELD\":\"BEGC_IP\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"44525553360830464\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"\",\"SCC_ORDER\":\"40\"}', '2018-07-27 11:59:49', 2);
+INSERT INTO `sys_value_record` VALUES ('44872652036243456', '1', 'BUS_ENTRANCE_GUARD_CARD', '44529511408074752', '{\"BEGC_TIME\":5,\"BEGC_USERNAME\":\"admin\",\"BEGC_ID\":\"U10061\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"888888\"}', '{\"BEGC_TIME\":\"6\",\"BEGC_USERNAME\":\"admin\",\"BEGC_ID\":\"U10061\",\"ID\":\"44529511408074752\",\"BEGC_PASSWORD\":\"888888\"}', '2018-07-27 12:01:43', 2);
+INSERT INTO `sys_value_record` VALUES ('44872813118488576', '1', 'SYS_CONFIGURE_SEARCH', '44872813068156928', NULL, '{\"SCS_METHOD_TYPE\":\"4\",\"SCS_TYPE\":\"1\",\"SCS_FIELD\":\"BEGC_IP\",\"SVR_TABLE_NAME\":\"SYS_CONFIGURE_SEARCH\",\"SCS_NAME\":\"IP地址\",\"SCS_SDT_CODE\":\"\",\"SCC_IS_VISIBLE\":\"1\",\"ID\":\"44872813068156928\",\"SC_ID\":\"38163489528741888\",\"SCS_REMARK\":\"\",\"SCS_ORDER\":\"20\"}', '2018-07-27 12:02:21', 1);
 
 -- ----------------------------
 -- Table structure for test_process
@@ -7695,7 +7725,7 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_dict_type` AS select `
 -- View structure for v_entrance_guard_card
 -- ----------------------------
 DROP VIEW IF EXISTS `v_entrance_guard_card`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_entrance_guard_card` AS select `begc`.`ID` AS `ID`,`begc`.`BEGC_SERIAL` AS `BEGC_SERIAL`,`begc`.`BEGC_ID` AS `BEGC_ID`,`begc`.`BEGC_KEY` AS `BEGC_KEY`,`begc`.`BEGC_STATUS` AS `BEGC_STATUS`,`begc`.`BEGC_INPUT` AS `BEGC_INPUT`,`begc`.`BEGC_NOW` AS `BEGC_NOW`,`begc`.`BEGC_T1` AS `BEGC_T1`,`begc`.`BEGC_H1` AS `BEGC_H1`,`begc`.`BEGC_T2` AS `BEGC_T2`,`begc`.`BEGC_H2` AS `BEGC_H2`,`begc`.`BEGC_INDEX` AS `BEGC_INDEX`,`begc`.`BEGC_VER` AS `BEGC_VER`,`begc`.`BEGC_NEXT_NUM` AS `BEGC_NEXT_NUM`,`begc`.`BEGC_MAC` AS `BEGC_MAC`,`begc`.`BEGC_USERNAME` AS `BEGC_USERNAME`,`begc`.`BEGC_PASSWORD` AS `BEGC_PASSWORD`,`begc`.`BEGC_UPDATE_TIME` AS `BEGC_UPDATE_TIME`,`begc`.`BEGC_ENTRY_TIME` AS `BEGC_ENTRY_TIME` from `bus_entrance_guard_card` `begc`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_entrance_guard_card` AS select `begc`.`ID` AS `ID`,`begc`.`BEGC_ID` AS `BEGC_ID`,`begc`.`BEGC_STATUS` AS `BEGC_STATUS`,`begc`.`BEGC_VER` AS `BEGC_VER`,`begc`.`BEGC_IP` AS `BEGC_IP`,`begc`.`BEGC_UPDATE_TIME` AS `BEGC_UPDATE_TIME` from `bus_entrance_guard_card` `begc`;
 
 -- ----------------------------
 -- View structure for v_format

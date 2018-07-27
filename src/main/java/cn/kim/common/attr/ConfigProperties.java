@@ -41,7 +41,7 @@ public class ConfigProperties {
     /**
      * 门禁卡接口AES秘钥
      */
-    public static String CARD_AES_KEY = "";
+    public static String CARD_AES_KEY;
 
     @Value("#{config['jdbc.username']}")
     public void setDbUsername(String dbUsername) {
@@ -89,12 +89,12 @@ public class ConfigProperties {
     }
 
     @Value("#{config['mappingPath']}")
-    public static void setMappingPath(String mappingPath) {
+    public void setMappingPath(String mappingPath) {
         ConfigProperties.mappingPath = mappingPath;
     }
 
     @Value("#{config['card.aesKey']}")
-    public static void setCardAesKey(String cardAesKey) {
+    public void setCardAesKey(String cardAesKey) {
         CARD_AES_KEY = cardAesKey;
     }
 }

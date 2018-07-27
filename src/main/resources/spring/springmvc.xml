@@ -161,6 +161,7 @@
             <mvc:exclude-mapping path="/pic/**"/>
             <mvc:exclude-mapping path="/file/**"/>
             <mvc:exclude-mapping path="/perview/**"/>
+            <mvc:exclude-mapping path="/api/**"/>
             <bean class="cn.kim.interceptor.PjaxInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>

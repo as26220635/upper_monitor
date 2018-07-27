@@ -1,5 +1,6 @@
 package cn.kim.util;
 
+import cn.kim.common.annotation.Validate;
 import cn.kim.common.attr.ParamTypeResolve;
 import cn.kim.entity.ActiveUser;
 import cn.kim.service.LogService;
@@ -62,12 +63,16 @@ public class LogUtil {
         Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(7);
 
         try {
+            //是否都要记录
+            boolean isSave = false;
+
             ActiveUser activeUser = AuthcUtil.getCurrentUser();
             if (activeUser != null) {
                 paramMap.put("SO_ID", activeUser.getId());
             }
             if (request != null) {
                 paramMap.put("SL_IP", HttpUtil.getIpAddr(request));
+                isSave = TextUtil.toBoolean(request.getAttribute("isSave"));
             }
 
             paramMap.put("SL_EVENT", logEvent);
@@ -78,8 +83,9 @@ public class LogUtil {
             paramMap.put("SL_RESULT", logResult);
             //日志内容
             paramMap.put("SLT_CONTENT", logTextContent);
+
             //防止重复记录
-            if (!toString(paramMap).equals(SessionUtil.get(PREV_LOG_SAVE_KEY))) {
+            if (!toString(paramMap).equals(SessionUtil.get(PREV_LOG_SAVE_KEY)) || isSave) {
                 SessionUtil.set(PREV_LOG_SAVE_KEY, toString(paramMap));
                 logUtil.logService.insertLog(paramMap);
                 logger.info("身份:" + (activeUser != null ? ParamTypeResolve.getOpeatorTypeName(activeUser.getType()) : "")

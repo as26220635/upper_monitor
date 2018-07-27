@@ -53,6 +53,8 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
             paramMap.put("BEGC_ID", mapParam.get("BEGC_ID"));
             paramMap.put("BEGC_USERNAME", mapParam.get("BEGC_USERNAME"));
             paramMap.put("BEGC_PASSWORD", mapParam.get("BEGC_PASSWORD"));
+            //继电器动作时间 默认5秒
+            paramMap.put("BEGC_TIME", isEmpty(mapParam.get("BEGC_TIME")) ? 5 : mapParam.get("BEGC_TIME"));
 
             if (isEmpty(id)) {
                 id = getId();
@@ -112,6 +114,7 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
             paramMap.put("BEGC_VER", mapParam.get("BEGC_VER"));
             paramMap.put("BEGC_NEXT_NUM", mapParam.get("BEGC_NEXT_NUM"));
             paramMap.put("BEGC_MAC", mapParam.get("BEGC_MAC"));
+            paramMap.put("BEGC_IP", mapParam.get("BEGC_IP"));
             paramMap.put("BEGC_UPDATE_TIME", getDate());
 
             baseDao.update(NameSpace.EntranceGuardCardMapper, "updateEntranceGuardCard", paramMap);

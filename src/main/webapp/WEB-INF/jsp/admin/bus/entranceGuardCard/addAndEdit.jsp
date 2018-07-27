@@ -26,6 +26,11 @@
         <input type="password" class="form-control" ${fns:validField("BUS_ENTRANCE_GUARD_CARD", "BEGC_PASSWORD")}
                value="${card.BEGC_PASSWORD}">
     </div>
+    <div class="form-group has-feedback">
+        <label>继电器动作时间(也就是继电器保持动作多少秒):</label>
+        <input type="text" class="form-control" ${fns:validField("BUS_ENTRANCE_GUARD_CARD", "BEGC_TIME")}
+               value="${card.BEGC_TIME}">
+    </div>
 </form>
 
 <script>

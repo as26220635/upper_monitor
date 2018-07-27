@@ -139,7 +139,7 @@ public class TextUtil {
         }
     }
 
-    public static String toJSONString(Map<String, Object> map) {
+    public static String toJSONString(Map<?, ?> map) {
         return JSON.toJSONString(map);
     }
 

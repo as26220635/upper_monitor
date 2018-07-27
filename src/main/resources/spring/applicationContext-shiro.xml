@@ -40,6 +40,8 @@
             <value>
                 <!-- 对静态资源设置匿名访问 -->
                 /resources/** = anon
+                <!--api-->
+                /api/** = anon
                 <!--Druid监控页面-->
                 /druid/** = anon
                 <!--验证码-->
