@@ -90,7 +90,6 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
                         try {
                             values[i] = TextUtil.toString(CommonUtil.idDecrypt(values[i]));
                         } catch (InvalidKeyException e) {
-                            values[i] = Tips.LOG_ERROR;
                         }
                     } else {
                         values[i] = CommonUtil.cleanXSS(values[i]);

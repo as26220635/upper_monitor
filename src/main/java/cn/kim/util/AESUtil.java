@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.Security;
 
 /**
  * Created by 余庚鑫 on 2017/11/1.
@@ -73,7 +74,7 @@ public class AESUtil {
         byte[] raw = sKey.getBytes("utf-8");
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
         //"算法/模式/补码方式"
-        Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+        Cipher cipher = Cipher.getInstance("AES/ECB/ZeroBytePadding");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
         byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
 
@@ -96,7 +97,7 @@ public class AESUtil {
             }
             byte[] raw = sKey.getBytes("utf-8");
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/NoPadding");
+            Cipher cipher = Cipher.getInstance("AES/ECB/ZeroBytePadding");
             cipher.init(Cipher.DECRYPT_MODE, skeySpec);
 
 

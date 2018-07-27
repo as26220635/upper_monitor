@@ -24,4 +24,8 @@ public enum UseType {
         return this.type;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(type);
+    }
 }

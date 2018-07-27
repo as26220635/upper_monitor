@@ -176,6 +176,7 @@ public abstract class BaseController extends BaseData {
 
     /**
      * url参数转为Map
+     *
      * @param urlParams
      * @return
      */
@@ -183,6 +184,22 @@ public abstract class BaseController extends BaseData {
         Map<String, String> map = Maps.newHashMapWithExpectedSize(10);
         for (String keyValue : urlParams.split("&")) {
             map.put(keyValue.split("=")[0], keyValue.split("=")[1]);
+        }
+        return map;
+    }
+
+    /**
+     * url参数转为Map
+     *
+     * @param paramMap
+     * @return
+     */
+    public Map<String, String> urlParamsToMap(Map<String, String[]> paramMap) {
+        Map<String, String> map = Maps.newHashMapWithExpectedSize(10);
+        for (String key : paramMap.keySet()) {
+            if(!isEmpty(paramMap.get(key))){
+                map.put(key, paramMap.get(key)[0]);
+            }
         }
         return map;
     }

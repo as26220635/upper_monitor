@@ -61,6 +61,7 @@
     <jjwt.version>0.9.0</jjwt.version>
     <javax.mail.version>1.6.1</javax.mail.version>
     <poi.version>3.15</poi.version>
+    <bcprov.version>1.60</bcprov.version>
   </properties>
 
   <dependencies>
@@ -429,6 +430,13 @@
       <groupId>org.apache.poi</groupId>
       <artifactId>ooxml-schemas</artifactId>
       <version>1.3</version>
+    </dependency>
+
+    <!--AES-->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcprov-jdk15on</artifactId>
+      <version>${bcprov.version}</version>
     </dependency>
 
   </dependencies>

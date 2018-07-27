@@ -190,4 +190,20 @@ public class DateUtil {
         return a.get(Calendar.MONTH) + 1;
     }
 
+    public static String getNowCardDate() {
+        return getDate("yyyyMMddHHmmss") + "0" + getWeekOfDate(new Date());
+    }
+
+    /**
+     * 获取当前日期是星期几<br>
+     *
+     * @param dt
+     * @return 当前日期是星期几
+     */
+    public static int getWeekOfDate(Date dt) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(dt);
+        int w = cal.get(Calendar.DAY_OF_WEEK);
+        return w;
+    }
 }

@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.security.Security;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class DataInitialization implements ApplicationListener<ContextRefreshedE
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (contextRefreshedEvent.getApplicationContext().getParent() == null) {
+            //设置AES加密包
+            Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             //加载字典
             DictUtil.initDictToCache();
 

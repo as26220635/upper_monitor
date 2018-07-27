@@ -1,22 +1,16 @@
 package cn.kim.controller.api;
 
-import cn.kim.common.attr.Attribute;
 import cn.kim.common.attr.ConfigProperties;
 import cn.kim.common.eu.UseType;
 import cn.kim.controller.manager.BaseController;
 import cn.kim.exception.CustomException;
 import cn.kim.service.EntranceGuardCardService;
-import cn.kim.util.AESUtil;
-import cn.kim.util.HttpUtil;
-import cn.kim.util.LogUtil;
-import cn.kim.util.TextUtil;
+import cn.kim.util.*;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,23 +30,29 @@ public class EntranceGuardCardApiController extends BaseController {
     /**
      * 门禁心跳请求
      *
-     * @param data 加密后的参数主体
      * @return
      * @throws Exception
      */
     @RequestMapping("/GetStatus")
     @ResponseBody
-    public String getStatus(@RequestParam("DATAS") String data, HttpServletRequest request) throws Exception {
+    public String getStatus(HttpServletRequest request) throws Exception {
         try {
-            if (isEmpty(data)) {
-                throw new CustomException("参数为空!");
-            }
+            Map<String, String> dataMap = null;
+            String data = request.getParameter("DATAS");
             //参数转为Map
-            Map<String, String> dataMap = decryptParamsToMap(data);
+            if (isEmpty(data)) {
+                //没有参数说明是未加密数据
+                dataMap = urlParamsToMap(request.getParameterMap());
+            } else {
+                dataMap = decryptParamsToMap(data);
+            }
 
             String serial = dataMap.get("Serial");
             String id = dataMap.get("ID");
             String key = dataMap.get("Key");
+            if (isEmpty(key)) {
+                throw new CustomException("参数错误!");
+            }
             String status = dataMap.get("Status");
             String input = dataMap.get("Input");
             String now = dataMap.get("Now");
@@ -64,10 +64,6 @@ public class EntranceGuardCardApiController extends BaseController {
             String ver = dataMap.get("Ver");
             String nextNum = dataMap.get("NextNum");
             String mac = dataMap.get("MAC");
-
-            if(isEmpty(key)){
-                throw new CustomException("参数错误!");
-            }
 
             Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(16);
             paramMap.put("BEGC_SERIAL", serial);
@@ -90,38 +86,42 @@ public class EntranceGuardCardApiController extends BaseController {
             entranceGuardCardService.updateEntranceGuardCard(paramMap);
             //解析NOW日期 判断日期是否有误 有误返回当前服务器日期
 
+
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Key", key);
+            jsonObject.put("Now", DateUtil.getNowCardDate());
             //返回加密字符串
             return resultEncryptJson(jsonObject);
         } catch (Exception e) {
-            e.printStackTrace();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("error", "-1");
-            jsonObject.put("message", e.getMessage());
-            return jsonObject.toJSONString();
+            return resultErrorJson(-1, e.getMessage());
         }
     }
 
     /**
      * 刷卡请求
      *
-     * @param data 加密后的参数主体
      * @return
      * @throws Exception
      */
-    @RequestMapping("/SearchCard")
+    @RequestMapping("/SearchCardAcs")
     @ResponseBody
-    public String searchCard(@RequestParam("DATAS") String data, HttpServletRequest request) throws Exception {
+    public String searchCardAcs(HttpServletRequest request) throws Exception {
         try {
-            if (isEmpty(data)) {
-                throw new CustomException("参数为空");
-            }
+            Map<String, String> dataMap = null;
+            String data = request.getParameter("DATAS");
             //参数转为Map
-            Map<String, String> dataMap = decryptParamsToMap(data);
+            if (isEmpty(data)) {
+                //没有参数说明是未加密数据
+                dataMap = urlParamsToMap(request.getParameterMap());
+            } else {
+                dataMap = decryptParamsToMap(data);
+            }
 
             //接收到的卡号、密码、二维码、身份证号码等
             String card = dataMap.get("Card");
+            if (isEmpty(card)) {
+                throw new CustomException("参数错误！");
+            }
 //            接收到的数据类型
 //            0=普通卡
 //            1=串口232接口输入字符串,如二维码等
@@ -166,12 +166,23 @@ public class EntranceGuardCardApiController extends BaseController {
             //返回加密字符串
             return resultEncryptJson(jsonObject);
         } catch (Exception e) {
-            e.printStackTrace();
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("error", "-1");
-            jsonObject.put("message", e.getMessage());
-            return jsonObject.toJSONString();
+            return resultErrorJson(-1, e.getMessage());
         }
+    }
+
+
+    /**
+     * 返回错误信息
+     *
+     * @param code
+     * @param message
+     * @return
+     */
+    private String resultErrorJson(int code, String message) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("error", code);
+        jsonObject.put("message", message);
+        return jsonObject.toJSONString();
     }
 
     /**
