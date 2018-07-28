@@ -67,13 +67,6 @@ public class PjaxInterceptor implements HandlerInterceptor {
             try {
                 //判断是哪里的pjax请求
                 if (path.contains(ManagerController.MANAGER_URL)) {
-                    //设置管理员菜单按钮
-//                    ActiveUser activeUser = AuthcUtil.getCurrentUser();
-//                    if (!ValidateUtil.isEmpty(activeUser)) {
-//                        List<Map<String, Object>> menus = managerService.queryOperatorMenuTree(activeUser.getId());
-//                        activeUser.setMenus(menus);
-//                        AuthcUtil.setCurrentUser(activeUser);
-//                    }
                     //后台管理
                     url += ManagerController.LAYOUT_PATH;
                     request.getRequestDispatcher(url).forward(request, response);

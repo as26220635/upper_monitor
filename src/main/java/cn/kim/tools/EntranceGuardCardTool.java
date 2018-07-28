@@ -1,13 +1,8 @@
 package cn.kim.tools;
 
-import cn.kim.common.attr.Attribute;
-import cn.kim.common.attr.ConfigProperties;
-import cn.kim.common.attr.MagicValue;
-import cn.kim.util.HttpClient;
 import cn.kim.util.TextUtil;
 import com.google.common.collect.Maps;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

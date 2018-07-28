@@ -1,10 +1,10 @@
-package cn.kim.util;
+package cn.kim.tools;
 
 import cn.kim.common.attr.Attribute;
 import cn.kim.common.attr.MagicValue;
+import cn.kim.util.ValidateUtil;
 import com.google.common.collect.Maps;
 import org.apache.http.Consts;
-import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;

@@ -4,9 +4,7 @@ import cn.kim.common.attr.ConfigProperties;
 import cn.kim.common.attr.MagicValue;
 import cn.kim.controller.ManagerController;
 import cn.kim.controller.reception.home.MyHomeController;
-import cn.kim.common.attr.ConfigProperties;
-import cn.kim.controller.ManagerController;
-import cn.kim.controller.reception.home.MyHomeController;
+import cn.kim.tools.HttpClient;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import org.apache.shiro.cache.Cache;
@@ -18,7 +16,6 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
