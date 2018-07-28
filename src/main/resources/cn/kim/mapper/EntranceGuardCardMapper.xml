@@ -5,15 +5,20 @@
 
     <!--查询-->
     <select id="selectEntranceGuardCard" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT * FROM BUS_ENTRANCE_GUARD_CARD
-        <where>
-            <if test="ID != NULL and ID != ''">
-                AND ID = #{ID}
-            </if>
-            <if test="BEGC_ID != NULL and BEGC_ID != ''">
-                AND BEGC_ID = #{BEGC_ID}
-            </if>
-        </where>
+        SELECT BEGC.*,SDI.SDI_NAME AS BEGC_STATUS_NAME
+        FROM(
+            SELECT * FROM BUS_ENTRANCE_GUARD_CARD
+            <where>
+                <if test="ID != NULL and ID != ''">
+                    AND ID = #{ID}
+                </if>
+                <if test="BEGC_ID != NULL and BEGC_ID != ''">
+                    AND BEGC_ID = #{BEGC_ID}
+                </if>
+            </where>
+        )BEGC
+        LEFT JOIN SYS_DICT_INFO SDI ON SDI.SDT_CODE = 'SYS_OPEN_CLOSE' AND SDI.SDI_CODE = BEGC.BEGC_STATUS
+
     </select>
 
     <!--查询-->

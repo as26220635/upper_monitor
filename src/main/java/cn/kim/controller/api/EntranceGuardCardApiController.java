@@ -24,6 +24,10 @@ import java.util.Map;
 @Controller
 @RequestMapping("/api")
 public class EntranceGuardCardApiController extends BaseController {
+    /**
+     * 传递参数加密字段
+     */
+    private static final String ENCRYPT_DATA_FIELD = "DATAS";
 
     @Autowired
     private EntranceGuardCardService entranceGuardCardService;
@@ -39,7 +43,7 @@ public class EntranceGuardCardApiController extends BaseController {
     public String getStatus(HttpServletRequest request) throws Exception {
         try {
             Map<String, String> dataMap = null;
-            String data = request.getParameter("DATAS");
+            String data = request.getParameter(ENCRYPT_DATA_FIELD);
             //参数转为Map
             if (isEmpty(data)) {
                 //没有参数说明是未加密数据
@@ -66,7 +70,7 @@ public class EntranceGuardCardApiController extends BaseController {
             String nextNum = dataMap.get("NextNum");
             String mac = dataMap.get("MAC");
             String ip = dataMap.get("IP");
-
+            //16位解析
             status = hexConvert16(status);
 
             if (!isEmpty(t1) && !"00".equals(t1)) {
@@ -104,11 +108,11 @@ public class EntranceGuardCardApiController extends BaseController {
             }
             //更新门禁卡信息和插入心跳日志
             entranceGuardCardService.updateEntranceGuardCard(paramMap);
-            //解析NOW日期 判断日期是否有误 有误返回当前服务器日期
 
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Key", key);
+            //返回服务器时间
             jsonObject.put("Now", DateUtil.getNowCardDate());
             //返回加密字符串
             return resultEncryptJson(jsonObject);
@@ -126,17 +130,16 @@ public class EntranceGuardCardApiController extends BaseController {
     @RequestMapping("/SearchCardAcs")
     @ResponseBody
     public String searchCardAcs(HttpServletRequest request) throws Exception {
+        Map<String, String> dataMap = null;
+        String data = request.getParameter(ENCRYPT_DATA_FIELD);
+        //参数转为Map
+        if (isEmpty(data)) {
+            //没有参数说明是未加密数据
+            dataMap = urlParamsToMap(request.getParameterMap());
+        } else {
+            dataMap = decryptParamsToMap(data.replaceAll(" ", "+"));
+        }
         try {
-            Map<String, String> dataMap = null;
-            String data = request.getParameter("DATAS");
-            //参数转为Map
-            if (isEmpty(data)) {
-                //没有参数说明是未加密数据
-                dataMap = urlParamsToMap(request.getParameterMap());
-            } else {
-                dataMap = decryptParamsToMap(data.replaceAll(" ", "+"));
-            }
-
             //接收到的卡号、密码、二维码、身份证号码等
             String card = dataMap.get("Card");
             if (isEmpty(card)) {
@@ -165,6 +168,7 @@ public class EntranceGuardCardApiController extends BaseController {
             if (CardType.ORCODE.getType() == type || CardType.CHINA.getType() == type || CardType.BASE64.getType() == type || CardType.VIEN_FINGER.getType() == type || CardType.FACE.getType() == type) {
                 card = TextUtil.base64Decrypt(card);
             }
+            //16位解析
             status = hexConvert16(status);
 
             //根据ID找到门禁卡
@@ -190,10 +194,12 @@ public class EntranceGuardCardApiController extends BaseController {
             //记录刷卡日志
             request.setAttribute("isSave", true);
             LogUtil.recordLog(request, "刷卡请求", UseType.SYSTEM.getType(), UseType.SYSTEM.toString(),
-                    "刷卡请求,接收数据:" + TextUtil.toJSONString(dataMap) + ",返回参数:" + jsonObject.toJSONString(), acsRes == 1 ? STATUS_SUCCESS : STATUS_ERROR);
+                    "刷卡请求,接收数据:" + TextUtil.toJSONString(dataMap) + ",返回参数:" + jsonObject.toJSONString(), STATUS_SUCCESS);
             //返回加密字符串
             return resultEncryptJson(jsonObject);
         } catch (Exception e) {
+            LogUtil.recordLog(request, "刷卡请求", UseType.SYSTEM.getType(), UseType.SYSTEM.toString(),
+                    "刷卡请求,接收数据:" + TextUtil.toJSONString(dataMap) + ",错误信息:" + e.getMessage(), STATUS_ERROR);
             return resultErrorJson(-1, e.getMessage());
         }
     }
@@ -234,7 +240,7 @@ public class EntranceGuardCardApiController extends BaseController {
      * @throws Exception
      */
     private String resultEncryptJson(JSONObject jsonObject) throws Exception {
-        return "DATAS={" + AESUtil.encrypt(jsonObject.toJSONString(), ConfigProperties.CARD_AES_KEY, true) + "}";
+        return ENCRYPT_DATA_FIELD + "={" + AESUtil.encrypt(jsonObject.toJSONString(), ConfigProperties.CARD_AES_KEY, true) + "}";
     }
 
     /**

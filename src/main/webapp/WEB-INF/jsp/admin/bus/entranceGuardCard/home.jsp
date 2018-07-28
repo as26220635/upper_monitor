@@ -4,7 +4,39 @@
 <%--通用列表--%>
 <%@ include file="/WEB-INF/jsp/admin/component/grid/dataGrid.jsp" %>
 <script>
-    // $dataGridTable.css('display','inline-block');
+    var timeout;
+    //防止重复执行
+    clearTimeout(timeout);
+    //5秒刷新一次列表
+    loopRefresh();
+
+    function loopRefresh() {
+        timeout = setTimeout(function () {
+            var length = $("#dataGrid${MENU.ID}").length;
+            if (length != 0 && !isOpenStatus) {
+                tableView.reload($dataGrid, false);
+            }
+            if (length != 0) {
+                loopRefresh();
+            }
+        }, 10000);
+    }
+
+    //切换门禁状态
+    function onSwitchChange($this, field, check, IS_STATUS) {
+        showLoadingContentDiv();
+        var action = check ? '0' : '1';
+        ajax.post('${ENTRANCE_GUARD_CARD_CONTROL_URL}/' + $this.val() + '/' + action, {}, function (data) {
+            if (data.code == STATUS_SUCCESS) {
+                demo.showNotify(ALERT_SUCCESS, data.message);
+            } else {
+                $this.bootstrapSwitch('toggleState', true);
+                demo.showNotify(ALERT_WARNING, data.message);
+            }
+            removeLoadingDiv();
+        });
+    }
+
     //添加
     $('#addBtn').on('click', function () {
         ajax.getHtml('${ENTRANCE_GUARD_CARD_ADD_URL}', {}, function (html) {

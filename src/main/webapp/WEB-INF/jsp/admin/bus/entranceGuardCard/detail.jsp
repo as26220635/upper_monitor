@@ -19,7 +19,7 @@
     </div>
     <div class="form-group has-feedback col-md-6">
         <label>状态:</label>
-        <span>${card.BEGC_STATUS}</span>
+        <span>${card.BEGC_STATUS_NAME}</span>
     </div>
     <div class="form-group has-feedback col-md-6">
         <label>输入状态:</label>

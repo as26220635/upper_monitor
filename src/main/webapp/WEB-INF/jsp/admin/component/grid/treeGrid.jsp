@@ -194,7 +194,16 @@
             </c:if>
         }
     });
-
+    try{
+        <%--设置最小宽度--%>
+        var $treeGridColumns = $("#treeGrid${MENU.ID} thead tr th");
+        <c:forEach items="${COLUMN_LIST}" var="COLUMN" varStatus="status">
+        <c:if test="${not empty COLUMN.SCC_WIDTH}">
+        $($treeGridColumns[${status.index}]).css('min-width', '${COLUMN.SCC_WIDTH}');
+        </c:if>
+        </c:forEach>
+    }catch (e) {
+    }
 
     $('#expandBtn${MENU.ID}').on('click', function () {
         $treeGridTable.bootstrapTable('expandAllTree');

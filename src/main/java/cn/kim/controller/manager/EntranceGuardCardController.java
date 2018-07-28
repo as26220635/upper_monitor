@@ -9,6 +9,7 @@ import cn.kim.common.eu.UseType;
 import cn.kim.entity.ResultState;
 import cn.kim.service.EntranceGuardCardService;
 import cn.kim.tools.EntranceGuardCardTool;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,14 @@ public class EntranceGuardCardController extends BaseController {
         return resultState(resultMap);
     }
 
+
+    /**
+     * 门禁详细信息
+     * @param model
+     * @param ID
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/detail/{ID}")
     @RequiresPermissions("BUS:ENTRANCE_GUARD_CARD_DETAIL")
     public String detailHtml(Model model, @PathVariable("ID") String ID) throws Exception {
@@ -58,6 +67,27 @@ public class EntranceGuardCardController extends BaseController {
         model.addAttribute("card", entranceGuardCardService.selectEntranceGuardCard(mapParam));
         return "admin/bus/entranceGuardCard/detail";
     }
+
+    /**
+     * 获取门禁状态
+     * @param model
+     * @param ID
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/status/{ID}")
+    @RequiresPermissions("BUS:ENTRANCE_GUARD_CARD_CONTROL")
+    @ResponseBody
+    public JSONObject status(Model model, @PathVariable("ID") String ID) throws Exception {
+        Map<String, Object> mapParam = Maps.newHashMapWithExpectedSize(1);
+        mapParam.put("ID", ID);
+        Map<String, Object> card = entranceGuardCardService.selectEntranceGuardCard(mapParam);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("BEGC_STATUS_NAME",card.get("BEGC_STATUS_NAME"));
+        return jsonObject;
+    }
+
 
     /**
      * 控制界面

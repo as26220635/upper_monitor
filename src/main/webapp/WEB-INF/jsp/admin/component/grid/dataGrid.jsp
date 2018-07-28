@@ -159,6 +159,8 @@
 <script>
     $(".select2").select2({language: "zh-CN"});
 
+    var isOpenStatus = false;
+
     var $dataGridTable = $("#dataGrid${MENU.ID}");
 
     var $dataGrid = tableView.init({
@@ -341,6 +343,7 @@
                     var IS_STATUS = check ? STATUS_SUCCESS : STATUS_ERROR;
 
                     if (typeof onSwitchChange == 'function') {
+                        isOpenStatus = true;
                         <%--确认弹出框--%>
                         model.confirm({
                             message: '是否切换状态为:' + getStatusName(IS_STATUS),
@@ -351,6 +354,7 @@
                                 } else {
                                     $this.bootstrapSwitch('toggleState', true);
                                 }
+                                isOpenStatus = false;
                             }
                         });
                     }
@@ -358,6 +362,16 @@
             });
             if (typeof endDataGridCallback == 'function') {
                 endDataGridCallback(api);
+            }
+
+            //自动计算宽度是否超出表格宽度
+            var columnsWidth = 0;
+            //获取宽度
+            $dataGrid.columns().nodes().each(function (cell, i) {
+                columnsWidth +=$(cell).width();
+            });
+            if($('#dataGrid${MENU.ID}').width() < columnsWidth){
+                $dataGridTable.css('display','inline-block');
             }
         }
     });

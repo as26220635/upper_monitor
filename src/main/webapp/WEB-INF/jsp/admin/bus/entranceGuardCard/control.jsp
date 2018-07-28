@@ -9,6 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="row btn-group" id="controlDiv">
+    <div class="col-md-12">
+        <label>门禁状态:</label>
+        <span id="${card.ID}" style="color: red;">${card.BEGC_STATUS_NAME}</span>
+    </div>
     <div class="col-md-3">
         <button type="button" class="btn btn-default" value="0">开进</button>
     </div>
@@ -55,6 +59,9 @@
 </div>
 
 <script>
+    //循环获取门禁状态
+    getCardStatus();
+
     //按钮点击
     $('#controlDiv button').on('click', function () {
         controlAction($(this).val());
@@ -68,5 +75,19 @@
         ajax.post('${ENTRANCE_GUARD_CARD_CONTROL_URL}/${card.ID}/' + action, {}, function (data) {
             ajaxReturn.data(data);
         });
+    }
+
+    /**
+     * 每3秒循环获取门禁状态
+     */
+    function getCardStatus() {
+        setTimeout(function () {
+            if ($('#${card.ID}').length != 0) {
+                ajax.get('${ENTRANCE_GUARD_CARD_STATUS_URL}/${card.ID}', {}, function (data) {
+                    $('#${card.ID}').text(data.BEGC_STATUS_NAME);
+                });
+                getCardStatus();
+            }
+        }, 3000);
     }
 </script>
