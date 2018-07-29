@@ -24,7 +24,7 @@ public class EntranceGuardCardTool {
 
         Map<String, String> headerMap = Maps.newHashMapWithExpectedSize(1);
         //添加认证
-        headerMap.put("Authorization", "Basic " + TextUtil.base64Encrypt(username + ":" + password));
+        headerMap.put("Authorization", "Basic " + TextUtil.base64Encrypt(username + ":" + password).trim());
         HttpClient httpClient = new HttpClient();
         Map<String, Object> resultMap = httpClient.get("http://" + ip + "/cdor.cgi?open=" + action, headerMap, null);
         
