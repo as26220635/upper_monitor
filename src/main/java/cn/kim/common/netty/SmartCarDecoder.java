@@ -1,15 +1,11 @@
 package cn.kim.common.netty;
 
-import cn.kim.common.attr.Constants;
+import cn.kim.entity.CardProtocol;
 import cn.kim.util.TextUtil;
-import com.sun.deploy.uitoolkit.impl.fx.Utils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
-import org.aspectj.apache.bcel.classfile.ConstantValue;
-import org.bouncycastle.pqc.math.linearalgebra.ByteUtils;
 
-import javax.smartcardio.Card;
 import java.util.List;
 
 /**
@@ -35,34 +31,50 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
 
             int packgeLength = buffer.readableBytes();
 
+            boolean isStart = false;
+            boolean isEnd = false;
 
             byte[] req = new byte[buffer.readableBytes()];
             buffer.readBytes(req);
+            for (byte b : req) {
+                if (b == 0X02) {
+                    isStart = true;
+                    continue;
+                }
+                if (b == 0X03) {
+                    isEnd = true;
+                    break;
+                }
+            }
+            //没有找到开头和结尾
+            if (!isStart || !isEnd) {
+                return;
+            }
 
             byte[] data = new byte[packgeLength - BASE_LENGTH];
 
             System.arraycopy(req, START_LENGTH, data, 0, packgeLength - BASE_LENGTH);
             CardProtocol cardProtocol = new CardProtocol(packgeLength - BASE_LENGTH, data);
-            cardProtocol.setStx(req[0]);
-            cardProtocol.setRand(req[1]);
-            cardProtocol.setCommand(req[2]);
-            cardProtocol.setAddress(req[3]);
-            cardProtocol.setDoor(req[4]);
-            cardProtocol.setLengthL(req[5]);
-            cardProtocol.setLengthH(req[6]);
-            System.out.println(req[packgeLength - END_LENGTH] == 0xA3);
-            cardProtocol.setCs(req[packgeLength - END_LENGTH]);
-            cardProtocol.setEtx(req[packgeLength - END_LENGTH + 1]);
+            cardProtocol.setStx(TextUtil.toInt16(req[0]));
+            cardProtocol.setRand(TextUtil.toInt16(req[1]));
+            cardProtocol.setCommand(TextUtil.toInt16(req[2]));
+            cardProtocol.setAddress(TextUtil.toInt16(req[3]));
+            cardProtocol.setDoor(TextUtil.toInt16(req[4]));
+            cardProtocol.setLengthL(TextUtil.toInt16(req[5]));
+            cardProtocol.setLengthH(TextUtil.toInt16(req[6]));
+            cardProtocol.setCs(TextUtil.toInt(req[cardProtocol.getLengthH() + BASE_LENGTH - END_LENGTH]));
+            cardProtocol.setEtx(TextUtil.toInt(req[cardProtocol.getLengthH() + BASE_LENGTH - END_LENGTH + 1]));
+
+            //异或校验
+            byte checkByte = req[0];
+            for (int i = 1; i < req.length - END_LENGTH; i++) {
+                checkByte ^= req[i];
+            }
+            //校验不通过
+            if (checkByte != cardProtocol.getCs()) {
+                return;
+            }
             out.add(cardProtocol);
         }
-    }
-
-    /**
-     * 16进制转换
-     *
-     * @return
-     */
-    public String hexConvert16(int s) {
-        return TextUtil.toString((s & 0xfc) | ((~s) & 0x03));
     }
 }

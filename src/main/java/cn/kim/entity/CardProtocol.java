@@ -1,39 +1,67 @@
-package cn.kim.common.netty;
+package cn.kim.entity;
 
 import cn.kim.common.attr.Constants;
+
+import java.io.Serializable;
 
 /**
  * Created by 余庚鑫 on 2018/7/30
  */
-public class CardProtocol {
+public class CardProtocol implements Serializable {
+    /**
+     * 开始位
+     */
     private int stx = Constants.TCP_HEAD_DATA;
-
+    /**
+     * 随机数
+     */
     private int rand;
+    /**
+     * 指令
+     */
     private int command;
+    /**
+     * 地址
+     */
     private int address;
+    /**
+     * 门编号
+     */
     private int door;
+    /**
+     * 数据长度低位
+     */
     private int lengthL;
+    /**
+     * 数据长度高位
+     */
     private int lengthH;
     /**
      * 消息的长度
      */
-    private int contentLength;
+    private int dataLength;
     /**
      * 消息的内容
      */
-    private byte[] content;
+    private byte[] data;
+    /**
+     * 校验
+     */
     private int cs;
+    /**
+     * 结束
+     */
     private int etx = Constants.TCP_END_DATA;
 
     /**
      * 用于初始化，CardProtocol
      *
-     * @param contentLength 协议里面，消息数据的长度
-     * @param content       协议里面，消息的数据
+     * @param dataLength 协议里面，消息数据的长度
+     * @param data       协议里面，消息的数据
      */
-    public CardProtocol(int contentLength, byte[] content) {
-        this.contentLength = contentLength;
-        this.content = content;
+    public CardProtocol(int dataLength, byte[] data) {
+        this.dataLength = dataLength;
+        this.data = data;
     }
 
     public int getStx() {
@@ -92,20 +120,20 @@ public class CardProtocol {
         this.lengthH = lengthH;
     }
 
-    public int getContentLength() {
-        return contentLength;
+    public int getDataLength() {
+        return dataLength;
     }
 
-    public void setContentLength(int contentLength) {
-        this.contentLength = contentLength;
+    public void setDataLength(int dataLength) {
+        this.dataLength = dataLength;
     }
 
-    public byte[] getContent() {
-        return content;
+    public byte[] getData() {
+        return data;
     }
 
-    public void setContent(byte[] content) {
-        this.content = content;
+    public void setData(byte[] data) {
+        this.data = data;
     }
 
     public int getCs() {
