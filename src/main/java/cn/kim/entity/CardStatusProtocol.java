@@ -39,24 +39,30 @@ public class CardStatusProtocol implements Serializable {
     private int lengthH;
     public int n1;
     public byte[] time;
+    /**
+     *设备时间
+     */
+    public String date;
+
     public int doorStatus;
     public int n2;
     public int dirPass;
     public int n3;
     public int controlType;
     public int relayOut;
-    public int output;
+    public byte[] output;
     public int o1;
     public int o2;
+    public byte[] spare;
     public int alarmOut;
 
     public int ver;
     public int oemCode;
-    public byte[] serial;
+    public String serial;
 
-    public int input;
+    public byte[] input;
 
-    public byte[] id;
+    public String id;
     public float t1;
     public float t2;
     public float h1;
@@ -64,11 +70,19 @@ public class CardStatusProtocol implements Serializable {
     /**
      * 版本，用于自动升级
      */
-    public int version;
+    public String version;
     /**
      * 备用功能 剩余通过人数
      */
     public int nextNum;
+    /**
+     * 校验
+     */
+    private int cs;
+    /**
+     * 结束
+     */
+    private int etx = Constants.TCP_END_DATA;
 
     public int getStx() {
         return stx;
@@ -190,11 +204,11 @@ public class CardStatusProtocol implements Serializable {
         this.relayOut = relayOut;
     }
 
-    public int getOutput() {
+    public byte[] getOutput() {
         return output;
     }
 
-    public void setOutput(int output) {
+    public void setOutput(byte[] output) {
         this.output = output;
     }
 
@@ -212,6 +226,14 @@ public class CardStatusProtocol implements Serializable {
 
     public void setO2(int o2) {
         this.o2 = o2;
+    }
+
+    public byte[] getSpare() {
+        return spare;
+    }
+
+    public void setSpare(byte[] spare) {
+        this.spare = spare;
     }
 
     public int getAlarmOut() {
@@ -238,27 +260,27 @@ public class CardStatusProtocol implements Serializable {
         this.oemCode = oemCode;
     }
 
-    public byte[] getSerial() {
+    public String getSerial() {
         return serial;
     }
 
-    public void setSerial(byte[] serial) {
+    public void setSerial(String serial) {
         this.serial = serial;
     }
 
-    public int getInput() {
+    public byte[] getInput() {
         return input;
     }
 
-    public void setInput(int input) {
+    public void setInput(byte[] input) {
         this.input = input;
     }
 
-    public byte[] getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(byte[] id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -294,11 +316,11 @@ public class CardStatusProtocol implements Serializable {
         this.h2 = h2;
     }
 
-    public int getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(String version) {
         this.version = version;
     }
 
@@ -308,5 +330,29 @@ public class CardStatusProtocol implements Serializable {
 
     public void setNextNum(int nextNum) {
         this.nextNum = nextNum;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getCs() {
+        return cs;
+    }
+
+    public void setCs(int cs) {
+        this.cs = cs;
+    }
+
+    public int getEtx() {
+        return etx;
+    }
+
+    public void setEtx(int etx) {
+        this.etx = etx;
     }
 }

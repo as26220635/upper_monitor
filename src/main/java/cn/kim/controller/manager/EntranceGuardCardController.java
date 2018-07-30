@@ -6,12 +6,14 @@ import cn.kim.common.annotation.Validate;
 import cn.kim.common.attr.Attribute;
 import cn.kim.common.attr.MagicValue;
 import cn.kim.common.eu.UseType;
+import cn.kim.common.netty.TCPServerNetty;
 import cn.kim.entity.ResultState;
 import cn.kim.service.EntranceGuardCardService;
 import cn.kim.tools.EntranceGuardCardTool;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,8 @@ public class EntranceGuardCardController extends BaseController {
     @Autowired
     private EntranceGuardCardService entranceGuardCardService;
 
+    @Autowired
+    private TCPServerNetty tcpServerNetty;
 
     @GetMapping("/add")
     @RequiresPermissions("BUS:ENTRANCE_GUARD_CARD_INSERT")
@@ -54,6 +58,7 @@ public class EntranceGuardCardController extends BaseController {
 
     /**
      * 门禁详细信息
+     *
      * @param model
      * @param ID
      * @return
@@ -70,6 +75,7 @@ public class EntranceGuardCardController extends BaseController {
 
     /**
      * 获取门禁状态
+     *
      * @param model
      * @param ID
      * @return
@@ -84,7 +90,7 @@ public class EntranceGuardCardController extends BaseController {
         Map<String, Object> card = entranceGuardCardService.selectEntranceGuardCard(mapParam);
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("BEGC_STATUS_NAME",card.get("BEGC_STATUS_NAME"));
+        jsonObject.put("BEGC_STATUS_NAME", card.get("BEGC_STATUS_NAME"));
         return jsonObject;
     }
 
@@ -123,22 +129,8 @@ public class EntranceGuardCardController extends BaseController {
         mapParam.put("ID", ID);
         Map<String, Object> card = entranceGuardCardService.selectEntranceGuardCard(mapParam);
         String ip = toString(card.get("BEGC_IP"));
-        String username = toString(card.get("BEGC_USERNAME"));
-        String password = toString(card.get("BEGC_PASSWORD"));
 
-        boolean isSuccess = false;
-        String desc = STATUS_ERROR_MESSAGE;
-        //发送包操控
-        if (!isEmpty(ip) && !isEmpty(username) && !isEmpty(password)) {
-            Map<String, Object> controlMap = EntranceGuardCardTool.control(ip, action, username, password);
-            if (toInt(controlMap.get(MagicValue.STATUS)) == STATUS_SUCCESS) {
-                isSuccess = true;
-            } else {
-                desc = toString(controlMap.get(MagicValue.DESC));
-            }
-        } else {
-            isSuccess = false;
-        }
+        boolean isSuccess = tcpServerNetty.send(ip, TCPServerNetty.OPEN_DOOR, 1,1, null);
 
         Map<String, Object> resultMap = Maps.newHashMapWithExpectedSize(1);
         if (isSuccess) {
@@ -147,7 +139,7 @@ public class EntranceGuardCardController extends BaseController {
         } else {
             resultMap.put(MagicValue.STATUS, STATUS_ERROR);
             if (!isEmpty(ip)) {
-                resultMap.put(MagicValue.DESC, desc);
+                resultMap.put(MagicValue.DESC, "客户端连接失败!");
             } else {
                 resultMap.put(MagicValue.DESC, "门禁IP地址没有数据!");
             }

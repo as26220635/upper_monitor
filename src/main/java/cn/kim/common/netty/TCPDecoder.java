@@ -6,12 +6,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.List;
 
 /**
  * Created by 余庚鑫 on 2018/7/30
  */
-public class SmartCarDecoder extends ByteToMessageDecoder {
+public class TCPDecoder extends ByteToMessageDecoder {
 
     /**
      * <pre>
@@ -46,6 +47,7 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
                     break;
                 }
             }
+
             //没有找到开头和结尾
             if (!isStart || !isEnd) {
                 return;
@@ -74,7 +76,19 @@ public class SmartCarDecoder extends ByteToMessageDecoder {
             if (checkByte != cardProtocol.getCs()) {
                 return;
             }
+//            System.out.println(printHexBinary(req));
             out.add(cardProtocol);
         }
+    }
+
+    private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
+
+    public String printHexBinary(byte[] data) {
+        StringBuilder r = new StringBuilder(data.length * 2);
+        for (byte b : data) {
+            r.append(hexCode[(b >> 4) & 0xF]);
+            r.append(hexCode[(b & 0xF)] + " ");
+        }
+        return r.toString();
     }
 }

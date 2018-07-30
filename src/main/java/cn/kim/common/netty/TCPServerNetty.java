@@ -1,16 +1,14 @@
 package cn.kim.common.netty;
 
+import cn.kim.common.attr.Constants;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.*;
-import io.netty.handler.codec.bytes.ByteArrayDecoder;
-import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
+import javax.xml.bind.DatatypeConverter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -18,6 +16,50 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by 余庚鑫 on 2018/7/29
  */
 public class TCPServerNetty {
+    /**
+     * 开门
+     */
+    public static final int OPEN_DOOR = 0x2C;
+    /**
+     * 门常开
+     */
+    public static final int OPEN_DOORS = 0x2D;
+    /**
+     * 关门
+     */
+    public static final int CLOSE_DOOR = 0x2E;
+    /**
+     * 锁门
+     */
+    public static final int LOCK_DOOR = 0x2F;
+    /**
+     * 禁止读卡
+     */
+    public static final int PROHIBITION_CARD = 0x5A;
+    /**
+     * 时间同步
+     */
+    public static final int TIME_LOCK = 0x07;
+    /**
+     * 操作报警
+     */
+    public static final int POLICE_ALARM = 0x18;
+    /**
+     * 操作火警
+     */
+    public static final int FIRE_ALARM = 0x19;
+    /**
+     * 设置参数
+     */
+    public static final int SET_PARAM = 0x63;
+    /**
+     * 控制器复位
+     */
+    public static final int CONTROLLER_RESET = 0x04;
+    /**
+     * 控制输出
+     */
+    public static final int OUT_PUT = 0x73;
     /**
      * 端口号
      */
@@ -30,13 +72,11 @@ public class TCPServerNetty {
 
     public TCPServerNetty(int port) {
         this.port = port;
-        bind();
+//        this.bind();
     }
 
 
-    private void bind() {
-
-
+    public void bind() {
         EventLoopGroup boss = new NioEventLoopGroup();
         EventLoopGroup worker = new NioEventLoopGroup();
 
@@ -61,15 +101,7 @@ public class TCPServerNetty {
                         throws Exception {
                     // Decoders
                     ChannelPipeline p = ch.pipeline();
-//                    p.addLast(new LineBasedFrameDecoder(1024));
-//                    p.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
-//                    p.addLast("bytesDecoder", new ByteArrayDecoder());
-                    // Encoder
-//                    p.addLast("frameEncoder", new LengthFieldPrepender(4));
-//                    p.addLast("bytesEncoder", new ByteArrayEncoder());
-
-                    p.addLast(new SmartCarEncoder());
-                    p.addLast(new SmartCarDecoder());
+                    p.addLast(new TCPDecoder());
                     p.addLast(new OutBoundHandler());
                     p.addLast(new IdleStateHandler(0, 0, 300), new InBoundHandler());
                 }
@@ -100,10 +132,62 @@ public class TCPServerNetty {
      */
     public boolean send(String clientIP, byte[] msg) {
         try {
-            return TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(msg).isSuccess();
+            System.out.println(DatatypeConverter.printHexBinary(msg));
+            ChannelFuture channelFuture = TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(msg);
+            return channelFuture.isSuccess();
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean send(String clientIP, int command) {
+        return send(clientIP, command, null);
+    }
+
+    public boolean send(String clientIP, int command, byte[] data) {
+        return send(clientIP, TCPServerNetty.stickyPack(command, 00, 00, data));
+    }
+
+    public boolean send(String clientIP, int command, int door, byte[] data) {
+        return send(clientIP, TCPServerNetty.stickyPack(command, 00, door, data));
+    }
+
+    public boolean send(String clientIP, int command, int address, int door, byte[] data) {
+        return send(clientIP, TCPServerNetty.stickyPack(command, address, door, data));
+    }
+
+    /**
+     * 粘包
+     *
+     * @param command
+     * @param address
+     * @param door
+     * @param data
+     * @return
+     */
+    public static byte[] stickyPack(int command, int address, int door, byte[] data) {
+        byte[] resultBytes = new byte[7 + 2 + (data == null ? 0 : data.length)];
+        resultBytes[0] = Constants.TCP_HEAD_DATA;
+        resultBytes[1] = 00;
+        resultBytes[2] = (byte) command;
+        resultBytes[3] = (byte) address;
+        resultBytes[4] = (byte) door;
+        resultBytes[5] = 00;
+        resultBytes[6] = data == null ? 00 : (byte) data.length;
+        //复制数据
+        if (data != null) {
+            System.arraycopy(data, 0, resultBytes, 6, data.length);
+        }
+        //异或校验
+        byte checkByte = resultBytes[0];
+        for (int i = 1; i < resultBytes.length - 2; i++) {
+            checkByte ^= resultBytes[i];
+        }
+        //校验
+        resultBytes[7 + (data == null ? 0 : data.length)] = checkByte;
+        resultBytes[7 + (data == null ? 0 : data.length) + 1] = Constants.TCP_END_DATA;
+        return resultBytes;
     }
 
     public static Map<String, Channel> getClientMap() {

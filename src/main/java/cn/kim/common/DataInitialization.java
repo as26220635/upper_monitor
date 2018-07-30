@@ -1,5 +1,6 @@
 package cn.kim.common;
 
+import cn.kim.common.netty.TCPServerNetty;
 import cn.kim.service.AllocationService;
 import cn.kim.util.EmailUtil;
 import cn.kim.common.attr.Attribute;
@@ -10,6 +11,7 @@ import cn.kim.util.CacheUtil;
 import cn.kim.util.DictUtil;
 import cn.kim.util.EmailUtil;
 import cn.kim.util.TextUtil;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,9 +32,17 @@ public class DataInitialization implements ApplicationListener<ContextRefreshedE
     @Autowired
     private AllocationService allocationService;
 
+    @Autowired
+    private TCPServerNetty tcpServerNetty;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         if (contextRefreshedEvent.getApplicationContext().getParent() == null) {
+            //异步监听
+            new Thread(() -> {
+                tcpServerNetty.bind();
+            }).start();
+
             //设置AES加密包
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
             //加载字典

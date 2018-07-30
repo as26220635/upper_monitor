@@ -206,4 +206,15 @@ public class DateUtil {
         int w = cal.get(Calendar.DAY_OF_WEEK);
         return w;
     }
+
+    /**
+     * 前面补0
+     *
+     * @param i
+     * @return
+     */
+    public static String supplement(Object i) {
+        String s = TextUtil.toString(i);
+        return s.length() == 1 ? "0" + s : s;
+    }
 }
