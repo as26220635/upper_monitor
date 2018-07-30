@@ -101,6 +101,14 @@ public class TextUtil {
         }
     }
 
+    public static String toString(byte[] con){
+        try {
+            return new String(con, "UTF-8");
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public static String toString(String[] strs) {
         String str = "";
         for (String s : strs) {
@@ -141,6 +149,14 @@ public class TextUtil {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    public static byte[] toByte(String str) {
+        if (str == null) {
+            return null;
+        }
+        byte[] byteArray = str.getBytes();
+        return byteArray;
     }
 
     public static String toJSONString(Map<?, ?> map) {
