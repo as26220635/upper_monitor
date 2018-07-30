@@ -1,10 +1,12 @@
 package cn.kim.common.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.*;
 import io.netty.handler.codec.bytes.ByteArrayDecoder;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -58,13 +60,18 @@ public class TCPServerNetty {
                 public void initChannel(SocketChannel ch)
                         throws Exception {
                     // Decoders
-                    //ch.pipeline().addLast("frameDecoder", new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
-                    ch.pipeline().addLast("bytesDecoder", new ByteArrayDecoder());
+                    ChannelPipeline p = ch.pipeline();
+//                    p.addLast(new LineBasedFrameDecoder(1024));
+//                    p.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(1048576, 0, 4, 0, 4));
+//                    p.addLast("bytesDecoder", new ByteArrayDecoder());
                     // Encoder
-                    //ch.pipeline().addLast("frameEncoder", new LengthFieldPrepender(4));
-                    ch.pipeline().addLast("bytesEncoder", new ByteArrayEncoder());
-                    ch.pipeline().addLast(new OutBoundHandler());
-                    ch.pipeline().addLast(new IdleStateHandler(0,0,300), new InBoundHandler());
+//                    p.addLast("frameEncoder", new LengthFieldPrepender(4));
+//                    p.addLast("bytesEncoder", new ByteArrayEncoder());
+
+                    p.addLast(new SmartCarEncoder());
+                    p.addLast(new SmartCarDecoder());
+                    p.addLast(new OutBoundHandler());
+                    p.addLast(new IdleStateHandler(0, 0, 300), new InBoundHandler());
                 }
             });
             ChannelFuture f = bootstrap.bind(port).sync();
@@ -86,14 +93,15 @@ public class TCPServerNetty {
 
     /**
      * 发送消息
+     *
      * @param clientIP
      * @param msg
      * @return
      */
-    public boolean send(String clientIP,byte[] msg){
+    public boolean send(String clientIP, byte[] msg) {
         try {
             return TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(msg).isSuccess();
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -106,7 +114,7 @@ public class TCPServerNetty {
         TCPServerNetty.clientMap = map;
     }
 
-    public static String bytesToHexString(byte[] src){
+    public static String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder();
         if (src == null || src.length <= 0) {
             return null;

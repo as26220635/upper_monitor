@@ -10,7 +10,6 @@ import java.util.TimerTask;
 public class Server {
 
     public static void main(String[] args) throws InterruptedException {
-
         TCPServerNetty server= new TCPServerNetty(8888);
 
         Timer timer=new Timer();//实例化Timer类

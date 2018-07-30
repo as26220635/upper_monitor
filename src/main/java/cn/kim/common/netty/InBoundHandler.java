@@ -2,11 +2,11 @@ package cn.kim.common.netty;
 
 import cn.kim.util.DateUtil;
 import cn.kim.util.TextUtil;
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.ReferenceCountUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,6 +46,17 @@ public class InBoundHandler extends SimpleChannelInboundHandler<byte[]> {
         logger.info(DateUtil.getDate()+",client:("+getRemoteAddress(ctx)+")断开连接");
         TCPServerNetty.getClientMap().remove(getIPString(ctx));
         ctx.close();
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        try {
+            // 用于获取客户端发来的数据信息
+            CardProtocol body = (CardProtocol) msg;
+            System.out.println("Client接受的客户端的信息 :" + body.getContent());
+        } finally {
+            ReferenceCountUtil.release(msg);
+        }
     }
 
     /**

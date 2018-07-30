@@ -19,7 +19,8 @@ public class Test {
 //        System.out.println(AESUtil.decrypt("InXDNDnoG2qNwYIMqE4Bb5TKU7fdErfVYWVu444acfQ5bKQL+lBslDwp3Jp5XCnPOxI+ePpJpSgA3FV53GNqYYNzeOohQuZiEOilmnhbZU4G1cqF0RqD6+kGKT2AlnIJPLxgKXSe1ps9jadGEMxgYKnbZau9j/N8G0Oc9h83PAjA0ZdcXMeugN2bgHLIFoKmk6qGT+4Mc+QlshFaczyIMw==", "abcdefgh20161234", false));
 //        int a = Integer.parseInt("02",16);
 //        System.out.println((a & 0xfc) | ((~a) & 0x03));
-        System.out.println(TextUtil.base64Decrypt("ODIwNDM0MjE3NDQwMDIwNA"));
+//        System.out.println(TextUtil.base64Decrypt("ODIwNDM0MjE3NDQwMDIwNA"));
+        System.out.println("00 09 08 18 0C 07 0A 00 00 00 00 00 00 00 00 00 00 00 50 00 00".replaceAll(" ",""));
     }
 
     public int Byte2Int(Byte[]bytes) {

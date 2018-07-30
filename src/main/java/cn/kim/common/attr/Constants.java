@@ -18,6 +18,12 @@ public class Constants {
     public static final String JWT_ERRCODE_EXPIRE = "success";
 
     public static final String JWT_ERRCODE_FAIL = "error";
-
-
+    /**
+     * 包开始
+     */
+    public static final int TCP_HEAD_DATA = 0x02;
+    /**
+     * 包结束
+     */
+    public static final int TCP_END_DATA = 0x03;
 }
