@@ -148,9 +148,7 @@ public class TCPServerNetty {
             tcpSendMessage.setData(msg);
 
             ChannelFuture channelFuture = TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage);
-            channelFuture.await(60);
-
-            return channelFuture.isSuccess();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

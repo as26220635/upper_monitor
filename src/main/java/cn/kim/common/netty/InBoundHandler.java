@@ -11,6 +11,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.timeout.IdleState;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,6 +76,26 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         ctx.close();
     }
 
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
+            throws Exception {
+        String socketString = ctx.channel().remoteAddress().toString();
+
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent event = (IdleStateEvent) evt;
+            if (event.state() == IdleState.READER_IDLE) {
+                logger.info("Client: "+socketString+" READER_IDLE 读超时");
+                ctx.disconnect();
+            } else if (event.state() == IdleState.WRITER_IDLE) {
+                logger.info("Client: "+socketString+" WRITER_IDLE 写超时");
+                ctx.disconnect();
+            } else if (event.state() == IdleState.ALL_IDLE) {
+                logger.info("Client: "+socketString+" ALL_IDLE 总超时");
+                ctx.disconnect();
+            }
+        }
+    }
 
     /**
      * 处理上位机包
@@ -185,8 +207,8 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         statusProtocol.setCommand(card.getCommand());
         statusProtocol.setAddress(card.getAddress());
         statusProtocol.setDoor(card.getDoor());
-        statusProtocol.setLengthL(00);
-        statusProtocol.setLengthH(00);
+        statusProtocol.setLengthL(card.getLengthL());
+        statusProtocol.setLengthH(card.getLengthH());
         //起始位置
         int startIndex = 0;
         //解析包数据

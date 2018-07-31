@@ -16,13 +16,12 @@ public class TCPDecoder extends ByteToMessageDecoder {
 
     /**
      * <pre>
-     * 协议开始的标准head_data，int类型，占据1个字节.
      * 包头7位 包尾2位
      * </pre>
      */
-    public final int START_LENGTH = 7;
-    public final int END_LENGTH = 2;
-    public final int BASE_LENGTH = START_LENGTH + END_LENGTH;
+    public static final int START_LENGTH = 7;
+    public static final int END_LENGTH = 2;
+    public static final int BASE_LENGTH = START_LENGTH + END_LENGTH;
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf buffer,
@@ -76,7 +75,6 @@ public class TCPDecoder extends ByteToMessageDecoder {
             if (checkByte != cardProtocol.getCs()) {
                 return;
             }
-//            System.out.println(printHexBinary(req));
             out.add(cardProtocol);
         }
     }

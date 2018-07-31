@@ -3,16 +3,14 @@ package cn.kim.common.netty;
 import cn.kim.entity.CardRequestProtocol;
 import cn.kim.entity.CardStatusProtocol;
 import cn.kim.entity.TCPSendMessage;
-import cn.kim.util.TextUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.xml.bind.DatatypeConverter;
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by 余庚鑫 on 2018/7/30
@@ -30,9 +28,9 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
             //心跳放回数据
             byte[] resultBytes = new byte[2];
             //客户代码高位
-            resultBytes[0] = 00;
+            resultBytes[0] = (byte) status.getLengthH();
             //客户代码低位
-            resultBytes[1] = 00;
+            resultBytes[1] = (byte) status.getLengthL();
             ctx.writeAndFlush(getSendByteBuf(TCPServerNetty.stickyPack(status.getCommand(), status.getAddress(), status.getDoor(), resultBytes)));
         } else if (msg instanceof CardRequestProtocol) {
             CardRequestProtocol request = (CardRequestProtocol) msg;

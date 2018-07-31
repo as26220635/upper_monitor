@@ -60,13 +60,13 @@
 
 <script>
     //循环获取门禁状态
-    getCardStatus();
+    // getCardStatus();
 
     //按钮点击
     $('#controlDiv button').on('click', function () {
         controlAction($(this).val());
     });
-
+    
     /**
      * 操控门禁
      * @param action
