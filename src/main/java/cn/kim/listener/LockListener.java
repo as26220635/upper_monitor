@@ -10,5 +10,5 @@ import java.util.Map;
  * 锁回调
  */
 public interface LockListener {
-    ResultState lock() throws Exception;
+    void lock(Map<String,Object> map) throws Exception;
 }

@@ -2,6 +2,7 @@ package cn.kim.common.netty;
 
 import cn.kim.entity.CardRequestProtocol;
 import cn.kim.entity.CardStatusProtocol;
+import cn.kim.entity.TCPSendMessage;
 import cn.kim.util.TextUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -50,17 +51,17 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
                 resultBytes[i] = 00;
             }
             ctx.writeAndFlush(getSendByteBuf(TCPServerNetty.stickyPack(request.getCommand(), request.getAddress(), request.getDoor(), resultBytes)));
-        } else if (msg instanceof byte[]) {
-            ctx.writeAndFlush(getSendByteBuf((byte[]) msg));
+        } else if (msg instanceof TCPSendMessage) {
+            TCPSendMessage message = (TCPSendMessage) msg;
+            ctx.writeAndFlush(getSendByteBuf(message.getData())).addListener((ChannelFutureListener) future -> {
+                message.setSuccess(true);
+            });
         }
     }
 
-    private ByteBuf getSendByteBuf(byte[] req)
-            throws UnsupportedEncodingException {
+    private ByteBuf getSendByteBuf(byte[] req) {
         ByteBuf pingMessage = Unpooled.buffer();
         pingMessage.writeBytes(req);
-
-
         return pingMessage;
     }
 }

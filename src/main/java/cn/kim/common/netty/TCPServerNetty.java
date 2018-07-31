@@ -1,6 +1,8 @@
 package cn.kim.common.netty;
 
 import cn.kim.common.attr.Constants;
+import cn.kim.entity.TCPSendMessage;
+import cn.kim.listener.LockListener;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -16,6 +18,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by 余庚鑫 on 2018/7/29
  */
 public class TCPServerNetty {
+    /**
+     * 心跳
+     */
+    public static final int HEART_BEAT = 0x56;
+    /**
+     * 刷卡
+     */
+    public static final int REQUEST_CARD = 0x53;
     /**
      * 开门
      */
@@ -133,7 +143,13 @@ public class TCPServerNetty {
     public boolean send(String clientIP, byte[] msg) {
         try {
             System.out.println(DatatypeConverter.printHexBinary(msg));
-            ChannelFuture channelFuture = TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(msg);
+            TCPSendMessage tcpSendMessage = new TCPSendMessage();
+            tcpSendMessage.setClientIp(clientIP);
+            tcpSendMessage.setData(msg);
+
+            ChannelFuture channelFuture = TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage);
+            channelFuture.await(60);
+
             return channelFuture.isSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,7 +193,7 @@ public class TCPServerNetty {
         resultBytes[6] = data == null ? 00 : (byte) data.length;
         //复制数据
         if (data != null) {
-            System.arraycopy(data, 0, resultBytes, 6, data.length);
+            System.arraycopy(data, 0, resultBytes, 7, data.length);
         }
         //异或校验
         byte checkByte = resultBytes[0];

@@ -8,7 +8,7 @@
     //防止重复执行
     clearTimeout(timeout);
     //5秒刷新一次列表
-    loopRefresh();
+    // loopRefresh();
 
     function loopRefresh() {
         timeout = setTimeout(function () {
