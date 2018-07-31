@@ -146,9 +146,9 @@ public class TCPServerNetty {
             TCPSendMessage tcpSendMessage = new TCPSendMessage();
             tcpSendMessage.setClientIp(clientIP);
             tcpSendMessage.setData(msg);
-
-            ChannelFuture channelFuture = TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage);
-            return true;
+            //等待1秒 判断是否下发成功
+            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage).await(1000);
+            return tcpSendMessage.isSuccess();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
