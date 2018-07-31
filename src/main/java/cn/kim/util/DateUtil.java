@@ -31,8 +31,16 @@ public class DateUtil {
         return getDate(FORMAT);
     }
 
+    public static String getDate(long time) {
+        return getDate(FORMAT);
+    }
+
     public static String getDate(String format) {
         return new SimpleDateFormat(format).format(new Date());
+    }
+
+    public static String getDate(String format,long time) {
+        return new SimpleDateFormat(format).format(time);
     }
 
     public static Date getDateTime(String format) {

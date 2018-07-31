@@ -12,6 +12,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -49,7 +50,7 @@ public class TCPServerNetty {
     /**
      * 时间同步
      */
-    public static final int TIME_LOCK = 0x07;
+    public static final int TIME_ASYNC = 0x07;
     /**
      * 操作报警
      */
@@ -147,7 +148,7 @@ public class TCPServerNetty {
             tcpSendMessage.setClientIp(clientIP);
             tcpSendMessage.setData(msg);
             //等待1秒 判断是否下发成功
-            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage).await(1000);
+            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage).await(700);
             return tcpSendMessage.isSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,12 +184,12 @@ public class TCPServerNetty {
     public static byte[] stickyPack(int command, int address, int door, byte[] data) {
         byte[] resultBytes = new byte[7 + 2 + (data == null ? 0 : data.length)];
         resultBytes[0] = Constants.TCP_HEAD_DATA;
-        resultBytes[1] = 00;
+        resultBytes[1] = (byte) 0xA0;
         resultBytes[2] = (byte) command;
         resultBytes[3] = (byte) address;
         resultBytes[4] = (byte) door;
-        resultBytes[5] = 00;
-        resultBytes[6] = data == null ? 00 : (byte) data.length;
+        resultBytes[5] = data == null ? 00 : (byte) data.length;
+        resultBytes[6] = 00;
         //复制数据
         if (data != null) {
             System.arraycopy(data, 0, resultBytes, 7, data.length);

@@ -28,9 +28,9 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
             //心跳放回数据
             byte[] resultBytes = new byte[2];
             //客户代码高位
-            resultBytes[0] = (byte) status.getLengthH();
+            resultBytes[0] = (byte) (status.getOemCode() >> 8);
             //客户代码低位
-            resultBytes[1] = (byte) status.getLengthL();
+            resultBytes[1] = (byte) (status.getOemCode() & 0xFF);
             ctx.writeAndFlush(getSendByteBuf(TCPServerNetty.stickyPack(status.getCommand(), status.getAddress(), status.getDoor(), resultBytes)));
         } else if (msg instanceof CardRequestProtocol) {
             CardRequestProtocol request = (CardRequestProtocol) msg;
@@ -60,6 +60,25 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
     private ByteBuf getSendByteBuf(byte[] req) {
         ByteBuf pingMessage = Unpooled.buffer();
         pingMessage.writeBytes(req);
+
+        System.out.println(bytesToHexString(req));
         return pingMessage;
+    }
+
+    public static String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+        for (int i = 0; i < src.length; i++) {
+            int v = src[i] & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv);
+            stringBuilder.append(' ');
+        }
+        return stringBuilder.toString();
     }
 }

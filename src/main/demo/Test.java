@@ -20,7 +20,10 @@ public class Test {
 //        int a = Integer.parseInt("02",16);
 //        System.out.println((a & 0xfc) | ((~a) & 0x03));
 //        System.out.println(TextUtil.base64Decrypt("ODIwNDM0MjE3NDQwMDIwNA"));
-        System.out.println("00 09 08 18 0C 07 0A 00 00 00 00 00 00 00 00 00 00 00 50 00 00".replaceAll(" ",""));
+//        System.out.println("00 09 08 18 0C 07 0A 00 00 00 00 00 00 00 00 00 00 00 50 00 00".replaceAll(" ",""));
+        System.out.println( 3328 >> 8 );
+        System.out.println( 3380 & 0xff);
+        System.out.println(3328 +52);
     }
 
     public int Byte2Int(Byte[]bytes) {

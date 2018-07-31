@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * Created by 余庚鑫 on 2017/5/28.
  */
 public class TextUtil {
-    public static final Pattern BLANK_PATTERN = Pattern.compile("\\s*|\t|\r|\n");
+    public static final Pattern BLANK_PATTERN = Pattern.compile("\\s*|\t|\r|\n|\\u0000");
 
 
     // 将汉字转换为全拼
@@ -502,6 +502,13 @@ public class TextUtil {
         return sb.toString();
     }
 
+    public static String parseByte2HexStr(byte buf) {
+        String hex = Integer.toHexString(buf & 0xFF);
+        if (hex.length() == 1) {
+            hex = '0' + hex;
+        }
+        return hex;
+    }
 
     /**
      * 将16进制转换为二进制
@@ -573,7 +580,7 @@ public class TextUtil {
      * @return
      */
     public static String parsePackParam(byte[] bytes) {
-        return replaceBlank(hexStringToString(parseByte2HexStr(bytes)));
+        return replaceBlank(hexStringToString(parseByte2HexStr(bytes))).trim();
     }
 
     /**

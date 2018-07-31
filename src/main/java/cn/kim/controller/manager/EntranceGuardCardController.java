@@ -130,7 +130,79 @@ public class EntranceGuardCardController extends BaseController {
         Map<String, Object> card = entranceGuardCardService.selectEntranceGuardCard(mapParam);
         String ip = toString(card.get("BEGC_IP"));
 
-        boolean isSuccess = tcpServerNetty.send(ip, TCPServerNetty.OPEN_DOOR, 1,1, null);
+        mapParam.clear();
+        int command = 0x00;
+        if ("0".equals(action)) {
+            //开进
+            command = TCPServerNetty.OPEN_DOOR;
+            mapParam.put(MagicValue.DOOR, 1);
+        } else if ("1".equals(action)) {
+            //关进
+            command = TCPServerNetty.CLOSE_DOOR;
+            mapParam.put(MagicValue.DOOR, 1);
+        } else if ("2".equals(action)) {
+            //开出
+            command = TCPServerNetty.OPEN_DOOR;
+            mapParam.put(MagicValue.DOOR, 2);
+        } else if ("3".equals(action)) {
+            //关出
+            command = TCPServerNetty.CLOSE_DOOR;
+            mapParam.put(MagicValue.DOOR, 2);
+        } else if ("4".equals(action)) {
+            //锁进
+            command = TCPServerNetty.LOCK_DOOR;
+            mapParam.put(MagicValue.DOOR, 1);
+            mapParam.put(MagicValue.STATUS, 1);
+        } else if ("5".equals(action)) {
+            //解锁进
+            command = TCPServerNetty.LOCK_DOOR;
+            mapParam.put(MagicValue.DOOR, 1);
+            mapParam.put(MagicValue.STATUS, 0);
+        } else if ("6".equals(action)) {
+            //锁出
+            command = TCPServerNetty.LOCK_DOOR;
+            mapParam.put(MagicValue.DOOR, 2);
+            mapParam.put(MagicValue.STATUS, 1);
+        } else if ("7".equals(action)) {
+            //解锁出
+            command = TCPServerNetty.LOCK_DOOR;
+            mapParam.put(MagicValue.DOOR, 2);
+            mapParam.put(MagicValue.STATUS, 0);
+        } else if ("8".equals(action)) {
+            //火警输出
+            command = TCPServerNetty.FIRE_ALARM;
+            mapParam.put(MagicValue.DESC, 1);
+            mapParam.put(MagicValue.STATUS, 0);
+        } else if ("9".equals(action)) {
+            //关闭火警输出
+            command = TCPServerNetty.FIRE_ALARM;
+            mapParam.put(MagicValue.DESC, 1);
+            mapParam.put(MagicValue.STATUS, 1);
+        } else if ("a".equals(action)) {
+            //报警输出
+            command = TCPServerNetty.POLICE_ALARM;
+            mapParam.put(MagicValue.DESC, 1);
+            mapParam.put(MagicValue.STATUS, 0);
+        } else if ("b".equals(action)) {
+            //关闭报警输出
+            command = TCPServerNetty.POLICE_ALARM;
+            mapParam.put(MagicValue.DESC, 1);
+            mapParam.put(MagicValue.STATUS, 1);
+        } else if ("c".equals(action)) {
+            //长开进
+            command = TCPServerNetty.OPEN_DOORS;
+            mapParam.put(MagicValue.DOOR, 1);
+        } else if ("d".equals(action)) {
+            //长开出
+            command = TCPServerNetty.OPEN_DOORS;
+            mapParam.put(MagicValue.DOOR, 2);
+        } else if ("f".equals(action)) {
+            //时间同步
+            command = TCPServerNetty.TIME_ASYNC;
+        }
+
+        //操控
+        boolean isSuccess = EntranceGuardCardTool.control(ip, command, mapParam);
 
         Map<String, Object> resultMap = Maps.newHashMapWithExpectedSize(1);
         if (isSuccess) {

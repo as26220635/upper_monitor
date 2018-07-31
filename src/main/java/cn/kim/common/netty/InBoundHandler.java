@@ -21,6 +21,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 /**
@@ -85,13 +88,13 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         if (evt instanceof IdleStateEvent) {
             IdleStateEvent event = (IdleStateEvent) evt;
             if (event.state() == IdleState.READER_IDLE) {
-                logger.info("Client: "+socketString+" READER_IDLE 读超时");
+                logger.info("Client: " + socketString + " READER_IDLE 读超时");
                 ctx.disconnect();
             } else if (event.state() == IdleState.WRITER_IDLE) {
-                logger.info("Client: "+socketString+" WRITER_IDLE 写超时");
+                logger.info("Client: " + socketString + " WRITER_IDLE 写超时");
                 ctx.disconnect();
             } else if (event.state() == IdleState.ALL_IDLE) {
-                logger.info("Client: "+socketString+" ALL_IDLE 总超时");
+                logger.info("Client: " + socketString + " ALL_IDLE 总超时");
                 ctx.disconnect();
             }
         }
@@ -219,23 +222,21 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         byte[] time = new byte[6];
         System.arraycopy(data, 1, time, 0, 6);
         statusProtocol.setTime(time);
-        //转为 yyyy-MM-dd HH:mm:ss
+        //格式化时间
         int second = time[5];
         int minute = time[4];
         int hour = time[3];
         int day = time[2];
         int month = time[1];
         int year = time[0] + 2000;
-        statusProtocol.setDate(year + "-" + DateUtil.supplement(month) + "-" + DateUtil.supplement(day)
-                + " " + DateUtil.supplement(hour) + ":" + DateUtil.supplement(minute) + ":" + DateUtil.supplement(second));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day, hour, minute, second);
+        statusProtocol.setDate(DateUtil.getDate(DateUtil.FORMAT, calendar.getTime()));
         startIndex += 6;
         //门状态	1	Bit5 出是否被锁；Bit4 进是否被锁；
         //Bit1 出的状态(门磁和锁输出都为关则为关)；
         //Bit0 进的状态(门磁和锁输出都为关则为关)；
         byte s = data[startIndex++];
-        System.out.println(s);
-        System.out.println(hexConvert16(s));
-        System.out.println(TextUtil.toInt16(s));
         statusProtocol.setDoorStatus(TextUtil.toInt16(s));
         //—	1	备用
         statusProtocol.setN2(TextUtil.toInt16(data[startIndex++]));
@@ -265,7 +266,7 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         //OEM代码	2	整数值（可选功能）
         byte[] oem = new byte[2];
         System.arraycopy(data, startIndex, oem, 0, 2);
-        statusProtocol.setOemCode(TextUtil.toInt(TextUtil.parsePackParam(oem)));
+        statusProtocol.setOemCode(oem[0] + (oem[1] << 8));
         startIndex += 2;
         //序列号	6	控制器的序列号
         byte[] serial = new byte[6];

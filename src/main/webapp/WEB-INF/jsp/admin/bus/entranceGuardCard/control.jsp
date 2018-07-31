@@ -55,7 +55,9 @@
     <div class="col-md-3">
         <button type="button" class="btn btn-default" value="d">长开出</button>
     </div>
-
+    <div class="col-md-3">
+        <button type="button" class="btn btn-default" value="f">时间同步</button>
+    </div>
 </div>
 
 <script>
