@@ -340,7 +340,10 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         //读头	1	数据读头来源，0-3,0=232或者Read A，1=232出或者Reader B，2=485A，3=485B
         request.setReadHead(TextUtil.toInt16(data[startIndex++]));
         //—	5	备用
-        request.setN1(TextUtil.toInt16(data[startIndex++]));
+        byte[] remark = new byte[5];
+        System.arraycopy(data, startIndex, remark, 0, 5);
+        request.setN1(remark);
+        startIndex += 5;
         //数据类型	1	0=普通卡  1=串口232接口输入字符串,如二维码等
         //2=密码    3=按钮
         //6=二代证数据 数据结构见后面身份证数据结构。

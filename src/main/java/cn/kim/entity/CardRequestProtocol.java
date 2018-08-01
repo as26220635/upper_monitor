@@ -40,7 +40,7 @@ public class CardRequestProtocol implements Serializable {
     public String serial;
     public String id;
     public int readHead;
-    public int n1;
+    public byte[] n1;
     public int type;
     public byte[] time;
     /**
@@ -134,11 +134,11 @@ public class CardRequestProtocol implements Serializable {
         this.id = id;
     }
 
-    public int getN1() {
+    public byte[] getN1() {
         return n1;
     }
 
-    public void setN1(int n1) {
+    public void setN1(byte[] n1) {
         this.n1 = n1;
     }
 
