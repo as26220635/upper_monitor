@@ -146,6 +146,10 @@ public abstract class BaseServiceImpl extends BaseData implements BaseService {
 
         if (!ValidateUtil.isEmpty(trees)) {
             for (Map<String, Object> tree : trees) {
+                //遇到不是叶节点的 直接return;
+                if ("-1".equals(selectId) && toInt(tree.get("SM_IS_LEAF")) == STATUS_ERROR) {
+                    continue;
+                }
                 tree.put("CHILDREN_MENU", getOperatorMenuTree(baseDao, nameSpace, sqlId, operatorId, toString(tree.get("ID")), selectId, notParentId, roleMenus));
             }
         }

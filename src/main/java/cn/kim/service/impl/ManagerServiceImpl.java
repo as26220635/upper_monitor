@@ -117,7 +117,7 @@ public class ManagerServiceImpl extends BaseServiceImpl implements ManagerServic
      */
     @Override
     public List<Map<String, Object>> queryOperatorMenuTree(String operatorId) {
-        return getOperatorMenuTree(baseDao, NameSpace.ManagerMapper, "queryOperatorMenu", operatorId, "0", null, null, null);
+        return getOperatorMenuTree(baseDao, NameSpace.ManagerMapper, "queryOperatorMenu", operatorId, "0", "-1", null, null);
     }
 
 }
