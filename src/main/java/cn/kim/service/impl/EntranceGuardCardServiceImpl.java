@@ -100,6 +100,7 @@ public class EntranceGuardCardServiceImpl extends BaseServiceImpl implements Ent
             }
             paramMap.clear();
             paramMap.put("ID", card.get("ID"));
+            paramMap.put("BEGC_IS_ONLINE", STATUS_SUCCESS);
             paramMap.put("BEGC_ID", mapParam.get("BEGC_ID"));
             paramMap.put("BEGC_SERIAL", mapParam.get("BEGC_SERIAL"));
             paramMap.put("BEGC_KEY", mapParam.get("BEGC_KEY"));

@@ -9,6 +9,7 @@ import cn.kim.util.*;
 import com.google.common.collect.Maps;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
@@ -115,6 +116,13 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
             //心跳
             case TCPServerNetty.HEART_BEAT: {
                 logger.info(DateUtil.getDate() + ",client:(" + getRemoteAddress(ctx) + ")心跳数据");
+                //是否存在
+                Map<String, Channel> clientMap = TCPServerNetty.getClientMap();
+                String ip = getIPString(ctx);
+                //不存在就放入map
+                if (clientMap.containsKey(ip)) {
+                    clientMap.put(ip, ctx.channel());
+                }
                 //解析心跳
                 CardStatusProtocol status = parseStatusData(card);
 

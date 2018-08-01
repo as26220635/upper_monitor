@@ -7,15 +7,15 @@
     <select id="selectEntranceGuardCard" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT BEGC.*,SDI.SDI_NAME AS BEGC_STATUS_NAME
         FROM(
-            SELECT * FROM BUS_ENTRANCE_GUARD_CARD
-            <where>
-                <if test="ID != NULL and ID != ''">
-                    AND ID = #{ID}
-                </if>
-                <if test="BEGC_ID != NULL and BEGC_ID != ''">
-                    AND BEGC_ID = #{BEGC_ID}
-                </if>
-            </where>
+        SELECT * FROM BUS_ENTRANCE_GUARD_CARD
+        <where>
+            <if test="ID != NULL and ID != ''">
+                AND ID = #{ID}
+            </if>
+            <if test="BEGC_ID != NULL and BEGC_ID != ''">
+                AND BEGC_ID = #{BEGC_ID}
+            </if>
+        </where>
         )BEGC
         LEFT JOIN SYS_DICT_INFO SDI ON SDI.SDT_CODE = 'SYS_OPEN_CLOSE' AND SDI.SDI_CODE = BEGC.BEGC_STATUS
 
@@ -59,6 +59,7 @@
             <if test="BEGC_IP != null">BEGC_IP,</if>
             <if test="BEGC_UPDATE_TIME != null">BEGC_UPDATE_TIME,</if>
             <if test="BEGC_ENTRY_TIME != null">BEGC_ENTRY_TIME,</if>
+            <if test="BEGC_IS_ONLINE != null">BEGC_IS_ONLINE,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="ID != null">#{ID},</if>
@@ -82,6 +83,7 @@
             <if test="BEGC_IP != null">#{BEGC_IP},</if>
             <if test="BEGC_UPDATE_TIME != null">#{BEGC_UPDATE_TIME},</if>
             <if test="BEGC_ENTRY_TIME != null">#{BEGC_ENTRY_TIME},</if>
+            <if test="BEGC_IS_ONLINE != null">#{BEGC_IS_ONLINE},</if>
         </trim>
     </insert>
 
@@ -110,6 +112,7 @@
             <if test="BEGC_IP != null">BEGC_IP=#{BEGC_IP},</if>
             <if test="BEGC_UPDATE_TIME != null">BEGC_UPDATE_TIME=#{BEGC_UPDATE_TIME},</if>
             <if test="BEGC_ENTRY_TIME != null">BEGC_ENTRY_TIME=#{BEGC_ENTRY_TIME},</if>
+            <if test="BEGC_IS_ONLINE != null">BEGC_IS_ONLINE=#{BEGC_IS_ONLINE},</if>
         </set>
         <where>
             <if test="ID !=null">ID=#{ID}</if>
@@ -120,6 +123,12 @@
     <delete id="deleteEntranceGuardCard" parameterType="java.util.Map">
 		DELETE FROM BUS_ENTRANCE_GUARD_CARD WHERE ID = #{ID}
 	</delete>
+
+    <!--刷新设备是否在线情况 设备超过10秒没有发送心跳就判断为离线-->
+    <update id="refreshEntranceGuardCardIsOnline" parameterType="java.util.Map">
+        UPDATE BUS_ENTRANCE_GUARD_CARD SET BEGC_IS_ONLINE = 0
+        WHERE BEGC_IS_ONLINE != 0 AND TIME_TO_SEC(TIMEDIFF(NOW(), BEGC_UPDATE_TIME)) > 10
+    </update>
 
     <!--查询-->
     <select id="selectEntranceGuardCardLog" parameterType="java.util.Map" resultType="java.util.Map">
