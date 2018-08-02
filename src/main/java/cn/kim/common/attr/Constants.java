@@ -26,4 +26,12 @@ public class Constants {
      * 包结束
      */
     public static final int TCP_END_DATA = 0x03;
+    /**
+     * 门报警
+     */
+    public static final int DOOR_MAST = 0x01;
+    /**
+     * 开门时间太长报警
+     */
+    public static final int DOOR_LOOG_MAST = 0x02;
 }

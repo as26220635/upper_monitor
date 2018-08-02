@@ -1,5 +1,6 @@
 package cn.kim.common.netty;
 
+import cn.kim.common.eu.TCPCommand;
 import cn.kim.entity.CardProtocol;
 import cn.kim.entity.CardRequestProtocol;
 import cn.kim.entity.CardStatusProtocol;
@@ -111,71 +112,65 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CardProtocol card) throws Exception {
         //判断指令
+        int command = card.getCommand();
 
-        switch (card.getCommand()) {
+        if (command == TCPCommand.HEART_BEAT.getType()) {
             //心跳
-            case TCPServerNetty.HEART_BEAT: {
-                logger.info(DateUtil.getDate() + ",client:(" + getRemoteAddress(ctx) + ")心跳数据");
-                //是否存在
-                Map<String, Channel> clientMap = TCPServerNetty.getClientMap();
-                String ip = getIPString(ctx);
-                //不存在就放入map
-                if (clientMap.containsKey(ip)) {
-                    clientMap.put(ip, ctx.channel());
-                }
-                //解析心跳
-                CardStatusProtocol status = parseStatusData(card);
-
-                float t1 = status.getT1();
-                float t2 = status.getT2();
-                float h1 = status.getH1();
-                float h2 = status.getH2();
-
-                if (!ValidateUtil.isEmpty(t1) && !Float.isNaN(t1)) {
-                    t1 = t1 / 10;
-                }
-                if (!ValidateUtil.isEmpty(t2) && !Float.isNaN(t2)) {
-                    t2 = t2 / 10;
-                }
-                if (!ValidateUtil.isEmpty(h1) && !Float.isNaN(h1)) {
-                    h1 = h1 / 10;
-                }
-                if (!ValidateUtil.isEmpty(h2) && !Float.isNaN(h2)) {
-                    h2 = h2 / 10;
-                }
-                Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(16);
-                paramMap.put("BEGC_SERIAL", status.getSerial());
-                paramMap.put("BEGC_ID", status.getId());
-                paramMap.put("BEGC_STATUS", status.getDoorStatus());
-                paramMap.put("BEGC_NOW", status.getDate());
-                paramMap.put("BEGC_T1", t1);
-                paramMap.put("BEGC_H1", h1);
-                paramMap.put("BEGC_T2", t2);
-                paramMap.put("BEGC_H2", h2);
-                paramMap.put("BEGC_VER", status.getVer());
-                paramMap.put("BEGC_NEXT_NUM", status.getNextNum());
-                //获取设备所在的公网IP
-                paramMap.put("BEGC_IP", getIPString(ctx));
-                //更新门禁卡信息和插入心跳日志
-                InBoundHandler.entranceGuardCardService.updateEntranceGuardCard(paramMap);
-
-                //返回数据
-                ctx.writeAndFlush(status);
-
+            logger.info(DateUtil.getDate() + ",client:(" + getRemoteAddress(ctx) + ")心跳数据");
+            //是否存在
+            Map<String, Channel> clientMap = TCPServerNetty.getClientMap();
+            String ip = getIPString(ctx);
+            //不存在就放入map
+            if (clientMap.containsKey(ip)) {
+                clientMap.put(ip, ctx.channel());
             }
-            break;
+            //解析心跳
+            CardStatusProtocol status = parseStatusData(card);
+
+            float t1 = status.getT1();
+            float t2 = status.getT2();
+            float h1 = status.getH1();
+            float h2 = status.getH2();
+
+            if (!ValidateUtil.isEmpty(t1) && !Float.isNaN(t1)) {
+                t1 = t1 / 10;
+            }
+            if (!ValidateUtil.isEmpty(t2) && !Float.isNaN(t2)) {
+                t2 = t2 / 10;
+            }
+            if (!ValidateUtil.isEmpty(h1) && !Float.isNaN(h1)) {
+                h1 = h1 / 10;
+            }
+            if (!ValidateUtil.isEmpty(h2) && !Float.isNaN(h2)) {
+                h2 = h2 / 10;
+            }
+            Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(16);
+            paramMap.put("BEGC_SERIAL", status.getSerial());
+            paramMap.put("BEGC_ID", status.getId());
+            paramMap.put("BEGC_STATUS", status.getDoorStatus());
+            paramMap.put("BEGC_NOW", status.getDate());
+            paramMap.put("BEGC_T1", t1);
+            paramMap.put("BEGC_H1", h1);
+            paramMap.put("BEGC_T2", t2);
+            paramMap.put("BEGC_H2", h2);
+            paramMap.put("BEGC_VER", status.getVer());
+            paramMap.put("BEGC_NEXT_NUM", status.getNextNum());
+            //获取设备所在的公网IP
+            paramMap.put("BEGC_IP", getIPString(ctx));
+            //更新门禁卡信息和插入心跳日志
+            InBoundHandler.entranceGuardCardService.updateEntranceGuardCard(paramMap);
+
+            //返回数据
+            ctx.writeAndFlush(status);
+        } else if (command == TCPCommand.REQUEST_CARD.getType()) {
             //刷卡
-            case TCPServerNetty.REQUEST_CARD: {
-                CardRequestProtocol status = parseRequestData(card);
+            CardRequestProtocol status = parseRequestData(card);
 
-                //返回数据
-                ctx.writeAndFlush(status);
-            }
-            break;
-            default:
-                break;
+            //返回数据
+            ctx.writeAndFlush(status);
         }
 
+        //释放资源
         ReferenceCountUtil.release(card);
     }
 

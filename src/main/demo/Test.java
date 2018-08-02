@@ -21,9 +21,10 @@ public class Test {
 //        System.out.println((a & 0xfc) | ((~a) & 0x03));
 //        System.out.println(TextUtil.base64Decrypt("ODIwNDM0MjE3NDQwMDIwNA"));
 //        System.out.println("00 09 08 18 0C 07 0A 00 00 00 00 00 00 00 00 00 00 00 50 00 00".replaceAll(" ",""));
-        System.out.println( 3328 >> 8 );
-        System.out.println( 3380 & 0xff);
-        System.out.println(3328 +52);
+//        System.out.println( 3328 >> 8 );
+//        System.out.println( 3380 & 0xff);
+//        System.out.println(3328 +52);
+        System.out.println("12345678".getBytes().length);
     }
 
     private static final char[] hexCode = "0123456789ABCDEF".toCharArray();

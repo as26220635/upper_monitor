@@ -24,8 +24,8 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
                       ChannelPromise promise) throws Exception {
 
         if (msg instanceof CardStatusProtocol) {
+            //心跳返回
             CardStatusProtocol status = (CardStatusProtocol) msg;
-            //心跳放回数据
             byte[] resultBytes = new byte[2];
             //客户代码高位
             resultBytes[0] = (byte) (status.getOemCode() >> 8);
@@ -33,18 +33,18 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
             resultBytes[1] = (byte) (status.getOemCode() & 0xFF);
             ctx.writeAndFlush(getSendByteBuf(TCPServerNetty.stickyPack(status.getCommand(), status.getAddress(), status.getDoor(), resultBytes)));
         } else if (msg instanceof CardRequestProtocol) {
+            //刷卡返回
             CardRequestProtocol request = (CardRequestProtocol) msg;
-            //心跳放回数据
             byte[] resultBytes = new byte[133];
             //是否开门
             resultBytes[0] = 1;
             //继电器	1	输出的继电器编号，从0开始。0进门、1出门、2报警。
             resultBytes[1] = 0;
             //开门时间	2	输出继电器动作的时间，秒为单位。
-            resultBytes[2] = 05;
-            resultBytes[3] = 00;
+            resultBytes[2] = 5;
+            resultBytes[3] = 0;
             resultBytes[4] = (byte) request.getReadHead();
-            resultBytes[5] = 05;
+            resultBytes[5] = 5;
             for (int i = 5; i < resultBytes.length; i++) {
                 resultBytes[i] = 00;
             }
@@ -52,7 +52,8 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
         } else if (msg instanceof TCPSendMessage) {
             TCPSendMessage message = (TCPSendMessage) msg;
             ctx.writeAndFlush(getSendByteBuf(message.getData())).addListener((ChannelFutureListener) future -> {
-                message.setSuccess(true);
+                //是否成功
+                message.setSuccess(future.isSuccess());
                 //释放同步锁
                 message.getCountDownLatch().countDown();
             });

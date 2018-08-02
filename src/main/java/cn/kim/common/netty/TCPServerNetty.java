@@ -25,62 +25,12 @@ public class TCPServerNetty {
      * 发送消息超时时间 毫秒
      */
     public static final int OVER_TIME = 5000;
-    /**
-     * 心跳
-     */
-    public static final int HEART_BEAT = 0x56;
-    /**
-     * 刷卡
-     */
-    public static final int REQUEST_CARD = 0x53;
-    /**
-     * 开门
-     */
-    public static final int OPEN_DOOR = 0x2C;
-    /**
-     * 门常开
-     */
-    public static final int OPEN_DOORS = 0x2D;
-    /**
-     * 关门
-     */
-    public static final int CLOSE_DOOR = 0x2E;
-    /**
-     * 锁门
-     */
-    public static final int LOCK_DOOR = 0x2F;
-    /**
-     * 禁止读卡
-     */
-    public static final int PROHIBITION_CARD = 0x5A;
-    /**
-     * 时间同步
-     */
-    public static final int TIME_ASYNC = 0x07;
-    /**
-     * 操作报警
-     */
-    public static final int POLICE_ALARM = 0x18;
-    /**
-     * 操作火警
-     */
-    public static final int FIRE_ALARM = 0x19;
-    /**
-     * 设置参数
-     */
-    public static final int SET_PARAM = 0x63;
-    /**
-     * 控制器复位
-     */
-    public static final int CONTROLLER_RESET = 0x04;
-    /**
-     * 控制输出
-     */
-    public static final int OUT_PUT = 0x73;
+
     /**
      * 端口号
      */
     private int port;
+
     /**
      * 客户端集合
      */
