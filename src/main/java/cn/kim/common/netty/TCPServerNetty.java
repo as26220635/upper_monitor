@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TCPServerNetty {
     /**
-     * 发送消息超时时间
+     * 发送消息超时时间 毫秒
      */
     public static final int OVER_TIME = 5000;
     /**
@@ -157,7 +157,12 @@ public class TCPServerNetty {
             CountDownLatch countDownLatch = new CountDownLatch(1);
             tcpSendMessage.setCountDownLatch(countDownLatch);
             //等待1秒 判断是否下发成功
-            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage);
+            Channel client = TCPServerNetty.getClientMap().get(clientIP);
+            //设备离线状态
+            if (client == null) {
+                return false;
+            }
+            client.writeAndFlush(tcpSendMessage);
             //等待，设置超时时间
             countDownLatch.await(OVER_TIME, TimeUnit.MILLISECONDS);
             //是否成功
