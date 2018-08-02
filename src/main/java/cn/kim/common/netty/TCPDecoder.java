@@ -1,5 +1,6 @@
 package cn.kim.common.netty;
 
+import cn.kim.common.attr.Constants;
 import cn.kim.entity.CardProtocol;
 import cn.kim.util.TextUtil;
 import io.netty.buffer.ByteBuf;
@@ -31,24 +32,18 @@ public class TCPDecoder extends ByteToMessageDecoder {
 
             int packgeLength = buffer.readableBytes();
 
-            boolean isStart = false;
-            boolean isEnd = false;
-
             byte[] req = new byte[buffer.readableBytes()];
             buffer.readBytes(req);
-            for (byte b : req) {
-                if (b == 0X02) {
-                    isStart = true;
-                    continue;
-                }
-                if (b == 0X03) {
-                    isEnd = true;
-                    break;
-                }
+            if (req[0] != Constants.TCP_HEAD_DATA || req[packgeLength - 1] != Constants.TCP_END_DATA) {
+                return;
             }
-
-            //没有找到开头和结尾
-            if (!isStart || !isEnd) {
+            //异或校验
+            byte checkByte = req[0];
+            for (int i = 1; i < req.length - END_LENGTH; i++) {
+                checkByte ^= req[i];
+            }
+            //校验不通过
+            if (checkByte != req[packgeLength - 2]) {
                 return;
             }
 
@@ -66,27 +61,7 @@ public class TCPDecoder extends ByteToMessageDecoder {
             cardProtocol.setCs(TextUtil.toInt(req[cardProtocol.getLengthH() + BASE_LENGTH - END_LENGTH]));
             cardProtocol.setEtx(TextUtil.toInt(req[cardProtocol.getLengthH() + BASE_LENGTH - END_LENGTH + 1]));
 
-            //异或校验
-            byte checkByte = req[0];
-            for (int i = 1; i < req.length - END_LENGTH; i++) {
-                checkByte ^= req[i];
-            }
-            //校验不通过
-            if (checkByte != cardProtocol.getCs()) {
-                return;
-            }
             out.add(cardProtocol);
         }
-    }
-
-    private static final char[] hexCode = "0123456789ABCDEF".toCharArray();
-
-    public String printHexBinary(byte[] data) {
-        StringBuilder r = new StringBuilder(data.length * 2);
-        for (byte b : data) {
-            r.append(hexCode[(b >> 4) & 0xF]);
-            r.append(hexCode[(b & 0xF)] + " ");
-        }
-        return r.toString();
     }
 }
