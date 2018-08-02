@@ -53,6 +53,8 @@ public class OutBoundHandler extends ChannelOutboundHandlerAdapter {
             TCPSendMessage message = (TCPSendMessage) msg;
             ctx.writeAndFlush(getSendByteBuf(message.getData())).addListener((ChannelFutureListener) future -> {
                 message.setSuccess(true);
+                //释放同步锁
+                message.getCountDownLatch().countDown();
             });
         }
     }

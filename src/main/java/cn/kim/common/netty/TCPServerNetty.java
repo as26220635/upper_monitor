@@ -14,11 +14,17 @@ import javax.xml.bind.DatatypeConverter;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by 余庚鑫 on 2018/7/29
  */
 public class TCPServerNetty {
+    /**
+     * 发送消息超时时间
+     */
+    public static final int OVER_TIME = 5000;
     /**
      * 心跳
      */
@@ -147,8 +153,14 @@ public class TCPServerNetty {
             TCPSendMessage tcpSendMessage = new TCPSendMessage();
             tcpSendMessage.setClientIp(clientIP);
             tcpSendMessage.setData(msg);
+            //同步锁
+            CountDownLatch countDownLatch = new CountDownLatch(1);
+            tcpSendMessage.setCountDownLatch(countDownLatch);
             //等待1秒 判断是否下发成功
-            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage).await(700);
+            TCPServerNetty.getClientMap().get(clientIP).writeAndFlush(tcpSendMessage);
+            //等待，设置超时时间
+            countDownLatch.await(OVER_TIME, TimeUnit.MILLISECONDS);
+            //是否成功
             return tcpSendMessage.isSuccess();
         } catch (Exception e) {
             e.printStackTrace();
