@@ -1,11 +1,11 @@
 package cn.kim.util;
 
 import cn.kim.common.attr.CacheName;
+import cn.kim.common.shiro.cache.SpringCacheManagerWrapper;
 import com.sun.istack.internal.NotNull;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,45 +21,45 @@ public class CacheUtil {
     private static Logger logger = LogManager.getLogger(CacheUtil.class.getName());
 
     @Autowired
-    private EhCacheManager ehCacheManager;
+    private SpringCacheManagerWrapper shiroCacheManager;
     private static CacheUtil cacheUtil;
 
-    public void setCacheManager(EhCacheManager ehCacheManager) {
-        this.ehCacheManager = ehCacheManager;
+    public void setCacheManager(SpringCacheManagerWrapper shiroCacheManager) {
+        this.shiroCacheManager = shiroCacheManager;
     }
 
     @PostConstruct
     public void init() {
         cacheUtil = this;
-        cacheUtil.ehCacheManager = this.ehCacheManager;
+        cacheUtil.shiroCacheManager = this.shiroCacheManager;
     }
 
-    public static EhCacheManager getCacheManager() {
-        return cacheUtil.ehCacheManager;
+    public static SpringCacheManagerWrapper getCacheManager() {
+        return cacheUtil.shiroCacheManager;
     }
 
     public static void put(String cacheName, String key, Object value) {
-        Cache cache = cacheUtil.ehCacheManager.getCache(cacheName);
+        Cache cache = cacheUtil.shiroCacheManager.getCache(cacheName);
         cache.put(key, value);
     }
 
     public static Cache getCache(String cacheName) {
-        return cacheUtil.ehCacheManager.getCache(cacheName);
+        return cacheUtil.shiroCacheManager.getCache(cacheName);
     }
 
     public static Object get(String cacheName, String key) {
-        Cache cache = cacheUtil.ehCacheManager.getCache(cacheName);
+        Cache cache = cacheUtil.shiroCacheManager.getCache(cacheName);
         return cache.get(key);
     }
 
     public static void remove(String cacheName, String key) {
-        Cache cache = cacheUtil.ehCacheManager.getCache(cacheName);
+        Cache cache = cacheUtil.shiroCacheManager.getCache(cacheName);
         cache.remove(key);
     }
 
     public static void clear(String cacheName) {
         logger.info("移除缓存:" + cacheName + ",的全部缓存数据");
-        cacheUtil.ehCacheManager.getCache(cacheName).clear();
+        cacheUtil.shiroCacheManager.getCache(cacheName).clear();
     }
 
     /***

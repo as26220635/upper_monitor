@@ -528,7 +528,7 @@ public class CommonUtil {
      * @return
      */
     public static Object idEncrypt(Object obj) throws InvalidKeyException {
-        if (ValidateUtil.isEmpty(obj) || obj instanceof ActiveUser) {
+        if (ValidateUtil.isEmpty(obj)) {
             return obj;
         }
         try {
@@ -619,7 +619,7 @@ public class CommonUtil {
      * @return
      */
     public static Object idDecrypt(Object obj) throws InvalidKeyException {
-        if (ValidateUtil.isEmpty(obj) || obj instanceof ActiveUser) {
+        if (ValidateUtil.isEmpty(obj)) {
             return obj;
         }
         try {

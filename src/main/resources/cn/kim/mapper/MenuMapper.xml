@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.kim.mapper.MenuMapper">
-
+    <cache type="org.mybatis.caches.redis.RedisCache"/>
 
     <!--查询用户菜单权限-->
     <select id="selectMenu" parameterType="java.util.Map" resultType="java.util.Map">
         SELECT SM.*,SMP.SM_NAME AS SM_PARENT_NAME,SC.SC_NAME
         FROM(
-            SELECT SM.*
-            FROM SYS_MENU SM
-            <where>
-                <if test="SM_PARENTID != null and SM_PARENTID != '' ">
-                    AND SM.SM_PARENTID = #{SM_PARENTID}
-                </if>
-                <if test="ID != null and ID != '' ">
-                    AND SM.ID = #{ID}
-                </if>
-                <if test="SM_TYPE != null and SM_TYPE != '' ">
-                    AND SM.SM_TYPE = #{SM_TYPE}
-                </if>
-                <if test="SM_CODE != null and SM_CODE != '' ">
-                    AND SM.SM_CODE = #{SM_CODE}
-                </if>
-                <if test="SM_URL != null and SM_URL != '' ">
-                    AND SM.SM_URL = #{SM_URL}
-                </if>
-                <if test="SC_ID != null and SC_ID != '' ">
-                    AND SM.SC_ID = #{SC_ID}
-                </if>
-                <if test="NOT_ID != null and NOT_ID != '' ">
-                    AND SM.ID != #{NOT_ID}
-                </if>
-            </where>
+        SELECT SM.*
+        FROM SYS_MENU SM
+        <where>
+            <if test="SM_PARENTID != null and SM_PARENTID != '' ">
+                AND SM.SM_PARENTID = #{SM_PARENTID}
+            </if>
+            <if test="ID != null and ID != '' ">
+                AND SM.ID = #{ID}
+            </if>
+            <if test="SM_TYPE != null and SM_TYPE != '' ">
+                AND SM.SM_TYPE = #{SM_TYPE}
+            </if>
+            <if test="SM_CODE != null and SM_CODE != '' ">
+                AND SM.SM_CODE = #{SM_CODE}
+            </if>
+            <if test="SM_URL != null and SM_URL != '' ">
+                AND SM.SM_URL = #{SM_URL}
+            </if>
+            <if test="SC_ID != null and SC_ID != '' ">
+                AND SM.SC_ID = #{SC_ID}
+            </if>
+            <if test="NOT_ID != null and NOT_ID != '' ">
+                AND SM.ID != #{NOT_ID}
+            </if>
+        </where>
         )SM
         LEFT JOIN SYS_MENU SMP ON SMP.ID = SM.SM_PARENTID
         LEFT JOIN SYS_CONFIGURE SC ON SC.ID = SM.SC_ID

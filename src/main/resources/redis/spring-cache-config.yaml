@@ -1,0 +1,24 @@
+#权限缓存
+shiro-authorizationCache:
+  ttl: 3600000
+  maxIdleTime: 1800000
+#认证缓存
+shiro-authenticationCache:
+  ttl: 3600000
+  maxIdleTime: 1800000
+#session会话缓存
+shiro-activeSessionCache:
+  ttl: 3600000
+  maxIdleTime: 3600000
+#登录错误次数锁定10分钟
+password-retry-cache:
+  ttl: 600000
+  maxIdleTime: 600000
+#记录上一次保存的日志信息,重复的日志2分钟记录一次
+log-record-cache:
+  ttl: 120000
+  maxIdleTime: 120000
+#各种值的集合
+value-collection:
+  ttl: 0
+  maxIdleTime: 0

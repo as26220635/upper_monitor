@@ -18,7 +18,7 @@ public class FirstController extends BaseController {
 
     @GetMapping("/queryUser")
     public String queryUser(Model model) throws Exception {
-        model.addAttribute("accountInfo",getAccountInfo());
+        model.addAttribute("accountInfo", getAccountInfo());
         return "admin/system/first/editActiveUser";
     }
 
@@ -60,4 +60,15 @@ public class FirstController extends BaseController {
         return null;
     }
 
+    /**
+     * 主页
+     *
+     * @param model
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/home")
+    public String home(Model model) throws Exception {
+        return "admin/system/first/home";
+    }
 }
