@@ -11,7 +11,7 @@
  Target Server Version : 80011
  File Encoding         : 65001
 
- Date: 02/08/2018 09:34:06
+ Date: 03/08/2018 16:07:19
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `bus_entrance_guard_card`  (
 -- ----------------------------
 -- Records of bus_entrance_guard_card
 -- ----------------------------
-INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', 0, '1Y5132', '1Y5132\0\0\0\0', '23685', '3', '0000', '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', '11571', '146', '0', '0004A33CCCB2', 'admin', '888888', 6, '127.0.0.1', '2018-07-31 17:31:26', '2018-07-26 13:18:12');
+INSERT INTO `bus_entrance_guard_card` VALUES ('44529511408074752', 0, '1Y5132', '1Y5132', '23685', '3', '0000', '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', '11571', '146', '0', '0004A33CCCB2', 'admin', '888888', 6, '127.0.0.1', '2018-08-02 17:59:01', '2018-07-26 13:18:12');
 
 -- ----------------------------
 -- Table structure for bus_entrance_guard_card_log
@@ -174,6 +174,7 @@ INSERT INTO `bus_entrance_guard_card_log` VALUES ('46405176319279104', '44529511
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('46405176898093056', '44529511408074752', '1Y5132', '1Y5132\0\0\0\0', NULL, '3', NULL, '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', NULL, '146', '0', NULL, '2018-07-31 17:31:25');
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('46405177476907008', '44529511408074752', '1Y5132', '1Y5132\0\0\0\0', NULL, '3', NULL, '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', NULL, '146', '0', NULL, '2018-07-31 17:31:25');
 INSERT INTO `bus_entrance_guard_card_log` VALUES ('46405178043138048', '44529511408074752', '1Y5132', '1Y5132\0\0\0\0', NULL, '3', NULL, '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', NULL, '146', '0', NULL, '2018-07-31 17:31:26');
+INSERT INTO `bus_entrance_guard_card_log` VALUES ('47136897956315136', '44529511408074752', '1Y5132', '1Y5132', NULL, '3', NULL, '2003-03-17 10:07:22', '0.0', '0.0', '0.0', '0.0', NULL, '146', '0', NULL, '2018-08-02 17:59:01');
 
 -- ----------------------------
 -- Table structure for bus_store
@@ -3692,6 +3693,26 @@ INSERT INTO `sys_log` VALUES ('46767144154693632', '1', NULL, '添加字典', '0
 INSERT INTO `sys_log` VALUES ('46767210726686720', '1', NULL, '添加字典信息', '0:0:0:0:0:0:0:1', 1, '2018-08-01 17:30:01', '1', 2);
 INSERT INTO `sys_log` VALUES ('46767236148363264', '1', NULL, '添加字典信息', '0:0:0:0:0:0:0:1', 1, '2018-08-01 17:30:07', '1', 2);
 INSERT INTO `sys_log` VALUES ('46767774386618368', '1', NULL, '修改配置列表列', '0:0:0:0:0:0:0:1', 1, '2018-08-01 17:32:15', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136772114612224', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:58:31', '1', 9);
+INSERT INTO `sys_log` VALUES ('47136879992111104', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 0, '2018-08-02 17:58:57', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136919225630720', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:06', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136923537375232', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:07', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136926150426624', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:08', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136927710707712', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:08', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136934417399808', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:10', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136937496018944', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:11', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136941950369792', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:12', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136950418669568', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:14', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136954621362176', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:15', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136976448520192', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:20', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136980059815936', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:21', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136984774213632', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:22', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136990746902528', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:23', '1', 2);
+INSERT INTO `sys_log` VALUES ('47136993875853312', '1', NULL, '遥控门禁卡', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:24', '1', 2);
+INSERT INTO `sys_log` VALUES ('47137041439260672', '1', NULL, '查看邮箱配置', '0:0:0:0:0:0:0:1', 1, '2018-08-02 17:59:35', '1', 2);
+INSERT INTO `sys_log` VALUES ('47468988359245824', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-08-03 15:58:38', '1', 9);
+INSERT INTO `sys_log` VALUES ('47468992238977024', '1', NULL, '系统发现异常', '0:0:0:0:0:0:0:1', 0, '2018-08-03 15:58:39', '0', 1);
+INSERT INTO `sys_log` VALUES ('47470035718897664', '1', NULL, '删除菜单', '0:0:0:0:0:0:0:1', 1, '2018-08-03 16:02:47', '1', 2);
 INSERT INTO `sys_log` VALUES ('480859698233344', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:35', '1', 9);
 INSERT INTO `sys_log` VALUES ('480949980626944', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:04:56', '1', 9);
 INSERT INTO `sys_log` VALUES ('483274396794880', '1', NULL, '登录', '0:0:0:0:0:0:0:1', 1, '2018-03-27 00:14:10', '1', 9);
@@ -6701,6 +6722,26 @@ INSERT INTO `sys_log_text` VALUES ('46767144192442368', '46767144154693632', '�
 INSERT INTO `sys_log_text` VALUES ('46767211053842432', '46767210726686720', '添加字典类型:{SDI_CODE=0, SVR_TABLE_NAME=SYS_DICT_INFO, SDI_REQUIRED=0, SDI_ORDER=1, SDI_REMARK=, SDI_NAME=离线, SDI_PARENTID=0, IS_STATUS=1, SDT_CODE=SYS_ONLINE, SDI_INNERCODE=0, ID=46767210345005056, SDT_ID=46767143907229696}');
 INSERT INTO `sys_log_text` VALUES ('46767236173529088', '46767236148363264', '添加字典类型:{SDI_CODE=1, SVR_TABLE_NAME=SYS_DICT_INFO, SDI_REQUIRED=0, SDI_ORDER=2, SDI_REMARK=, SDI_NAME=在线, SDI_PARENTID=0, IS_STATUS=1, SDT_CODE=SYS_ONLINE, SDI_INNERCODE=1, ID=46767235699572736, SDT_ID=46767143907229696}');
 INSERT INTO `sys_log_text` VALUES ('46767774793465856', '46767774386618368', '更新配置列表字段,配置列表:门禁卡管理-门禁卡,更新前:,更新后:{SCC_NAME=设备状态, SVR_TABLE_NAME=SYS_CONFIGURE_COLUMN, SCC_FUNC=, SCC_IS_MERGE=, SCC_ALIGN=center, SCC_IS_STATUS=0, SCC_WIDTH=100px, SCC_FIELD=BEGC_IS_ONLINE, SCC_IS_VISIBLE=1, SCC_IS_OPERATION=0, ID=46766908740993024, SC_ID=38163489528741888, SCC_CLASS=, SCC_SDT_CODE=SYS_ONLINE, SCC_ORDER=5}');
+INSERT INTO `sys_log_text` VALUES ('47136772324327424', '47136772114612224', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('47136880025665536', '47136879992111104', '客户端连接失败!');
+INSERT INTO `sys_log_text` VALUES ('47136919254990848', '47136919225630720', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136923566735360', '47136923537375232', '遥控门禁:1Y5132,动作:4');
+INSERT INTO `sys_log_text` VALUES ('47136926200758272', '47136926150426624', '遥控门禁:1Y5132,动作:8');
+INSERT INTO `sys_log_text` VALUES ('47136927761039360', '47136927710707712', '遥控门禁:1Y5132,动作:c');
+INSERT INTO `sys_log_text` VALUES ('47136934463537152', '47136934417399808', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136937563127808', '47136937496018944', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136941988118528', '47136941950369792', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136950448029696', '47136950418669568', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136954654916608', '47136954621362176', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136976473686016', '47136976448520192', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136980097564672', '47136980059815936', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136984807768064', '47136984774213632', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136990780456960', '47136990746902528', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47136993905213440', '47136993875853312', '遥控门禁:1Y5132,动作:0');
+INSERT INTO `sys_log_text` VALUES ('47137041472815104', '47137041439260672', '访问链接:http://localhost:8080/upper/admin/allocation/email');
+INSERT INTO `sys_log_text` VALUES ('47468988736733184', '47468988359245824', '登录成功!登录地址:未知');
+INSERT INTO `sys_log_text` VALUES ('47468992310280192', '47468992238977024', '文件：DefaultErrorHandler.java，错误行数：42，方法：jspError，错误内容：/WEB-INF/jsp/admin/home.jsp (line: [206], column: [1]) File [/WEB-INF/jsp/admin/component/process/processExtend.jsp] not found');
+INSERT INTO `sys_log_text` VALUES ('47470035874086912', '47470035718897664', '删除菜单,信息:{SM_URL=, SC_NAME=null, SM_URL_PARAMS=, SM_PARENT_NAME=系统管理, SM_IS_LEAF=1, IS_STATUS=1, SM_TYPE=1, SM_ORDER=9, SM_CODE=SYSTEM:PROCESS, SM_NAME=流程管理, SM_PARENTID=1, SPD_ID=null, ID=26577007949119488, SC_ID=, SM_CLASSICON=mdi mdi-stack-overflow, SM_IS_EXPAND=}');
 INSERT INTO `sys_log_text` VALUES ('480859756953600', '480859698233344', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('480950030958592', '480949980626944', '登录成功!登录地址:未知');
 INSERT INTO `sys_log_text` VALUES ('483274606510080', '483274396794880', '登录成功!登录地址:未知');
@@ -6834,16 +6875,9 @@ INSERT INTO `sys_menu` VALUES ('26476504758091776', '26491587483664384', NULL, '
 INSERT INTO `sys_menu` VALUES ('26511186237325312', '', NULL, '编辑', '26476504758091776', 'SYSTEM:FORMAT_UPDATE', '', '', '', '0', '', '1', 1, 1);
 INSERT INTO `sys_menu` VALUES ('26571410583322624', '26568354160443392', NULL, '格式详细', '26476504758091776', 'SYSTEM:FORMAT_DETAIL', 'admin/dataGrid/', '', '', '0', '', '1', 10, 1);
 INSERT INTO `sys_menu` VALUES ('26571551922978816', '', NULL, '编辑', '26571410583322624', 'SYSTEM:FORMAT_DETAIL_UPDATE', '', '', '', '0', '', '1', 1, 1);
-INSERT INTO `sys_menu` VALUES ('26577007949119488', '', NULL, '流程管理', '1', 'SYSTEM:PROCESS', '', '', 'mdi mdi-stack-overflow', '1', '', '1', 9, 1);
-INSERT INTO `sys_menu` VALUES ('26577844645658624', '26721805670547456', NULL, '流程定义', '26577007949119488', 'SYSTEM:PROCESS_DEFINITION', 'admin/dataGrid/', '', 'mdi mdi-book-open', '0', '', '1', 1, 1);
-INSERT INTO `sys_menu` VALUES ('26579469829406720', '', NULL, '标签列表', '26577844645658624', 'SYSTEM:PROCESS_DEFINITION_TABS', 'admin/tabs', 'SF_CODE=SYS_PROCESS_DEFINITION', '', '0', '', '1', 1, 1);
-INSERT INTO `sys_menu` VALUES ('26714856669315072', '27187947212111872', NULL, '流程步骤', '26579469829406720', 'SYSTEM:PROCESS_STEP', 'admin/dataGrid/', '', '', '0', '', '1', 20, 1);
-INSERT INTO `sys_menu` VALUES ('26715728707059712', '27999782165282816', NULL, '启动角色', '26579469829406720', 'SYSTEM:PROCESS_START', 'admin/dataGrid/', '', '', '0', '', '1', 30, 1);
-INSERT INTO `sys_menu` VALUES ('26845813934129152', '', NULL, '流程定义', '26579469829406720', 'SYSTEM:PROCESS_DEFINITION_UPDATE', 'admin/process/definition/update', '', '', '0', '', '1', 10, 1);
 INSERT INTO `sys_menu` VALUES ('28019952082485248', '28020396255084544', '26816452786913280', '测试流程', '21130604443598848', '', 'admin/dataGrid/', '', '', '0', '', '1', 91, 1);
 INSERT INTO `sys_menu` VALUES ('2910350022279168', '2912701923721216', NULL, '字典信息', '1451155909509120', 'SYSTEM:DICTINFO', 'admin/dataGrid/', NULL, '', '0', '1', '1', 1, 1);
 INSERT INTO `sys_menu` VALUES ('3', '2', NULL, '按钮管理', '1', 'SYSTEM:BUTTON', 'admin/dataGrid/', NULL, 'mdi mdi-equal-box', '0', NULL, '1', 2, 1);
-INSERT INTO `sys_menu` VALUES ('33081241360138240', '33080508233547776', '', '流程进度', '26577007949119488', 'SYSTEM:PROCESS_SCHEDULE', 'admin/dataGrid/', '', 'mdi mdi-stack-overflow', '0', '', '1', 10, 1);
 INSERT INTO `sys_menu` VALUES ('3316536806735872', '', NULL, '编辑', '13358417838080', 'SYSTEM:OPERATOR_UPDATE', '', NULL, '', '0', '', '1', 1, 1);
 INSERT INTO `sys_menu` VALUES ('3547951557246976', '3545555946962944', NULL, '账户管理', '13358417838080', 'SYSTEM:OPERATOR_SUB', 'admin/dataGrid/', NULL, '', '0', '', '1', 2, 1);
 INSERT INTO `sys_menu` VALUES ('38116041032728576', '', '', '门店管理', '0', 'INFO', '', '', 'mdi mdi-information-variant', '1', '', '1', 20, 1);
@@ -6934,15 +6968,6 @@ INSERT INTO `sys_menu_button` VALUES ('26571609292668928', '26571410583322624', 
 INSERT INTO `sys_menu_button` VALUES ('26571609343000576', '26571410583322624', '793562643955712');
 INSERT INTO `sys_menu_button` VALUES ('26571626401234944', '26571551922978816', '763206804963328');
 INSERT INTO `sys_menu_button` VALUES ('26574787094511616', '26571410583322624', '1795360737460224');
-INSERT INTO `sys_menu_button` VALUES ('26715842821488640', '26714856669315072', '1');
-INSERT INTO `sys_menu_button` VALUES ('26715842855043072', '26714856669315072', '793777245519872');
-INSERT INTO `sys_menu_button` VALUES ('26715842876014592', '26714856669315072', '793562643955712');
-INSERT INTO `sys_menu_button` VALUES ('26715911536771072', '26715728707059712', '1');
-INSERT INTO `sys_menu_button` VALUES ('26715911570325504', '26715728707059712', '793777245519872');
-INSERT INTO `sys_menu_button` VALUES ('26715911599685632', '26715728707059712', '793562643955712');
-INSERT INTO `sys_menu_button` VALUES ('26724486367674368', '26577844645658624', '1');
-INSERT INTO `sys_menu_button` VALUES ('26724486392840192', '26577844645658624', '793562643955712');
-INSERT INTO `sys_menu_button` VALUES ('26846437945901056', '26845813934129152', '763206804963328');
 INSERT INTO `sys_menu_button` VALUES ('28178037900050432', '28019952082485248', '793562643955712');
 INSERT INTO `sys_menu_button` VALUES ('28283745773551616', '13358417838080', '28283426524102656');
 INSERT INTO `sys_menu_button` VALUES ('2910422617292800', '2910350022279168', '1');
@@ -6957,9 +6982,7 @@ INSERT INTO `sys_menu_button` VALUES ('3008720116121600', '13358417838080', '1')
 INSERT INTO `sys_menu_button` VALUES ('3008720158064640', '13358417838080', '793777245519872');
 INSERT INTO `sys_menu_button` VALUES ('3008720174841856', '13358417838080', '3008659554566144');
 INSERT INTO `sys_menu_button` VALUES ('3008720187424768', '13358417838080', '793562643955712');
-INSERT INTO `sys_menu_button` VALUES ('33081904680927232', '33081241360138240', '33081849764904960');
 INSERT INTO `sys_menu_button` VALUES ('3316580893065216', '3316536806735872', '763206804963328');
-INSERT INTO `sys_menu_button` VALUES ('33328711105249280', '33081241360138240', '33267466964566016');
 INSERT INTO `sys_menu_button` VALUES ('3375940465852416', '13358417838080', '3375831514611712');
 INSERT INTO `sys_menu_button` VALUES ('3548048869294080', '3547951557246976', '1');
 INSERT INTO `sys_menu_button` VALUES ('3548048898654208', '3547951557246976', '793777245519872');
@@ -7045,233 +7068,6 @@ INSERT INTO `sys_operator_sub` VALUES ('28282094119550976', '28281983868076032',
 INSERT INTO `sys_operator_sub` VALUES ('28282116387110912', '28281998451671040', 'test5', '2018-06-11 17:16:51', '', '1', 1, 1);
 INSERT INTO `sys_operator_sub` VALUES ('28282832660987904', '1', '超级管理员', '2018-06-11 17:19:42', '', '1', 0, 1);
 INSERT INTO `sys_operator_sub` VALUES ('4113423134621696', '4112733112893440', 'test', '2018-04-06 00:39:05', '测试', '1', 1, 1);
-
--- ----------------------------
--- Table structure for sys_process_definition
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_definition`;
-CREATE TABLE `sys_process_definition`  (
-  `ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SO_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人',
-  `SR_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '查看全部记录角色',
-  `SPD_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程名称',
-  `SPD_VERSION` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程版本',
-  `SPD_UPDATE_TABLE` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程更新表名',
-  `SPD_UPDATE_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程更新表名称字段',
-  `SPD_DESCRIBE` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '流程描述',
-  `SDP_ENTRY_TIME` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '添加时间',
-  `IS_STATUS` int(5) NULL DEFAULT NULL COMMENT '是否启用',
-  `IS_MULTISTAGE_BACK` int(255) NULL DEFAULT NULL COMMENT '是否允许多级回退',
-  PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_definition
--- ----------------------------
-INSERT INTO `sys_process_definition` VALUES ('26816452786913280', '1', '1', '测试流程', '1.0', 'TEST_PROCESS', 'NAME', '测试流程', '2018-06-07 16:12:49', 1, 1);
-
--- ----------------------------
--- Table structure for sys_process_log
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_log`;
-CREATE TABLE `sys_process_log`  (
-  `ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SPS_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程进度表ID',
-  `SPL_TABLE_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程表ID',
-  `SPL_SO_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '办理人ID',
-  `SPL_PROCESS_STATUS` int(5) NULL DEFAULT NULL COMMENT '流程办理状态',
-  `SPL_TRANSACTOR` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '办理人',
-  `SPL_OPINION` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '办理意见',
-  `SPL_ENTRY_TIME` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '办理时间',
-  `SPL_TYPE` int(5) NULL DEFAULT NULL COMMENT '办理类型',
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `SP_LOG_ID`(`SPS_ID`) USING BTREE,
-  INDEX `SPL_SO_ID`(`SPL_SO_ID`) USING BTREE,
-  INDEX `SPL_TABLE_ID`(`SPL_TABLE_ID`) USING BTREE,
-  CONSTRAINT `SP_LOG_ID` FOREIGN KEY (`SPS_ID`) REFERENCES `sys_process_schedule` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_log
--- ----------------------------
-INSERT INTO `sys_process_log` VALUES ('28751861985050624', '28751861846638592', '1', '4112733112893440', 0, 'test', '通过', '2018-06-13 00:23:27', 0);
-INSERT INTO `sys_process_log` VALUES ('29386037046280192', '28751861846638592', '1', '28281555327647744', 1, 'test2', '退回', '2018-06-14 18:23:26', 1);
-INSERT INTO `sys_process_log` VALUES ('29407076132323328', '28751861846638592', '1', '4112733112893440', 0, 'test', '通过', '2018-06-14 19:47:02', 0);
-INSERT INTO `sys_process_log` VALUES ('29411961355632640', '28751861846638592', '1', '28281555327647744', 1, 'test2', '退回', '2018-06-14 20:06:27', 1);
-INSERT INTO `sys_process_log` VALUES ('29411996260630528', '28751861846638592', '1', '4112733112893440', 0, 'test', '通过', '2018-06-14 20:06:35', 0);
-INSERT INTO `sys_process_log` VALUES ('29412015441182720', '28751861846638592', '1', '28281555327647744', 1, 'test2', '通过', '2018-06-14 20:06:40', 0);
-INSERT INTO `sys_process_log` VALUES ('31157988051910656', '28751861846638592', '1', '28281967912943616', 2, 'test3', '通过', '2018-06-19 15:44:32', 0);
-INSERT INTO `sys_process_log` VALUES ('31158090954964992', '28751861846638592', '1', '28281983868076032', 3, 'test4', '通过', '2018-06-19 15:44:57', 0);
-INSERT INTO `sys_process_log` VALUES ('31162593150238720', '28751861846638592', '1', '28281998451671040', 4, 'test5', '通过', '2018-06-19 16:02:50', 0);
-INSERT INTO `sys_process_log` VALUES ('31464118317744128', '31464118024142848', '10', '4112733112893440', 0, 'test', '通过', '2018-06-20 12:00:59', 0);
-INSERT INTO `sys_process_log` VALUES ('31465748702429184', '31464118024142848', '10', '4112733112893440', -1, 'test', '用户撤回(系统)', '2018-06-20 12:07:28', 2);
-INSERT INTO `sys_process_log` VALUES ('31467798358130688', '31464118024142848', '10', '4112733112893440', 0, 'test', '通过', '2018-06-20 12:15:37', 0);
-INSERT INTO `sys_process_log` VALUES ('31467812618764288', '31464118024142848', '10', '4112733112893440', -1, 'test', '用户撤回(系统)', '2018-06-20 12:15:40', 2);
-INSERT INTO `sys_process_log` VALUES ('31467831618961408', '31464118024142848', '10', '4112733112893440', 0, 'test', '通过', '2018-06-20 12:15:45', 0);
-INSERT INTO `sys_process_log` VALUES ('31815520994983936', '31464118024142848', '10', '28281555327647744', 1, 'test2', '说明\r\n当应用了搜索时，会在适当位置显示表格的搜索条件。 这个配置允许打开或者关闭这个特性。\r\n\r\n需要注意的是，默认情况下信息提示显示在表格下面的左边，但是这个可以用 domDT 和 CSS来控制.\r\n\r\n数据类型\r\n这个选项用下列的数据类型赋值:\r\n\r\nbooleanJS\r\n默认值', '2018-06-21 11:17:20', 1);
-INSERT INTO `sys_process_log` VALUES ('31820886759702528', '31820886659039232', '11', '4112733112893440', 0, 'test', 'test1', '2018-06-21 11:38:40', 0);
-INSERT INTO `sys_process_log` VALUES ('31820931802333184', '31820886659039232', '11', '4112733112893440', -1, 'test', '用户撤回(系统)', '2018-06-21 11:38:50', 2);
-INSERT INTO `sys_process_log` VALUES ('31821016380473344', '31820886659039232', '11', '4112733112893440', 0, 'test', '项目负责人不得是失信被执行人。', '2018-06-21 11:39:10', 0);
-INSERT INTO `sys_process_log` VALUES ('31821124169891840', '31820886659039232', '11', '28281555327647744', 1, 'test2', '项目牵头申报单位不得是列入项目管理资信&ldquo;黑名单&rdquo;且取消申报资格处罚时限未到期。', '2018-06-21 11:39:36', 0);
-INSERT INTO `sys_process_log` VALUES ('31821240096260096', '31820886659039232', '11', '28281967912943616', 2, 'test3', '省属公益类科研院所不在本批科技计划项目申报之列', '2018-06-21 11:40:04', 0);
-INSERT INTO `sys_process_log` VALUES ('31821410477277184', '31820886659039232', '11', '28281983868076032', 3, 'test4', '项目负责人当年度在（专题、区域发展、创新资金、星火、对外合作、引导性、自然基金、高校产学合作、软科学、STS项目类型）中只能申请其中1个项目', '2018-06-21 11:40:44', 0);
-INSERT INTO `sys_process_log` VALUES ('31821493885206528', '31820886659039232', '11', '28281998451671040', 4, 'test5', '必须有合作单位，附件有签订项目合作协议', '2018-06-21 11:41:04', 0);
-INSERT INTO `sys_process_log` VALUES ('31821493948121088', '31820886659039232', '11', '28281998451671040', 999, 'test5', '审核通过(系统)', '2018-06-21 11:41:04', 0);
-INSERT INTO `sys_process_log` VALUES ('33336595876675584', '33336595616628736', '1', '4112733112893440', 0, 'test', '通过', '2018-06-25 16:01:33', 0);
-INSERT INTO `sys_process_log` VALUES ('33336616118386688', '33336595616628736', '1', '4112733112893440', -1, 'test', '用户撤回(系统)', '2018-06-25 16:01:38', 2);
-INSERT INTO `sys_process_log` VALUES ('33339241551364096', '33336595616628736', '1', '4112733112893440', 0, 'test', '通过', '2018-06-25 16:12:04', 0);
-INSERT INTO `sys_process_log` VALUES ('33339355066007552', '33336595616628736', '1', '28281555327647744', 1, 'test2', '通过21321312', '2018-06-25 16:12:31', 0);
-INSERT INTO `sys_process_log` VALUES ('33339446736715776', '33336595616628736', '1', '28281967912943616', 2, 'test3', '李凯文 2018/6/25 10:33:51\r\n被爆破了？\r\n\r\n   .  2018/6/25 10:34:05\r\n不知道 很慢\r\n\r\n   .  2018/6/25 10:34:14\r\n每一步都感觉要爆炸了\r\n10:35:53\r\n李凯文 2018/6/25 10:35:53\r\n估计是代码有问题\r\n15:45:33\r\n李凯文 2018/6/25 15:45:33\r\n范贤光hkht-sq', '2018-06-25 16:12:52', 0);
-INSERT INTO `sys_process_log` VALUES ('33339520153812992', '33336595616628736', '1', '28281983868076032', 3, 'test4', '哎\r\n10:33:29\r\n   .  2018/6/25 10:33:29\r\n几把爆\r\n\r\n   .  2018/6/25 10:33:34\r\n\r\n\r\n   .  2018/6/25 10:33:40\r\n卡了十年了', '2018-06-25 16:13:10', 0);
-INSERT INTO `sys_process_log` VALUES ('33339631302868992', '33336595616628736', '1', '28281998451671040', 4, 'test5', '多通道（细胞）拉曼光谱快速成像仪器开发及产业化', '2018-06-25 16:13:36', 0);
-INSERT INTO `sys_process_log` VALUES ('33339631344812032', '33336595616628736', '1', '28281998451671040', 999, 'test5', '审核通过(系统)', '2018-06-25 16:13:36', 0);
-INSERT INTO `sys_process_log` VALUES ('33341909451669504', '33341909359394816', '7', '28281555327647744', 1, 'test2', 'ces', '2018-06-25 16:22:40', 0);
-INSERT INTO `sys_process_log` VALUES ('33344268596674560', '33341909359394816', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 16:32:02', 2);
-INSERT INTO `sys_process_log` VALUES ('33344288326680576', '33341909359394816', '7', '28281555327647744', 0, 'test2', '通过', '2018-06-25 16:32:07', 0);
-INSERT INTO `sys_process_log` VALUES ('33392428446646272', '33392428211765248', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 19:43:24', 0);
-INSERT INTO `sys_process_log` VALUES ('33392650191110144', '33392428211765248', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 19:44:17', 2);
-INSERT INTO `sys_process_log` VALUES ('33394905778749440', '33394905602588672', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 19:53:15', 0);
-INSERT INTO `sys_process_log` VALUES ('33394915509534720', '33394905602588672', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 19:53:17', 2);
-INSERT INTO `sys_process_log` VALUES ('33394957167362048', '33394905602588672', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 19:53:27', 0);
-INSERT INTO `sys_process_log` VALUES ('33395132145336320', '33394905602588672', '7', '28281967912943616', 2, 'test3', '通过123', '2018-06-25 19:54:09', 0);
-INSERT INTO `sys_process_log` VALUES ('33406850359623680', '33406850229600256', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 20:40:43', 0);
-INSERT INTO `sys_process_log` VALUES ('33406861902348288', '33406850229600256', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 20:40:45', 2);
-INSERT INTO `sys_process_log` VALUES ('33407487583453184', '33406850229600256', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 20:42:57', 0);
-INSERT INTO `sys_process_log` VALUES ('33407585252016128', '33406850229600256', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 20:43:38', 2);
-INSERT INTO `sys_process_log` VALUES ('33407615027380224', '33406850229600256', '7', '28281555327647744', 1, 'test2', '通过', '2018-06-25 20:43:45', 0);
-INSERT INTO `sys_process_log` VALUES ('33408270529986560', '33406850229600256', '7', '28281967912943616', 2, 'test3', '退回', '2018-06-25 20:46:21', 1);
-INSERT INTO `sys_process_log` VALUES ('33408399429337088', '33406850229600256', '7', '28281555327647744', 1, 'test2', '通过123', '2018-06-25 20:46:52', 0);
-INSERT INTO `sys_process_log` VALUES ('33408410372276224', '33406850229600256', '7', '28281555327647744', -1, 'test2', '用户撤回(系统)', '2018-06-25 20:46:55', 2);
-INSERT INTO `sys_process_log` VALUES ('33408426990108672', '33406850229600256', '7', '28281555327647744', 1, 'test2', '通过123', '2018-06-25 20:46:59', 0);
-INSERT INTO `sys_process_log` VALUES ('33408490370236416', '33406850229600256', '7', '28281967912943616', 2, 'test3', '通过123', '2018-06-25 20:47:14', 0);
-INSERT INTO `sys_process_log` VALUES ('33408600030314496', '33406850229600256', '7', '28281983868076032', 3, 'test4', '通过123123', '2018-06-25 20:47:40', 0);
-INSERT INTO `sys_process_log` VALUES ('33408707257696256', '33406850229600256', '7', '28281998451671040', 4, 'test5', 'gggggggggggggggggggggg', '2018-06-25 20:48:05', 0);
-INSERT INTO `sys_process_log` VALUES ('33408707295444992', '33406850229600256', '7', '28281998451671040', 999, 'test5', '审核通过(系统)', '2018-06-25 20:48:05', 0);
-INSERT INTO `sys_process_log` VALUES ('33410262950215680', '33410262795026432', '1', '4112733112893440', 0, 'test', 'cessss', '2018-06-25 20:54:16', 0);
-INSERT INTO `sys_process_log` VALUES ('33410274073509888', '33410262795026432', '1', '4112733112893440', -1, 'test', '用户撤回(系统)', '2018-06-25 20:54:19', 2);
-INSERT INTO `sys_process_log` VALUES ('33410899645562880', '33410262795026432', '1', '4112733112893440', 0, 'test', '通过', '2018-06-25 20:56:48', 0);
-
--- ----------------------------
--- Table structure for sys_process_schedule
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_schedule`;
-CREATE TABLE `sys_process_schedule`  (
-  `ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SO_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '创建人ID',
-  `SPD_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程定义ID',
-  `SPS_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当前办理步骤ID',
-  `SPS_TABLE_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程表ID',
-  `SPS_TABLE_NAME` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程表名称',
-  `SPS_AUDIT_STATUS` int(5) NOT NULL DEFAULT 0 COMMENT '审核状态',
-  `SPS_BACK_STATUS` int(5) NOT NULL DEFAULT 0 COMMENT '退回状态',
-  `SPS_BACK_STATUS_TRANSACTOR` int(5) NULL DEFAULT NULL COMMENT '退回到的审核状态',
-  `SPS_STEP_TYPE` int(5) NULL DEFAULT NULL COMMENT '当前办理步骤类型',
-  `SPS_STEP_TRANSACTOR` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '当前办理步骤办理人',
-  `SPS_PREV_AUDIT_STATUS` int(5) NULL DEFAULT NULL COMMENT '上一次流程审核状态',
-  `SPS_PREV_STEP_TYPE` int(5) NULL DEFAULT NULL COMMENT '上一次办理步骤类型',
-  `SPS_PREV_STEP_TRANSACTOR` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上一次办理步骤办理人',
-  `SPS_PREV_STEP_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上一次办理步骤ID',
-  `SPS_IS_CANCEL` int(5) NULL DEFAULT 0 COMMENT '是否作废',
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `SPS_TABLE_ID`(`SPS_TABLE_ID`) USING BTREE,
-  INDEX `SP_SCHEDULE_SPD_ID`(`SPD_ID`) USING BTREE,
-  INDEX `SPS_STEP_TYPE_TRANSACTOR`(`SPS_STEP_TYPE`, `SPS_STEP_TRANSACTOR`) USING BTREE,
-  INDEX `SPS_IS_CANCEL`(`SPS_IS_CANCEL`) USING BTREE,
-  CONSTRAINT `SP_SCHEDULE_SPD_ID` FOREIGN KEY (`SPD_ID`) REFERENCES `sys_process_definition` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_schedule
--- ----------------------------
-INSERT INTO `sys_process_schedule` VALUES ('28751861846638592', '4112733112893440', '26816452786913280', NULL, '1', '', 999, 0, -1, 1, '0', 4, 0, '28281998451671040', NULL, 1);
-INSERT INTO `sys_process_schedule` VALUES ('31464118024142848', '4112733112893440', '26816452786913280', NULL, '10', '', -1, 1, 0, 2, '4112733112893440', 1, 1, '28281555327647744', NULL, 1);
-INSERT INTO `sys_process_schedule` VALUES ('31820886659039232', '4112733112893440', '26816452786913280', NULL, '11', '', 999, 0, -1, 1, '0', 4, 0, '28281998451671040', NULL, 1);
-INSERT INTO `sys_process_schedule` VALUES ('33336595616628736', '4112733112893440', '26816452786913280', NULL, '1', '', 999, 0, -1, 1, '0', 4, 0, '28281998451671040', NULL, 1);
-INSERT INTO `sys_process_schedule` VALUES ('33341909359394816', '28281555327647744', '26816452786913280', NULL, '7', '7', 1, 0, -1, 1, '27635893028257792', -1, 0, '28281555327647744', NULL, 1);
-INSERT INTO `sys_process_schedule` VALUES ('33392428211765248', '28281555327647744', '26816452786913280', '27652261702270976', '7', '7', -1, 2, 0, 2, '28281555327647744', 2, 2, '28281555327647744', '27652330522411008', 1);
-INSERT INTO `sys_process_schedule` VALUES ('33394905602588672', '28281555327647744', '26816452786913280', '27652553185427456', '7', '7', 3, 0, -1, 1, '27635966298554368', 2, 0, '28281967912943616', '27652330522411008', 1);
-INSERT INTO `sys_process_schedule` VALUES ('33406850229600256', '28281555327647744', '26816452786913280', '27653508450746368', '7', '7', 999, 0, -1, 1, '0', 4, 0, '28281998451671040', '27652648370962432', 0);
-INSERT INTO `sys_process_schedule` VALUES ('33410262795026432', '4112733112893440', '26816452786913280', '27652261702270976', '1', '测试流程1', 1, 0, -1, 1, '27635893028257792', -1, 0, '4112733112893440', '27650461607657472', 0);
-
--- ----------------------------
--- Table structure for sys_process_schedule_cancel
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_schedule_cancel`;
-CREATE TABLE `sys_process_schedule_cancel`  (
-  `ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `SPS_ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '流程进度表',
-  `SO_ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '作废人',
-  `SPSC_REASON` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作废原因',
-  `SPSC_ENTRY_TIME` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作废时间',
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `SPS_ID`(`SPS_ID`) USING BTREE,
-  INDEX `SO_ID`(`SO_ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_schedule_cancel
--- ----------------------------
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33328432880287744', '28751861846638592', '1', '测试作废', '2018-06-25 15:29:07');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33330123268685824', '31820886659039232', '1', '测试作废2', '2018-06-25 15:35:50');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33330140897345536', '31464118024142848', '1', '测试作废3', '2018-06-25 15:35:54');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33340008060420096', '33336595616628736', '1', '作废', '2018-06-25 16:15:06');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33344463388540928', '33341909359394816', '1', '123', '2018-06-25 16:32:49');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33394862799716352', '33392428211765248', '1', '123', '2018-06-25 19:53:05');
-INSERT INTO `sys_process_schedule_cancel` VALUES ('33406707115753472', '33394905602588672', '1', '123', '2018-06-25 20:40:09');
-
--- ----------------------------
--- Table structure for sys_process_start
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_start`;
-CREATE TABLE `sys_process_start`  (
-  `ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SPD_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程定义表ID',
-  `SR_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程启动角色',
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `SPD_ID`(`SPD_ID`) USING BTREE,
-  CONSTRAINT `SPD_ID` FOREIGN KEY (`SPD_ID`) REFERENCES `sys_process_definition` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_start
--- ----------------------------
-INSERT INTO `sys_process_start` VALUES ('28011053078020096', '26816452786913280', '4095556896948224');
-INSERT INTO `sys_process_start` VALUES ('28015493549916160', '26816452786913280', '27635893028257792');
-
--- ----------------------------
--- Table structure for sys_process_step
--- ----------------------------
-DROP TABLE IF EXISTS `sys_process_step`;
-CREATE TABLE `sys_process_step`  (
-  `ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `SPD_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '流程定义表ID',
-  `SR_ID` char(59) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属办理角色',
-  `SPS_NAME` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '步骤名称',
-  `SPS_ORDER` int(5) NOT NULL COMMENT '步骤顺序',
-  `SPS_STEP_TYPE` int(5) NOT NULL COMMENT '办理步骤类型',
-  `SPS_PROCESS_STATUS` int(5) NOT NULL COMMENT '步骤流程状态',
-  `SPS_IS_OVER_TIME` int(5) NULL DEFAULT NULL COMMENT '是否验证超时(开启后不填超时时间，默认为24小时 1440分钟)',
-  `SPS_OVER_TIME` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '超时时间(分)',
-  `SPS_TAB` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '步骤标记',
-  `SPS_IS_ADVANCE_CHECK` int(5) NULL DEFAULT NULL COMMENT '是否前进校验',
-  `SPS_IS_RETREAT_CHECK` int(5) NULL DEFAULT NULL COMMENT '是否退回校验',
-  `SPS_IS_ADVANCE_EXECUTE` int(5) NULL DEFAULT NULL COMMENT '是否前进执行',
-  `SPS_IS_RETREAT_EXECUTE` int(5) NULL DEFAULT NULL COMMENT '是否退回执行',
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `SPS_SPD_ID`(`SPD_ID`) USING BTREE,
-  INDEX `SPS_PROCESS_STATUS`(`SPS_PROCESS_STATUS`) USING BTREE,
-  CONSTRAINT `SPS_SPD_ID` FOREIGN KEY (`SPD_ID`) REFERENCES `sys_process_definition` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_process_step
--- ----------------------------
-INSERT INTO `sys_process_step` VALUES ('27650461607657472', '26816452786913280', '4095556896948224', '测试步骤1', 1, 1, 0, 0, '', '', 0, 0, 0, 0);
-INSERT INTO `sys_process_step` VALUES ('27652261702270976', '26816452786913280', '27635893028257792', '测试角色2', 2, 1, 1, 0, '', '', 0, 0, 0, 0);
-INSERT INTO `sys_process_step` VALUES ('27652330522411008', '26816452786913280', '27635943053721600', '测试步骤3', 3, 1, 2, 1, '', '', 0, 0, 0, 0);
-INSERT INTO `sys_process_step` VALUES ('27652553185427456', '26816452786913280', '27635966298554368', '测试步骤4', 4, 1, 3, 0, '', '', 0, 0, 0, 0);
-INSERT INTO `sys_process_step` VALUES ('27652648370962432', '26816452786913280', '27635991015587840', '测试步骤5', 5, 1, 4, 0, '', '', 1, 1, 1, 1);
-INSERT INTO `sys_process_step` VALUES ('27653508450746368', '26816452786913280', '', '完成', 6, 1, 999, 0, '', '', 0, 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -7377,17 +7173,6 @@ INSERT INTO `sys_role_button` VALUES ('26571675722055680', '26571647033016320', 
 INSERT INTO `sys_role_button` VALUES ('26571675826913280', '26571647033016320', '793777245519872');
 INSERT INTO `sys_role_button` VALUES ('26571675847884800', '26571647033016320', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('26571683259219968', '26571647079153664', '763206804963328');
-INSERT INTO `sys_role_button` VALUES ('26716046983430144', '26716002301509632', '1');
-INSERT INTO `sys_role_button` VALUES ('26716047012790272', '26716002301509632', '793777245519872');
-INSERT INTO `sys_role_button` VALUES ('26716047033761792', '26716002301509632', '793562643955712');
-INSERT INTO `sys_role_button` VALUES ('26716058782007296', '26716002242789376', '1');
-INSERT INTO `sys_role_button` VALUES ('26716058807173120', '26716002242789376', '793777245519872');
-INSERT INTO `sys_role_button` VALUES ('26716058832338944', '26716002242789376', '793562643955712');
-INSERT INTO `sys_role_button` VALUES ('26724642311897088', '26716002276343808', '1');
-INSERT INTO `sys_role_button` VALUES ('26724642332868608', '26716002276343808', '793562643955712');
-INSERT INTO `sys_role_button` VALUES ('26846544095346688', '26846505239314432', '763206804963328');
-INSERT INTO `sys_role_button` VALUES ('26847391378309120', '26716002339258368', '1');
-INSERT INTO `sys_role_button` VALUES ('26847391403474944', '26716002339258368', '1795360737460224');
 INSERT INTO `sys_role_button` VALUES ('28178123719704576', '28022312963932160', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('28178178518286336', '28178169823494144', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('28178245752979456', '28178238232592384', '793562643955712');
@@ -7403,13 +7188,11 @@ INSERT INTO `sys_role_button` VALUES ('2914828423266304', '2914068713177088', '7
 INSERT INTO `sys_role_button` VALUES ('2914828444237824', '2914068713177088', '793562643955712');
 INSERT INTO `sys_role_button` VALUES ('2914828465209344', '2914068713177088', '1795360737460224');
 INSERT INTO `sys_role_button` VALUES ('2915213791723520', '1452479145312256', '1');
-INSERT INTO `sys_role_button` VALUES ('33082001623875584', '33081991280721920', '33081849764904960');
 INSERT INTO `sys_role_button` VALUES ('3316636782166016', '3316626669699072', '763206804963328');
 INSERT INTO `sys_role_button` VALUES ('3316672232423424', '1383066211713024', '1');
 INSERT INTO `sys_role_button` VALUES ('3316672257589248', '1383066211713024', '793777245519872');
 INSERT INTO `sys_role_button` VALUES ('3316672291143680', '1383066211713024', '3008659554566144');
 INSERT INTO `sys_role_button` VALUES ('3316672316309504', '1383066211713024', '793562643955712');
-INSERT INTO `sys_role_button` VALUES ('33328765496983552', '33081991280721920', '33267466964566016');
 INSERT INTO `sys_role_button` VALUES ('3375984820617216', '1383066211713024', '3375831514611712');
 INSERT INTO `sys_role_button` VALUES ('4103843658858496', '4103830098673664', '763206804963328');
 INSERT INTO `sys_role_button` VALUES ('4113066069327872', '4086505521807360', '1');
@@ -7462,12 +7245,6 @@ INSERT INTO `sys_role_menu` VALUES ('26511298258796544', '1', '26511186237325312
 INSERT INTO `sys_role_menu` VALUES ('26511298309128192', '1', '26476504758091776');
 INSERT INTO `sys_role_menu` VALUES ('26571647033016320', '1', '26571410583322624');
 INSERT INTO `sys_role_menu` VALUES ('26571647079153664', '1', '26571551922978816');
-INSERT INTO `sys_role_menu` VALUES ('26716002242789376', '1', '26715728707059712');
-INSERT INTO `sys_role_menu` VALUES ('26716002276343808', '1', '26577844645658624');
-INSERT INTO `sys_role_menu` VALUES ('26716002301509632', '1', '26714856669315072');
-INSERT INTO `sys_role_menu` VALUES ('26716002318286848', '1', '26577007949119488');
-INSERT INTO `sys_role_menu` VALUES ('26716002339258368', '1', '26579469829406720');
-INSERT INTO `sys_role_menu` VALUES ('26846505239314432', '1', '26845813934129152');
 INSERT INTO `sys_role_menu` VALUES ('28022312963932160', '1', '28019952082485248');
 INSERT INTO `sys_role_menu` VALUES ('28178169823494144', '4095556896948224', '28019952082485248');
 INSERT INTO `sys_role_menu` VALUES ('28178169873825792', '4095556896948224', '21130604443598848');
@@ -7485,7 +7262,6 @@ INSERT INTO `sys_role_menu` VALUES ('28178381895892992', '27635991015587840', '2
 INSERT INTO `sys_role_menu` VALUES ('28178381921058816', '27635991015587840', '21130604443598848');
 INSERT INTO `sys_role_menu` VALUES ('2914068713177088', '1', '2910350022279168');
 INSERT INTO `sys_role_menu` VALUES ('3', '1', '3');
-INSERT INTO `sys_role_menu` VALUES ('33081991280721920', '1', '33081241360138240');
 INSERT INTO `sys_role_menu` VALUES ('3316626669699072', '1', '3316536806735872');
 INSERT INTO `sys_role_menu` VALUES ('38165103622750208', '1', '38116041032728576');
 INSERT INTO `sys_role_menu` VALUES ('4', '1', '8');
@@ -7933,32 +7709,13 @@ INSERT INTO `sys_value_record` VALUES ('46767143982727168', '1', 'SYS_DICT_TYPE'
 INSERT INTO `sys_value_record` VALUES ('46767210496000000', '1', 'SYS_DICT_INFO', '46767210345005056', NULL, '{\"SDI_CODE\":\"0\",\"SVR_TABLE_NAME\":\"SYS_DICT_INFO\",\"SDI_REQUIRED\":\"0\",\"SDI_ORDER\":\"1\",\"SDI_REMARK\":\"\",\"SDI_NAME\":\"离线\",\"SDI_PARENTID\":\"0\",\"IS_STATUS\":1,\"SDT_CODE\":\"SYS_ONLINE\",\"SDI_INNERCODE\":\"0\",\"ID\":\"46767210345005056\",\"SDT_ID\":\"46767143907229696\"}', '2018-08-01 17:30:01', 1);
 INSERT INTO `sys_value_record` VALUES ('46767235779264512', '1', 'SYS_DICT_INFO', '46767235699572736', NULL, '{\"SDI_CODE\":\"1\",\"SVR_TABLE_NAME\":\"SYS_DICT_INFO\",\"SDI_REQUIRED\":\"0\",\"SDI_ORDER\":\"2\",\"SDI_REMARK\":\"\",\"SDI_NAME\":\"在线\",\"SDI_PARENTID\":\"0\",\"IS_STATUS\":1,\"SDT_CODE\":\"SYS_ONLINE\",\"SDI_INNERCODE\":\"1\",\"ID\":\"46767235699572736\",\"SDT_ID\":\"46767143907229696\"}', '2018-08-01 17:30:07', 1);
 INSERT INTO `sys_value_record` VALUES ('46767774030102528', '1', 'SYS_CONFIGURE_COLUMN', '46766908740993024', '{\"SCC_NAME\":\"设备状态\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"\",\"SCC_FIELD\":\"BEGC_IS_ONLINE\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"46766908740993024\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"SYS_ONLINE\",\"SCC_ORDER\":5}', '{\"SCC_NAME\":\"设备状态\",\"SCC_FUNC\":\"\",\"SCC_IS_MERGE\":\"\",\"SCC_ALIGN\":\"center\",\"SCC_IS_STATUS\":\"0\",\"SCC_WIDTH\":\"100px\",\"SCC_FIELD\":\"BEGC_IS_ONLINE\",\"SCC_IS_VISIBLE\":\"1\",\"SCC_IS_OPERATION\":\"0\",\"ID\":\"46766908740993024\",\"SC_ID\":\"38163489528741888\",\"SCC_CLASS\":\"\",\"SCC_SDT_CODE\":\"SYS_ONLINE\",\"SCC_ORDER\":\"5\"}', '2018-08-01 17:32:15', 2);
-
--- ----------------------------
--- Table structure for test_process
--- ----------------------------
-DROP TABLE IF EXISTS `test_process`;
-CREATE TABLE `test_process`  (
-  `ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `NAME` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `SO_ID` char(59) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of test_process
--- ----------------------------
-INSERT INTO `test_process` VALUES ('1', '测试流程1', '4112733112893440');
-INSERT INTO `test_process` VALUES ('10', '10', '4112733112893440');
-INSERT INTO `test_process` VALUES ('11', '11', '4112733112893440');
-INSERT INTO `test_process` VALUES ('2', '2', '4112733112893440');
-INSERT INTO `test_process` VALUES ('3', '3', '4112733112893440');
-INSERT INTO `test_process` VALUES ('4', '4', '4112733112893440');
-INSERT INTO `test_process` VALUES ('5', '5', '4112733112893440');
-INSERT INTO `test_process` VALUES ('6', '6', '4112733112893440');
-INSERT INTO `test_process` VALUES ('7', '7', '28281555327647744');
-INSERT INTO `test_process` VALUES ('8', '8', '28281555327647744');
-INSERT INTO `test_process` VALUES ('9', '9', '28281555327647744');
+INSERT INTO `sys_value_record` VALUES ('47470032334094336', '1', 'SYS_MENU', '26577007949119488', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470032715776000', '1', 'SYS_MENU', '26577844645658624', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470033298784256', '1', 'SYS_MENU', '26579469829406720', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470033885986816', '1', 'SYS_MENU', '26845813934129152', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470034481577984', '1', 'SYS_MENU', '26714856669315072', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470034791956480', '1', 'SYS_MENU', '26715728707059712', NULL, NULL, '2018-08-03 16:02:47', 3);
+INSERT INTO `sys_value_record` VALUES ('47470035324633088', '1', 'SYS_MENU', '33081241360138240', NULL, NULL, '2018-08-03 16:02:47', 3);
 
 -- ----------------------------
 -- View structure for v_button
@@ -8033,40 +7790,10 @@ DROP VIEW IF EXISTS `v_operator_sub`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_operator_sub` AS select `sos`.`ID` AS `ID`,`sos`.`SO_ID` AS `SO_ID`,`sos`.`SOS_USERNAME` AS `SOS_USERNAME`,`sos`.`SOS_CREATETIME` AS `SOS_CREATETIME`,`sos`.`SOS_REMARK` AS `SOS_REMARK`,`sos`.`SOS_USERTYPE` AS `SOS_USERTYPE`,`sos`.`SOS_DEFAULT` AS `SOS_DEFAULT`,`sos`.`IS_STATUS` AS `IS_STATUS` from `sys_operator_sub` `sos`;
 
 -- ----------------------------
--- View structure for v_process_definition
--- ----------------------------
-DROP VIEW IF EXISTS `v_process_definition`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_process_definition` AS select `spd`.`ID` AS `ID`,`spd`.`SO_ID` AS `SO_ID`,`spd`.`SR_ID` AS `SR_ID`,`spd`.`SPD_NAME` AS `SPD_NAME`,`spd`.`SPD_VERSION` AS `SPD_VERSION`,`spd`.`SPD_UPDATE_TABLE` AS `SPD_UPDATE_TABLE`,`spd`.`SPD_UPDATE_NAME` AS `SPD_UPDATE_NAME`,`spd`.`SPD_DESCRIBE` AS `SPD_DESCRIBE`,`spd`.`SDP_ENTRY_TIME` AS `SDP_ENTRY_TIME`,`spd`.`IS_STATUS` AS `IS_STATUS` from `sys_process_definition` `spd`;
-
--- ----------------------------
--- View structure for v_process_schedule
--- ----------------------------
-DROP VIEW IF EXISTS `v_process_schedule`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_process_schedule` AS select `sps`.`ID` AS `ID`,`sps`.`SO_ID` AS `SO_ID`,`sps`.`SPD_ID` AS `SPD_ID`,`sps`.`SPS_ID` AS `SPS_ID`,`sps`.`SPS_TABLE_ID` AS `SPS_TABLE_ID`,`sps`.`SPS_TABLE_NAME` AS `SPS_TABLE_NAME`,`sps`.`SPS_AUDIT_STATUS` AS `SPS_AUDIT_STATUS`,`sps`.`SPS_BACK_STATUS` AS `SPS_BACK_STATUS`,`sps`.`SPS_BACK_STATUS_TRANSACTOR` AS `SPS_BACK_STATUS_TRANSACTOR`,`sps`.`SPS_STEP_TYPE` AS `SPS_STEP_TYPE`,`sps`.`SPS_STEP_TRANSACTOR` AS `SPS_STEP_TRANSACTOR`,`sps`.`SPS_PREV_AUDIT_STATUS` AS `SPS_PREV_AUDIT_STATUS`,`sps`.`SPS_PREV_STEP_TYPE` AS `SPS_PREV_STEP_TYPE`,`sps`.`SPS_PREV_STEP_TRANSACTOR` AS `SPS_PREV_STEP_TRANSACTOR`,`sps`.`SPS_PREV_STEP_ID` AS `SPS_PREV_STEP_ID`,`sps`.`SPS_IS_CANCEL` AS `SPS_IS_CANCEL`,`spd`.`SPD_NAME` AS `SPD_NAME`,`sai`.`SAI_NAME` AS `INITIATOR_NAME`,`saic`.`SAI_NAME` AS `CANCEL_NAME`,`spsc`.`ID` AS `SPSC_ID`,`spsc`.`SPSC_REASON` AS `SPSC_REASON`,`spsc`.`SPSC_ENTRY_TIME` AS `SPSC_ENTRY_TIME`,`sdi`.`SDI_NAME` AS `PROCESS_STATUS_NAME`,`spt`.`SPS_NAME` AS `STEP_NAME` from ((((((`sys_process_schedule` `sps` left join `sys_process_step` `spt` on((`spt`.`ID` = `sps`.`SPS_ID`))) left join `sys_process_definition` `spd` on((`spd`.`ID` = `sps`.`SPD_ID`))) left join `sys_process_schedule_cancel` `spsc` on((`spsc`.`SPS_ID` = convert(`sps`.`ID` using utf8mb4)))) left join `sys_account_info` `sai` on((`sai`.`SO_ID` = `sps`.`SO_ID`))) left join `sys_account_info` `saic` on((convert(`sai`.`SO_ID` using utf8mb4) = `spsc`.`SO_ID`))) left join `sys_dict_info` `sdi` on(((`sdi`.`SDT_CODE` = 'SYS_PROCESS_STATUS') and (`sdi`.`SDI_CODE` = `sps`.`SPS_AUDIT_STATUS`))));
-
--- ----------------------------
--- View structure for v_process_start
--- ----------------------------
-DROP VIEW IF EXISTS `v_process_start`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_process_start` AS select `sps`.`ID` AS `ID`,`sps`.`SPD_ID` AS `SPD_ID`,`sps`.`SR_ID` AS `SR_ID`,`sr`.`SR_NAME` AS `SR_NAME`,`sr`.`SR_CODE` AS `SR_CODE` from (`sys_process_start` `sps` left join `sys_role` `sr` on((`sr`.`ID` = `sps`.`SR_ID`)));
-
--- ----------------------------
--- View structure for v_process_step
--- ----------------------------
-DROP VIEW IF EXISTS `v_process_step`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_process_step` AS select `sps`.`ID` AS `ID`,`sps`.`SPD_ID` AS `SPD_ID`,`sps`.`SR_ID` AS `SR_ID`,`sps`.`SPS_NAME` AS `SPS_NAME`,`sps`.`SPS_ORDER` AS `SPS_ORDER`,`sps`.`SPS_STEP_TYPE` AS `SPS_STEP_TYPE`,`sps`.`SPS_PROCESS_STATUS` AS `SPS_PROCESS_STATUS`,`sps`.`SPS_IS_OVER_TIME` AS `SPS_IS_OVER_TIME`,`sps`.`SPS_OVER_TIME` AS `SPS_OVER_TIME`,`sps`.`SPS_TAB` AS `SPS_TAB`,`sps`.`SPS_IS_ADVANCE_CHECK` AS `SPS_IS_ADVANCE_CHECK`,`sps`.`SPS_IS_RETREAT_CHECK` AS `SPS_IS_RETREAT_CHECK`,`sps`.`SPS_IS_ADVANCE_EXECUTE` AS `SPS_IS_ADVANCE_EXECUTE`,`sps`.`SPS_IS_RETREAT_EXECUTE` AS `SPS_IS_RETREAT_EXECUTE`,`sr`.`SR_NAME` AS `SR_NAME` from (`sys_process_step` `sps` left join `sys_role` `sr` on((`sr`.`ID` = `sps`.`SR_ID`)));
-
--- ----------------------------
 -- View structure for v_role
 -- ----------------------------
 DROP VIEW IF EXISTS `v_role`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_role` AS select `sr`.`ID` AS `ID`,`sr`.`SR_TYPE` AS `SR_TYPE`,`sr`.`SR_CODE` AS `SR_CODE`,`sr`.`SR_NAME` AS `SR_NAME`,`sr`.`SR_EXPLAIN` AS `SR_EXPLAIN`,`sr`.`SR_REMARK` AS `SR_REMARK`,`sr`.`IS_STATUS` AS `IS_STATUS` from `sys_role` `sr`;
-
--- ----------------------------
--- View structure for v_test_process
--- ----------------------------
-DROP VIEW IF EXISTS `v_test_process`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_test_process` AS select `test_process`.`ID` AS `ID`,`test_process`.`NAME` AS `NAME`,`test_process`.`SO_ID` AS `SO_ID` from `test_process`;
 
 -- ----------------------------
 -- View structure for v_validate

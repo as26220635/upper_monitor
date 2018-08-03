@@ -33,10 +33,6 @@ public enum NameSpace {
     ValueRecordMapper("cn.kim.mapper.ValueRecordMapper"),
     //文件
     FileMapper("cn.kim.mapper.FileMapper"),
-    //流程进度、日志
-    ProcessMapper("cn.kim.mapper.ProcessMapper"),
-    //流程定义、步骤、启动角色（缓存）
-    ProcessFixedMapper("cn.kim.mapper.ProcessFixedMapper"),
     //格式管理
     FormatMapper("cn.kim.mapper.FormatMapper"),
     //门禁卡管理

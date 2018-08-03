@@ -202,8 +202,6 @@
 
 <%@ include file="/WEB-INF/jsp/common/common_params.jsp" %>
 <%@ include file="/WEB-INF/jsp/common/common_bottom.jsp" %>
-<%--流程工具--%>
-<%@ include file="/WEB-INF/jsp/admin/component/process/processExtend.jsp" %>
 <%--url--%>
 <%--<script src="${BASE_URL}resources/static/create/js/commonUrl.js?ver=${VERSION}"></script>--%>
 <script>

@@ -1,6 +1,7 @@
 package cn.kim.entity;
 
 import cn.kim.common.attr.Constants;
+import cn.kim.util.TCPUtil;
 
 import java.io.Serializable;
 
@@ -26,7 +27,7 @@ public class CardRequestProtocol implements Serializable {
      */
     private int address;
     /**
-     * 门编号
+     * 继电器	1	输出的继电器编号，从0开始。0进门、1出门、2报警。
      */
     private int door;
     /**
@@ -61,6 +62,47 @@ public class CardRequestProtocol implements Serializable {
      * 结束
      */
     private int etx = Constants.TCP_END_DATA;
+
+    /***
+     * 是否开门	1	是否通过验证，通过则开锁。1开，0不开
+     */
+    private int isOpen = 0;
+    /**
+     * 开门时间	2	输出继电器动作的时间，秒为单位。
+     */
+    private int openTime = 5;
+    /**
+     * 读头	1	读头，0进门 1出门。
+     */
+    private int reader = 0;
+    /**
+     * 保持时间	1	显示保持多少秒后显示默认首页。为0则不切换。
+     */
+    private int delay = 0;
+    /**
+     * 卡号值类型	1	1表示下面的卡号为4字节整数，0则为字符串。建议为0
+     */
+    private int cardIsDWord = 0;
+    /**
+     * 卡号	18	用于显示卡号字符串，为0表示无。
+     */
+    private byte[] returnCard = TCPUtil.strToByte("", 18);
+    /**
+     * 声音	40	用于语音播报的声音字符串，为0表示无。
+     */
+    private byte[] voice = TCPUtil.strToByte("", 40);
+    /**
+     * 姓名	16	用于显示的姓名字符串，为0表示无。
+     */
+    private byte[] name = TCPUtil.strToByte("", 16);
+    /**
+     * 事件	32	用于显示的事件字符串，为0表示无。
+     */
+    private byte[] note = TCPUtil.strToByte("", 32);
+    /**
+     * 时间	20	用于显示的时间字符串，为0表示无。
+     */
+    private byte[] returnTime = TCPUtil.strToByte("", 20);
 
     public int getStx() {
         return stx;
@@ -204,5 +246,85 @@ public class CardRequestProtocol implements Serializable {
 
     public void setReadHead(int readHead) {
         this.readHead = readHead;
+    }
+
+    public int getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(int isOpen) {
+        this.isOpen = isOpen;
+    }
+
+    public int getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(int openTime) {
+        this.openTime = openTime;
+    }
+
+    public int getReader() {
+        return reader;
+    }
+
+    public void setReader(int reader) {
+        this.reader = reader;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public int getCardIsDWord() {
+        return cardIsDWord;
+    }
+
+    public void setCardIsDWord(int cardIsDWord) {
+        this.cardIsDWord = cardIsDWord;
+    }
+
+    public byte[] getReturnCard() {
+        return returnCard;
+    }
+
+    public void setReturnCard(byte[] returnCard) {
+        this.returnCard = returnCard;
+    }
+
+    public byte[] getVoice() {
+        return voice;
+    }
+
+    public void setVoice(byte[] voice) {
+        this.voice = voice;
+    }
+
+    public byte[] getName() {
+        return name;
+    }
+
+    public void setName(byte[] name) {
+        this.name = name;
+    }
+
+    public byte[] getNote() {
+        return note;
+    }
+
+    public void setNote(byte[] note) {
+        this.note = note;
+    }
+
+    public byte[] getReturnTime() {
+        return returnTime;
+    }
+
+    public void setReturnTime(byte[] returnTime) {
+        this.returnTime = returnTime;
     }
 }

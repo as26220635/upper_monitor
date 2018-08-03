@@ -5,7 +5,7 @@
 
     <!--查询用户菜单权限-->
     <select id="selectMenu" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT SM.*,SMP.SM_NAME AS SM_PARENT_NAME,SC.SC_NAME,SPD.SPD_NAME
+        SELECT SM.*,SMP.SM_NAME AS SM_PARENT_NAME,SC.SC_NAME
         FROM(
             SELECT SM.*
             FROM SYS_MENU SM
@@ -35,7 +35,6 @@
         )SM
         LEFT JOIN SYS_MENU SMP ON SMP.ID = SM.SM_PARENTID
         LEFT JOIN SYS_CONFIGURE SC ON SC.ID = SM.SC_ID
-        LEFT JOIN SYS_PROCESS_DEFINITION SPD ON SPD.ID = SM.SPD_ID
         ORDER BY SM.SM_ORDER ASC
     </select>
 

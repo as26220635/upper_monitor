@@ -3,6 +3,7 @@ package cn.kim.common.netty;
 import cn.kim.common.attr.Constants;
 import cn.kim.entity.TCPSendMessage;
 import cn.kim.listener.LockListener;
+import cn.kim.util.TextUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -99,7 +100,7 @@ public class TCPServerNetty {
      */
     public boolean send(String clientIP, byte[] msg) {
         try {
-            System.out.println(DatatypeConverter.printHexBinary(msg));
+            System.out.println("发送指令包:" + TextUtil.printHexBinary(msg));
             TCPSendMessage tcpSendMessage = new TCPSendMessage();
             tcpSendMessage.setClientIp(clientIP);
             tcpSendMessage.setData(msg);
@@ -178,23 +179,6 @@ public class TCPServerNetty {
 
     public static void setClientMap(Map<String, Channel> map) {
         TCPServerNetty.clientMap = map;
-    }
-
-    public static String bytesToHexString(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (src == null || src.length <= 0) {
-            return null;
-        }
-        for (int i = 0; i < src.length; i++) {
-            int v = src[i] & 0xFF;
-            String hv = Integer.toHexString(v);
-            if (hv.length() < 2) {
-                stringBuilder.append(0);
-            }
-            stringBuilder.append(hv);
-            stringBuilder.append(' ');
-        }
-        return stringBuilder.toString();
     }
 
 }

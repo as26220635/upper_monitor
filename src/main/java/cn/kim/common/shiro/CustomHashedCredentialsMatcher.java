@@ -78,8 +78,8 @@ public class CustomHashedCredentialsMatcher extends HashedCredentialsMatcher {
                 cache.remove(username);
                 //登录成功，查询信息放入SESSION中
                 //添加菜单树
-                List<Map<String, Object>> menus = managerService.queryOperatorMenuTree(activeUser.getId());
-                activeUser.setMenus(menus);
+//                List<Map<String, Object>> menus = managerService.queryOperatorMenuTree(activeUser.getId());
+//                activeUser.setMenus(menus);
                 //查询按钮权限
 //                Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(1);
 //                paramMap.put("SO_ID", activeUser.getId());

@@ -1,5 +1,6 @@
 package cn.kim.common.netty;
 
+import cn.kim.common.attr.Attribute;
 import cn.kim.common.eu.TCPCommand;
 import cn.kim.entity.CardProtocol;
 import cn.kim.entity.CardRequestProtocol;
@@ -166,6 +167,24 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
             //刷卡
             CardRequestProtocol status = parseRequestData(card);
 
+            //调用接口验证二维码是否正确
+            boolean isSuccess = false;
+
+            //是否验证成功 成功就查询门禁信息返回
+            if (isSuccess) {
+                //查询门禁设置
+                //更新门禁卡信息和插入心跳日志
+                Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(1);
+                paramMap.put("BEGC_ID", status.getId());
+                Map<String, Object> entrance = InBoundHandler.entranceGuardCardService.selectEntranceGuardCard(paramMap);
+                if (!ValidateUtil.isEmpty(entrance)) {
+                    //开门
+                    status.setIsOpen(Attribute.STATUS_SUCCESS);
+                    //设置开门时间
+                    status.setOpenTime(TextUtil.toInt(entrance.get("BEGC_TIME")));
+                }
+            }
+
             //返回数据
             ctx.writeAndFlush(status);
         }
@@ -300,7 +319,7 @@ public class InBoundHandler extends SimpleChannelInboundHandler<CardProtocol> {
         //湿度	2	2组湿度，浮点值，带一位小数
         statusProtocol.setH1(TextUtil.toInt16(data[startIndex++]));
         statusProtocol.setH2(TextUtil.toInt16(data[startIndex++]));
-        //湿度	2	2组湿度，浮点值，带一位小数
+        //固件版本	4	固件详细版本
         byte[] version = new byte[4];
         System.arraycopy(data, startIndex, version, 0, 4);
         statusProtocol.setVersion(TextUtil.parsePackParam(version));

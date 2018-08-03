@@ -112,29 +112,6 @@
                                                 id="refreshBtn${MENU.ID}"><i
                                                 class="fa fa-refresh"></i>刷新
                                         </button>
-                                            <%--流程查看切换按钮--%>
-                                        <c:if test="${!fns:isEmpty(SPD)}">
-                                            <div class="btn-group" data-toggle="btn-toggle">
-                                                <c:if test="${isProcessAll == true}">
-                                                    <button id="processAllBtn" type="button"
-                                                            class="btn btn-default btn-sm active"
-                                                            data-process-status="${ProcessShowStatus.ALL.toString()}">
-                                                        <i class="fa fa-square text-yellow">全部</i>
-                                                    </button>
-                                                </c:if>
-                                                <button id="processStayBtn" type="button"
-                                                        class="btn btn-default btn-sm
-                                                    <c:if test="${isProcessAll != true}">active</c:if>"
-                                                        data-process-status="${ProcessShowStatus.STAY.toString()}">
-                                                    <i class="fa fa-square text-red">待审</i>
-                                                </button>
-                                                <button id="processAlreadyBtn" type="button"
-                                                        class="btn btn-default btn-sm"
-                                                        data-process-status="${ProcessShowStatus.ALREADY.toString()}">
-                                                    <i class="fa fa-square text-green"></i>已审
-                                                </button>
-                                            </div>
-                                        </c:if>
                                     </div>
                                 </div>
                             </c:if>
@@ -233,17 +210,6 @@
                     <%--设置最小宽度--%>
                     <c:if test="${not empty COLUMN.SCC_WIDTH}">
                     $(td).css('min-width', '${COLUMN.SCC_WIDTH}');
-                    </c:if>
-                    <c:if test="${COLUMN.SCC_IS_OPERATION eq Attribute.STATUS_SUCCESS }">
-                    <%--是否查询流程操作按钮--%>
-                    <c:if test="${!fns:isEmpty(SPD)}">
-                    <%--查询权限菜单--%>
-                    if (rowData.SPS_AUDIT_STATUS != 999) {
-                        ajax.get('${PROCESS_DATAGRID_BTN}', {ID: cellData, SPD_ID: '${SPD.ID}'}, function (data) {
-                            $(td).append(data.html);
-                        });
-                    }
-                    </c:if>
                     </c:if>
                 }
             }
@@ -399,76 +365,6 @@
         </c:choose>
     });
     </c:if>
-
-    <c:if test="${!fns:isEmpty(SPD)}">
-    //流程提交
-    $dataGridTable.find('tbody').on('click', '#PROCESS_SUBMIT', function () {
-        var data = getRowData(this);
-        var id = data.ID;
-        var SPD_ID = data.SPD_ID;
-
-        process.showProcessHome({
-            ID: id,
-            SPD_ID: SPD_ID,
-            PROCESS_TYPE: '${ProcessType.SUBMIT.toString()}',
-            dataGrid: $dataGrid
-        });
-    });
-
-    //流程退回
-    $dataGridTable.find('tbody').on('click', '#PROCESS_BACK', function () {
-        var data = getRowData(this);
-        var id = data.ID;
-        var SPD_ID = data.SPD_ID;
-
-        process.showProcessHome({
-            ID: id,
-            SPD_ID: SPD_ID,
-            PROCESS_TYPE: '${ProcessType.BACK.toString()}',
-            dataGrid: $dataGrid
-        });
-    });
-
-    //流程撤回
-    $dataGridTable.find('tbody').on('click', '#PROCESS_WITHDRAW', function () {
-        var data = getRowData(this);
-        var id = data.ID;
-        var SPD_ID = data.SPD_ID;
-
-        process.processWithdraw({
-            ID: id,
-            SPD_ID: SPD_ID,
-            dataGrid: $dataGrid
-        });
-    });
-
-    //流程日志
-    $dataGridTable.find('tbody').on('click', '#PROCESS_LOG', function () {
-        var data = getRowData(this);
-        var id = data.ID;
-        var SPD_ID = data.SPD_ID;
-
-        process.processLog({
-            ID: id,
-            SPD_ID: SPD_ID,
-        });
-    });
-
-    </c:if>
-    //按钮日志格式化
-    function processLogFunc(targets, field) {
-        return {
-            targets: targets,
-            data: field,
-            render: function (data, type, full, meta) {
-                if (full.SPS_AUDIT_STATUS == undefined || full.SPS_AUDIT_STATUS == 0) {
-                    return '<button type="button" class="btn btn-link btn-xs" disabled>' + data + '</button>';
-                } else {
-                    return '<button type="button" class="btn btn-link btn-xs" id="PROCESS_LOG">' + data + '</button>';
-                }
-            }
-        };
-    }
 
     /**
      *  根据this获取

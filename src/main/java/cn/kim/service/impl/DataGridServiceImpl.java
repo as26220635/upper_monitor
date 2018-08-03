@@ -82,66 +82,7 @@ public class DataGridServiceImpl extends BaseServiceImpl implements DataGridServ
         }
         //是否拥有流程
         boolean isProcess = false;
-        //查询是否拥有流程
-        String processDefinitionId = toString(menu.get("SPD_ID"));
-        if (!isEmpty(processDefinitionId)) {
-            paramMap.clear();
-            paramMap.put("ID", processDefinitionId);
-            Map<String, Object> definition = baseDao.selectOne(NameSpace.ProcessFixedMapper, "selectProcessDefinition", paramMap);
 
-            //流程没有停用
-            if (!isDiscontinuation(definition)) {
-                String roleId = toString(definition.get("SR_ID"));
-                //0 全部 1 待审 2 已审
-                String processStatus = toString(mapParam.get("processStatus"));
-                //设置流程查询ID
-                querySet.setProcessDefinitionId(processDefinitionId);
-
-                //流程过滤
-                if (!ProcessShowStatus.ALL.toString().equals(processStatus) || isEmpty(roleId) || !containsRole(roleId)) {
-                    ActiveUser activeUser = getActiveUser();
-
-                    String baseWhere = "SELECT SPS_TABLE_ID FROM SYS_PROCESS_SCHEDULE WHERE SPD_ID = '" + processDefinitionId + "' AND SPS_IS_CANCEL = 0 ";
-                    //WHERE过滤语句
-                    StringBuilder processWhereBuilder = new StringBuilder();
-                    //待审SQL语句
-                    StringBuilder stayBuilder = new StringBuilder();
-                    //查询没有流程和流程为未启动、撤回的
-                    stayBuilder.append("SELECT SV.ID AS SPS_TABLE_ID FROM " + toString(configure.get("SC_VIEW")) + " SV " +
-                            "   LEFT JOIN SYS_PROCESS_SCHEDULE SPS ON SPS.SPS_TABLE_ID = SV.ID AND SPS.SPS_IS_CANCEL = 0" +
-                            "   WHERE SV.SO_ID = '" + activeUser.getId() + "' AND (SPS.ID IS NULL OR SPS.SPS_AUDIT_STATUS = 0 OR (SPS.SPS_AUDIT_STATUS = -1 AND SPS.SPS_BACK_STATUS = 2))");
-                    if (!containsRole(roleId)) {
-                        //查询自身角色是否在流程中
-                        paramMap.clear();
-                        paramMap.put("SPD_ID", processDefinitionId);
-                        List<Map<String, Object>> stepList = baseDao.selectList(NameSpace.ProcessFixedMapper, "selectProcessStep", paramMap);
-                        //获取需要查询的角色
-                        stayBuilder.append(" UNION ALL " + baseWhere + " AND SPS_STEP_TYPE = 1 AND SPS_STEP_TRANSACTOR IN (" + TextUtil.toString(getExistRoleList(TextUtil.joinValue(stepList, "SR_ID", SERVICE_SPLIT))) + ") ");
-
-                        stayBuilder.append(" UNION ALL " + baseWhere + " AND SPS_STEP_TYPE = 2 AND SPS_STEP_TRANSACTOR = '" + activeUser.getId() + "' ");
-                    }
-
-                    //流程配置了自身角色可以查看全部的话就不进行过滤
-                    processWhereBuilder.append(" AND ID IN(");
-                    //待审
-                    if (isEmpty(processStatus) || ProcessShowStatus.ALL.toString().equals(processStatus) || ProcessShowStatus.STAY.toString().equals(processStatus)) {
-                        processWhereBuilder.append(stayBuilder.toString());
-                    } else {
-                        //已审
-                        processWhereBuilder.append("SELECT SPS.SPS_TABLE_ID FROM SYS_PROCESS_SCHEDULE SPS " +
-                                "   INNER JOIN SYS_PROCESS_LOG SPL ON SPL.SPS_ID = SPS.ID AND SPL.SPL_SO_ID = '" + activeUser.getId() + "' " +
-                                "   WHERE SPS.SPS_IS_CANCEL = 0  AND SPS.SPS_TABLE_ID NOT IN(" + stayBuilder.toString() + ") " +
-                                "   GROUP BY SPS.SPS_TABLE_ID");
-                    }
-
-                    processWhereBuilder.append(") ");
-
-                    querySet.setWhere(processWhereBuilder.toString());
-                }
-
-                isProcess = true;
-            }
-        }
         //是否开启自定义过滤
         if (!isProcess && toString(configure.get("SC_IS_FILTER")).equals(toString(STATUS_SUCCESS))) {
             querySet.setWhere(GridDataFilter.getInstance(configure, mapParam).filterWhereSql());

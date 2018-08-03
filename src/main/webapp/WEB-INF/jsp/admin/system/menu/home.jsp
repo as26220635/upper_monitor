@@ -114,7 +114,7 @@
 
         model.show({
             title: '删除菜单',
-            content: '是否删除菜单:' + name + ',会连下面的子菜单一起删除!',
+            content: '是否删除菜单:' + data.SM_NAME + ',会连下面的子菜单一起删除!',
             class: model.class.DANGER,
             okBtnName: model.btnName.DEL,
             footerModel: model.footerModel.ADMIN,

@@ -32,6 +32,19 @@ public class TCPUtil {
         return resultBytes;
     }
 
+    /**
+     * byte 转为int
+     *
+     * @param bytes
+     * @return
+     */
+    public static int toInt(byte[] bytes) {
+        return bytes[3] & 0xFF |
+                (bytes[2] & 0xFF) << 8 |
+                (bytes[1] & 0xFF) << 16 |
+                (bytes[0] & 0xFF) << 24;
+    }
+
     /***
      * int转为4位byte
      * @param num

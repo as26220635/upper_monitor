@@ -145,33 +145,6 @@
 <c:set var="FORMAT_DETAIL_UPDATE_URL" value="${FORMAT_DETAIL_BASE_URL}update"/>
 <c:set var="FORMAT_DETAIL_SWITCH_STATUS_URL" value="${FORMAT_DETAIL_BASE_URL}switchStatus"/>
 <c:set var="FORMAT_DETAIL_DELETE_URL" value="${FORMAT_DETAIL_BASE_URL}delete"/>
-<%--流程列表--%>
-<c:set var="PROCESS_BASE_URL" value="${MANAGER_URL}process/"/>
-<c:set var="PROCESS_DATAGRID_BTN" value="${PROCESS_BASE_URL}showDataGridBtn"/>
-<c:set var="PROCESS_SHOW_HOME" value="${PROCESS_BASE_URL}showDataGrid"/>
-<c:set var="PROCESS_SUBMIT" value="${PROCESS_BASE_URL}submit"/>
-<c:set var="PROCESS_WITHDRAW" value="${PROCESS_BASE_URL}withdraw"/>
-<c:set var="PROCESS_LOG" value="${PROCESS_BASE_URL}log"/>
-<c:set var="PROCESS_LOG_LIST" value="${PROCESS_BASE_URL}log/list"/>
-<%--流程定义列表--%>
-<c:set var="PROCESS_DEFINITION_BASE_URL" value="${PROCESS_BASE_URL}definition/"/>
-<c:set var="PROCESS_DEFINITION_TREE_DATA" value="${PROCESS_DEFINITION_BASE_URL}tree"/>
-<c:set var="PROCESS_DEFINITION_ADD_URL" value="${PROCESS_DEFINITION_BASE_URL}add"/>
-<c:set var="PROCESS_DEFINITION_UPDATE_URL" value="${PROCESS_DEFINITION_BASE_URL}update"/>
-<c:set var="PROCESS_DEFINITION_SWITCH_STATUS_URL" value="${PROCESS_DEFINITION_BASE_URL}switchStatus"/>
-<%--流程定义列表--%>
-<c:set var="PROCESS_STEP_BASE_URL" value="${PROCESS_BASE_URL}step/"/>
-<c:set var="PROCESS_STEP_ADD_URL" value="${PROCESS_STEP_BASE_URL}add"/>
-<c:set var="PROCESS_STEP_UPDATE_URL" value="${PROCESS_STEP_BASE_URL}update"/>
-<c:set var="PROCESS_STEP_DELETE_URL" value="${PROCESS_STEP_BASE_URL}delete"/>
-<%--流程启动角色列表--%>
-<c:set var="PROCESS_START_BASE_URL" value="${PROCESS_BASE_URL}start/"/>
-<c:set var="PROCESS_START_ADD_URL" value="${PROCESS_START_BASE_URL}add"/>
-<c:set var="PROCESS_START_UPDATE_URL" value="${PROCESS_START_BASE_URL}update"/>
-<c:set var="PROCESS_START_DELETE_URL" value="${PROCESS_START_BASE_URL}delete"/>
-<%--流程进度列表--%>
-<c:set var="PROCESS_SCHEDULE_BASE_URL" value="${PROCESS_BASE_URL}schedule/"/>
-<c:set var="PROCESS_SCHEDULE_CANCEL_URL" value="${PROCESS_SCHEDULE_BASE_URL}cancel"/>
 <%--门禁卡--%>
 <c:set var="ENTRANCE_GUARD_CARD_BASE_URL" value="${MANAGER_URL}entranceGuardCard/"/>
 <c:set var="ENTRANCE_GUARD_CARD_ADD_URL" value="${ENTRANCE_GUARD_CARD_BASE_URL}add"/>
