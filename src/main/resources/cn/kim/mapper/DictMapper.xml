@@ -57,7 +57,7 @@
 
     <!--查询字典信息-->
     <select id="selectDictInfo" parameterType="java.util.Map" resultType="java.util.Map">
-        SELECT SDI.*,SDT.SDT_NAME
+        SELECT SDI.*,SDT.SDT_NAME,SDIP.SDI_NAME AS SDI_PARENT_NAME
         FROM(
             SELECT SDI.*
             FROM SYS_DICT_INFO SDI
@@ -86,6 +86,7 @@
             </where>
         )SDI
         INNER JOIN SYS_DICT_TYPE SDT ON SDT.ID = SDI.SDT_ID
+        LEFT JOIN SYS_DICT_INFO SDIP ON SDIP.ID = SDI.SDI_PARENTID
         ORDER BY SDI.SDI_ORDER ASC
     </select>
 

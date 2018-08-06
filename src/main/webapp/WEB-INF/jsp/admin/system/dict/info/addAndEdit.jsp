@@ -29,8 +29,8 @@
     </div>
     <div class="form-group has-feedback">
         <label>父节点:</label>
-        <s:treeBox id="SDI_PARENTID" name="SDI_PARENT_NAME" value="${MENU.SDI_PARENTID}"
-                   nameValue="${MENU.SDI_PARENT_NAME}" sdtId="${fns:trueOrFalse(INFO != null ,INFO.SDT_ID,SDT_ID)}"
+        <s:treeBox id="SDI_PARENTID" name="SDI_PARENT_NAME" value="${INFO.SDI_PARENTID}"
+                   nameValue="${INFO.SDI_PARENT_NAME}" sdtId="${fns:trueOrFalse(INFO != null ,INFO.SDT_ID,SDT_ID)}"
                    notId="${INFO.ID}"
                    url="${DICT_INFO_TREE_URL}" title="选择字典父信息节点"></s:treeBox>
     </div>

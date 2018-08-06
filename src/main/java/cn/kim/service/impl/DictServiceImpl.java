@@ -1,10 +1,9 @@
 package cn.kim.service.impl;
 
-import cn.kim.common.attr.MagicValue;
-import cn.kim.common.attr.TableName;
-import cn.kim.exception.CustomException;
 import cn.kim.common.attr.Attribute;
+import cn.kim.common.attr.MagicValue;
 import cn.kim.common.attr.ParamTypeResolve;
+import cn.kim.common.attr.TableName;
 import cn.kim.common.eu.NameSpace;
 import cn.kim.dao.BaseDao;
 import cn.kim.entity.DictInfo;
@@ -15,12 +14,10 @@ import cn.kim.exception.CustomException;
 import cn.kim.service.DictService;
 import cn.kim.util.ValidateUtil;
 import com.google.common.collect.Maps;
-import com.sun.xml.internal.ws.wsdl.writer.document.ParamType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -287,6 +284,7 @@ public class DictServiceImpl extends BaseServiceImpl implements DictService {
     @Override
     public List<Tree> selectDictInfoTree(Map<String, Object> mapParam) {
         Map<String, Object> paramMap = Maps.newHashMapWithExpectedSize(2);
+        paramMap.put("SDI_PARENTID", "0");
         paramMap.put("SDT_ID", mapParam.get("SDT_ID"));
         paramMap.put("NOT_ID", mapParam.get("NOT_ID"));
         List<DictInfo> dictInfos = setDictInfoChildrenList(baseDao, baseDao.selectList(NameSpace.DictMapper, "selectDictInfo", paramMap), toString(mapParam.get("NOT_ID")));
